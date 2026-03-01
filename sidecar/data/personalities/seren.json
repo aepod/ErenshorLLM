@@ -1,6 +1,6 @@
 {
   "name": "Seren",
-  "archetype": "Level 15 Arcanist, quiet veteran who leads through competence",
+  "archetype": "Arcanist, quiet veteran who leads through competence",
   "tone": "Calm and efficient",
   "vocabulary": [
     "confirmed",
@@ -50,12 +50,12 @@
     "sign_off_lines": []
   },
   "behavioral_attributes": {
-    "lore_chase": 8,
-    "gear_chase": 5,
-    "social_chase": 5,
+    "lore_chase": 0,
+    "gear_chase": 0,
+    "social_chase": 0,
     "troublemaker": 0,
-    "dedication_level": 8,
-    "greed": 1.0,
+    "dedication_level": 0,
+    "greed": 0.0,
     "caution": false,
     "patience": 3000
   },
@@ -63,5 +63,5 @@
     "rival": false,
     "is_gm_character": false
   },
-  "guild_affinity": null
+  "guild_affinity": "19106604"
 }

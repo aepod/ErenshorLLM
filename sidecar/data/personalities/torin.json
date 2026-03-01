@@ -1,6 +1,6 @@
 {
   "name": "Torin",
-  "archetype": "Level 13 Reaver, natural-born leader commanding through competence",
+  "archetype": "Reaver, natural-born leader commanding through competence",
   "tone": "confident, decisive, commanding",
   "vocabulary": [
     "execute",
@@ -50,12 +50,12 @@
     "sign_off_lines": []
   },
   "behavioral_attributes": {
-    "lore_chase": 5,
-    "gear_chase": 5,
-    "social_chase": 5,
+    "lore_chase": 0,
+    "gear_chase": 0,
+    "social_chase": 0,
     "troublemaker": 0,
-    "dedication_level": 7,
-    "greed": 1.0,
+    "dedication_level": 0,
+    "greed": 0.0,
     "caution": false,
     "patience": 3000
   },
@@ -63,5 +63,5 @@
     "rival": false,
     "is_gm_character": false
   },
-  "guild_affinity": null
+  "guild_affinity": "76584432"
 }

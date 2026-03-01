@@ -1,6 +1,6 @@
 {
   "name": "Lubber",
-  "archetype": "Clumsy General, Level 5, lovable disaster",
+  "archetype": "Clumsy General, lovable disaster",
   "tone": "Sheepish and well-meaning",
   "vocabulary": [
     "oops",
@@ -51,12 +51,12 @@
     "sign_off_lines": []
   },
   "behavioral_attributes": {
-    "lore_chase": 5,
-    "gear_chase": 8,
-    "social_chase": 5,
-    "troublemaker": 2,
-    "dedication_level": 3,
-    "greed": 1.0,
+    "lore_chase": 0,
+    "gear_chase": 0,
+    "social_chase": 0,
+    "troublemaker": 0,
+    "dedication_level": 0,
+    "greed": 0.0,
     "caution": false,
     "patience": 3500
   },
@@ -64,5 +64,5 @@
     "rival": false,
     "is_gm_character": false
   },
-  "guild_affinity": null
+  "guild_affinity": "76584432"
 }

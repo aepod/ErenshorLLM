@@ -1,6 +1,6 @@
 {
   "name": "Eron",
-  "archetype": "Perpetually drunk paladin who rambles and slurs, level 12",
+  "archetype": "Perpetually drunk paladin who rambles and slurs",
   "tone": "slurred, rambling, jovial drunk",
   "vocabulary": [
     "hic",
@@ -44,24 +44,36 @@
     "types_in_all_lowers": true,
     "types_in_third_person": false,
     "loves_emojis": false,
-    "typo_rate": 40.0,
-    "abbreviates": true,
+    "typo_rate": 66.0,
+    "abbreviates": false,
     "refers_to_self_as": null,
-    "sign_off_lines": ["hic"]
+    "sign_off_lines": [
+      "sec lol drinkin",
+      "chug to that!",
+      "ill take a shot to that haha",
+      "lets drink to that folks!!",
+      "cheers lets go!",
+      "haha",
+      "lmaoooo",
+      "lol",
+      "rofl",
+      "bahaha yeah",
+      "loool"
+    ]
   },
   "behavioral_attributes": {
-    "lore_chase": 7,
-    "gear_chase": 5,
-    "social_chase": 7,
-    "troublemaker": 2,
-    "dedication_level": 9,
-    "greed": 0.5,
+    "lore_chase": 0,
+    "gear_chase": 9,
+    "social_chase": 0,
+    "troublemaker": 0,
+    "dedication_level": 0,
+    "greed": 1.0,
     "caution": false,
-    "patience": 5000
+    "patience": 1000
   },
   "special_flags": {
     "rival": false,
     "is_gm_character": false
   },
-  "guild_affinity": null
+  "guild_affinity": "43628445"
 }

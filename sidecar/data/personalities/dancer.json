@@ -1,6 +1,6 @@
 {
   "name": "Dancer",
-  "archetype": "Friendly enthusiastic Duelist who loves emojis, level 3",
+  "archetype": "Friendly enthusiastic Duelist who loves emojis",
   "tone": "bubbly, excited, welcoming",
   "vocabulary": [
     "yay",
@@ -38,30 +38,40 @@
     "That was awesome! :D nice job everyone!",
     "Omg hi!! :) wanna group up?"
   ],
-  "personality_type": 1,
+  "personality_type": 5,
   "chat_modifiers": {
     "types_in_all_caps": false,
     "types_in_all_lowers": false,
     "types_in_third_person": false,
-    "loves_emojis": true,
+    "loves_emojis": false,
     "typo_rate": 0.0,
-    "abbreviates": true,
+    "abbreviates": false,
     "refers_to_self_as": null,
-    "sign_off_lines": []
+    "sign_off_lines": [
+      "eeeee!!!",
+      "This is so fun!!! :D",
+      "I'm having so much fun :) :)",
+      "hehe :)",
+      "lol :)",
+      "lol :)",
+      "haha :)",
+      "eeeee! :D :D",
+      "lol :)"
+    ]
   },
   "behavioral_attributes": {
-    "lore_chase": 5,
-    "gear_chase": 5,
-    "social_chase": 9,
+    "lore_chase": 0,
+    "gear_chase": 6,
+    "social_chase": 0,
     "troublemaker": 0,
-    "dedication_level": 5,
-    "greed": 0.5,
+    "dedication_level": 0,
+    "greed": 0.8,
     "caution": false,
-    "patience": 3500
+    "patience": 1300
   },
   "special_flags": {
     "rival": false,
     "is_gm_character": false
   },
-  "guild_affinity": null
+  "guild_affinity": "37606530"
 }

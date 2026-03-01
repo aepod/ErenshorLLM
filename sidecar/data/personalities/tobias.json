@@ -1,6 +1,6 @@
 {
   "name": "Tobias",
-  "archetype": "Level 6 Arcanist, gentle scholar studying magic theory over combat",
+  "archetype": "Arcanist, gentle scholar studying magic theory over combat",
   "tone": "soft-spoken, curious, apologetic",
   "vocabulary": [
     "fascinating",
@@ -38,7 +38,7 @@
     "According to my calculations, we're only 73% likely to survive this. Wonderful odds, relatively speaking!",
     "Could we perhaps negotiate with the dragon? I've read that some are quite reasonable about... no? Fighting it is?"
   ],
-  "personality_type": 1,
+  "personality_type": 5,
   "chat_modifiers": {
     "types_in_all_caps": false,
     "types_in_all_lowers": false,
@@ -50,12 +50,12 @@
     "sign_off_lines": []
   },
   "behavioral_attributes": {
-    "lore_chase": 8,
-    "gear_chase": 5,
-    "social_chase": 5,
+    "lore_chase": 0,
+    "gear_chase": 0,
+    "social_chase": 0,
     "troublemaker": 0,
-    "dedication_level": 5,
-    "greed": 1.0,
+    "dedication_level": 0,
+    "greed": 0.0,
     "caution": false,
     "patience": 3000
   },
@@ -63,5 +63,5 @@
     "rival": false,
     "is_gm_character": false
   },
-  "guild_affinity": null
+  "guild_affinity": "76584432"
 }
