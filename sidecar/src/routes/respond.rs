@@ -211,7 +211,7 @@ async fn handle_respond(
     let rank_ctx = ranker::RankContext {
         channel: request.channel.clone(),
         zone: request.zone.clone(),
-        personality: personality_traits,
+        personality: personality_traits.clone(),
         relationship: request.relationship,
     };
     let ranked = ranker::rerank(candidates, &rank_ctx, &weights);
@@ -306,8 +306,13 @@ async fn handle_respond(
     let (response_text, source, llm_fallback_reason) =
         if llm_config.enabled && confidence < llm_config.enhance_threshold {
             if let Some(ref router) = state.llm_router {
-                // Build LLM prompt with personality + lore + memory context
-                let personality = state.personality_store.get(&request.sim_name);
+                // Build LLM prompt with personality + lore + memory context.
+                // Uses get_or_generate() so game-created sims without personality
+                // files get unique personalities based on their game trait flags.
+                let personality = state.personality_store.get_or_generate(
+                    &request.sim_name,
+                    &personality_traits,
+                );
                 let lore_ctx: Vec<LoreContext> = lore_results
                     .iter()
                     .map(|r| LoreContext {
@@ -326,20 +331,35 @@ async fn handle_respond(
                     GroundingContext::from_search_results(&lore_ctx, &request, sg)
                 });
 
-                // Token budget for prompt assembly (shimmy/cloud handle actual context window)
-                let context_budget = 2048;
-                let prompt = PromptBuilder::build(
-                    personality,
-                    &lore_ctx,
-                    &memory_ctx,
-                    &request,
-                    context_budget,
-                    grounding_ctx.as_ref(),
-                );
-
-                let result = router
-                    .generate(&prompt, llm_config.max_tokens, llm_config.temperature)
-                    .await;
+                // Use structured messages for local fine-tuned models,
+                // flat prompt for cloud backends
+                let result = if matches!(state.config.llm.mode, crate::config::LlmMode::Cloud) {
+                    let context_budget = 2048;
+                    let prompt = PromptBuilder::build(
+                        &personality,
+                        &lore_ctx,
+                        &memory_ctx,
+                        &request,
+                        context_budget,
+                        grounding_ctx.as_ref(),
+                    );
+                    router
+                        .generate(&prompt, llm_config.max_tokens, llm_config.temperature)
+                        .await
+                } else {
+                    // Local or Hybrid: send structured system/user messages
+                    // matching the fine-tuned model's training format
+                    let messages = PromptBuilder::build_messages(
+                        &personality,
+                        &lore_ctx,
+                        &memory_ctx,
+                        &request,
+                        grounding_ctx.as_ref(),
+                    );
+                    router
+                        .generate_chat(messages, llm_config.max_tokens, llm_config.temperature)
+                        .await
+                };
 
                 match result {
                     LlmResult::Success {

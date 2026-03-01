@@ -11,9 +11,9 @@ tokenizer_path = "models/tokenizer.json"
 threads = 2
 
 [indexes]
-lore_path = "dist/lore.json"
-responses_path = "dist/responses.json"
-memory_path = "dist/memory.json"
+lore_path = "dist/lore.ruvector"
+responses_path = "dist/responses.ruvector"
+memory_path = "dist/memory.ruvector"
 personality_path = "dist/personality.ruvector"
 
 [sona]

@@ -5,4 +5,5 @@ pub mod item_cleaner;
 pub mod personality_builder;
 pub mod template_builder;
 pub mod wiki_importer;
+pub mod training_exporter;
 pub mod wiki_parser;

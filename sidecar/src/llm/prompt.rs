@@ -1,3 +1,4 @@
+use crate::llm::cloud::ChatMessage;
 use crate::llm::grounding::GroundingContext;
 use crate::llm::personality::Personality;
 use crate::routes::respond::RespondRequest;
@@ -229,6 +230,59 @@ fn build_memory_section(memory_results: &[MemoryContext], budget_chars: usize) -
     }
 
     s
+}
+
+impl PromptBuilder {
+    /// Build structured chat messages for fine-tuned local models.
+    ///
+    /// Returns a system message (personality + context) and a user message
+    /// (the player's actual words). This matches the training data format
+    /// used by `export-training`, so the fine-tuned model produces
+    /// personality-grounded responses without needing explicit instructions.
+    pub fn build_messages(
+        personality: &Personality,
+        lore_results: &[LoreContext],
+        memory_results: &[MemoryContext],
+        request: &RespondRequest,
+        grounding: Option<&GroundingContext>,
+    ) -> Vec<ChatMessage> {
+        let mut system = build_system_section(personality, request);
+
+        // Append grounding context
+        if let Some(g) = grounding {
+            let section = g.format_prompt_section();
+            if !section.is_empty() {
+                system.push_str(&section);
+            }
+        }
+
+        // Append lore as world knowledge
+        if !lore_results.is_empty() {
+            system.push_str("\nWorld knowledge:\n");
+            for lore in lore_results {
+                system.push_str(&format!("- {}\n", lore.text));
+            }
+        }
+
+        // Append memory
+        if !memory_results.is_empty() {
+            system.push_str("\nRecent memory:\n");
+            for mem in memory_results {
+                system.push_str(&format!("- {}\n", mem.text));
+            }
+        }
+
+        vec![
+            ChatMessage {
+                role: "system".to_string(),
+                content: system,
+            },
+            ChatMessage {
+                role: "user".to_string(),
+                content: request.player_message.clone(),
+            },
+        ]
+    }
 }
 
 fn build_instruction_section(request: &RespondRequest) -> String {

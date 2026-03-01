@@ -131,6 +131,60 @@ enum Commands {
         #[arg(long, default_value = "lore/zones")]
         zones_dir: PathBuf,
     },
+    /// Export training data for LoRA fine-tuning.
+    /// Generates JSONL files in ChatML, Alpaca, and/or ShareGPT formats
+    /// from personalities, templates, lore, and grounding data.
+    ExportTraining {
+        /// Output directory for JSONL files
+        #[arg(long, default_value = "dist/training")]
+        output_dir: PathBuf,
+        /// Output format: chatml, alpaca, sharegpt, or all
+        #[arg(long, default_value = "all")]
+        format: String,
+        /// Strategies (comma-separated): phrases, crossover, lore, multiturn, or all
+        #[arg(long, default_value = "all")]
+        strategies: String,
+        /// Deterministic RNG seed
+        #[arg(long, default_value = "42")]
+        seed: u64,
+        /// Max pairs per strategy (0 = unlimited)
+        #[arg(long, default_value = "0")]
+        max_per_strategy: usize,
+        /// Filter personality types (comma-separated): 1=Nice, 2=Tryhard, 3=Mean, 5=Neutral
+        #[arg(long)]
+        personality_types: Option<String>,
+        /// Filter template categories (comma-separated)
+        #[arg(long)]
+        categories: Option<String>,
+        /// Filter zones (comma-separated)
+        #[arg(long)]
+        zones: Option<String>,
+    },
+    /// Fine-tune a local model using exported training data.
+    /// Generates training scripts and optionally runs them.
+    FineTune {
+        /// Training data directory
+        #[arg(long, default_value = "dist/training")]
+        output_dir: PathBuf,
+        /// Backend: config-only, unsloth, or axolotl
+        #[arg(long, default_value = "config-only")]
+        backend: String,
+        /// HuggingFace base model ID
+        #[arg(long, default_value = "unsloth/gemma-3-1b-it")]
+        base_model: String,
+        /// LoRA rank
+        #[arg(long, default_value = "16")]
+        lora_rank: u32,
+        /// Training epochs
+        #[arg(long, default_value = "3")]
+        epochs: u32,
+        /// Learning rate
+        #[arg(long, default_value = "2e-4")]
+        learning_rate: f64,
+        /// RNG seed
+        #[arg(long, default_value = "42")]
+        seed: u64,
+    },
 }
 
 fn init_tracing(format: &str) {
@@ -194,9 +248,11 @@ fn load_embedder(config: &config::AppConfig) -> Option<std::sync::Arc<intelligen
 
 /// Load the lore index. Tries .ruvector first, falls back to .json.
 fn load_lore(config: &config::AppConfig) -> intelligence::lore::LoreStore {
-    let json_path = config.resolve_path(&config.indexes.lore_path);
     let ruvector_path = config.resolve_path(
         &config::IndexConfig::ruvector_path(&config.indexes.lore_path),
+    );
+    let json_path = config.resolve_path(
+        &config::IndexConfig::json_path(&config.indexes.lore_path),
     );
     let adapter_config = config.vectordb.to_adapter_config();
 
@@ -211,9 +267,11 @@ fn load_lore(config: &config::AppConfig) -> intelligence::lore::LoreStore {
 
 /// Load the memory store. Creates a new .ruvector if neither exists.
 fn load_memory(config: &config::AppConfig) -> intelligence::memory::MemoryStore {
-    let json_path = config.resolve_path(&config.indexes.memory_path);
     let ruvector_path = config.resolve_path(
         &config::IndexConfig::ruvector_path(&config.indexes.memory_path),
+    );
+    let json_path = config.resolve_path(
+        &config::IndexConfig::json_path(&config.indexes.memory_path),
     );
     let adapter_config = config.vectordb.to_adapter_config();
 
@@ -228,9 +286,11 @@ fn load_memory(config: &config::AppConfig) -> intelligence::memory::MemoryStore 
 
 /// Load the response template store. Tries .ruvector first, falls back to .json.
 fn load_responses(config: &config::AppConfig) -> intelligence::templates::ResponseStore {
-    let json_path = config.resolve_path(&config.indexes.responses_path);
     let ruvector_path = config.resolve_path(
         &config::IndexConfig::ruvector_path(&config.indexes.responses_path),
+    );
+    let json_path = config.resolve_path(
+        &config::IndexConfig::json_path(&config.indexes.responses_path),
     );
     let adapter_config = config.vectordb.to_adapter_config();
 
@@ -573,6 +633,130 @@ async fn main() {
                         std::process::exit(1);
                     }
                 }
+                return;
+            }
+            Commands::ExportTraining {
+                output_dir,
+                format,
+                strategies,
+                seed,
+                max_per_strategy,
+                personality_types,
+                categories,
+                zones,
+            } => {
+                use builder::training_exporter::{ExportConfig, OutputFormat, Strategy};
+
+                let output_dir = config.resolve_path(&output_dir.to_string_lossy());
+
+                let formats = match format.to_lowercase().as_str() {
+                    "all" => vec![OutputFormat::ChatML, OutputFormat::Alpaca, OutputFormat::ShareGPT],
+                    "chatml" => vec![OutputFormat::ChatML],
+                    "alpaca" => vec![OutputFormat::Alpaca],
+                    "sharegpt" => vec![OutputFormat::ShareGPT],
+                    other => {
+                        error!("Unknown format: '{}'. Use: chatml, alpaca, sharegpt, or all", other);
+                        std::process::exit(1);
+                    }
+                };
+
+                let strats = match strategies.to_lowercase().as_str() {
+                    "all" => Strategy::all().to_vec(),
+                    other => {
+                        let mut result = Vec::new();
+                        for s in other.split(',') {
+                            match Strategy::from_str(s.trim()) {
+                                Some(strat) => result.push(strat),
+                                None => {
+                                    error!("Unknown strategy: '{}'. Use: phrases, crossover, lore, multiturn, or all", s.trim());
+                                    std::process::exit(1);
+                                }
+                            }
+                        }
+                        result
+                    }
+                };
+
+                let type_filter = personality_types.as_ref().map(|s| {
+                    s.split(',')
+                        .filter_map(|t| t.trim().parse::<u8>().ok())
+                        .collect::<Vec<_>>()
+                });
+
+                let cat_filter = categories.as_ref().map(|s| {
+                    s.split(',')
+                        .map(|c| c.trim().to_string())
+                        .collect::<Vec<_>>()
+                });
+
+                let zone_filter = zones.as_ref().map(|s| {
+                    s.split(',')
+                        .map(|z| z.trim().to_string())
+                        .collect::<Vec<_>>()
+                });
+
+                let export_config = ExportConfig {
+                    data_dir: config.data_dir.clone(),
+                    output_dir,
+                    formats,
+                    strategies: strats,
+                    seed: *seed,
+                    max_per_strategy: *max_per_strategy,
+                    personality_types: type_filter,
+                    categories: cat_filter,
+                    zones: zone_filter,
+                };
+
+                info!("Exporting training data...");
+                if let Err(e) = builder::training_exporter::export_training(&export_config) {
+                    error!("Training export failed: {}", e);
+                    std::process::exit(1);
+                }
+
+                info!("Training data export complete.");
+                return;
+            }
+            Commands::FineTune {
+                output_dir,
+                backend,
+                base_model,
+                lora_rank,
+                epochs,
+                learning_rate,
+                seed,
+            } => {
+                use builder::training_exporter::{FineTuneBackend, FineTuneConfig};
+
+                let output_dir = config.resolve_path(&output_dir.to_string_lossy());
+
+                let backend = match backend.to_lowercase().as_str() {
+                    "config-only" => FineTuneBackend::ConfigOnly,
+                    "unsloth" => FineTuneBackend::Unsloth,
+                    "axolotl" => FineTuneBackend::Axolotl,
+                    other => {
+                        error!("Unknown backend: '{}'. Use: config-only, unsloth, or axolotl", other);
+                        std::process::exit(1);
+                    }
+                };
+
+                let ft_config = FineTuneConfig {
+                    data_dir: config.data_dir.clone(),
+                    output_dir,
+                    backend,
+                    base_model: base_model.clone(),
+                    lora_rank: *lora_rank,
+                    epochs: *epochs,
+                    learning_rate: *learning_rate,
+                    seed: *seed,
+                };
+
+                info!("Running fine-tune pipeline...");
+                if let Err(e) = builder::training_exporter::fine_tune(&ft_config) {
+                    error!("Fine-tune failed: {}", e);
+                    std::process::exit(1);
+                }
+
+                info!("Fine-tune pipeline complete.");
                 return;
             }
         }
