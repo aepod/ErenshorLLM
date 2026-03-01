@@ -171,6 +171,22 @@ namespace ErenshorLLMDialog
                 }
             }
 
+            // --- Dump full personalities if requested ---
+            if (_sidecarConfig.DumpFullPersonalities.Value == Toggle.On)
+            {
+                string personalitiesDir = ResolvePersonalitiesDir();
+                if (personalitiesDir != null)
+                {
+                    Log.LogInfo("Full personality dump enabled. Target: " + personalitiesDir);
+                    StartCoroutine(PersonalityDumper.DumpCoroutine(personalitiesDir, Log));
+                    _sidecarConfig.DumpFullPersonalities.Value = Toggle.Off;
+                }
+                else
+                {
+                    Log.LogWarning("Cannot dump personalities: unable to resolve data directory.");
+                }
+            }
+
             // --- Apply Harmony patches ---
             new Harmony("aepod.ErenshorLLMDialog").PatchAll();
             Log.LogInfo("ErenshorLLMDialog v0.2.0 loaded!");

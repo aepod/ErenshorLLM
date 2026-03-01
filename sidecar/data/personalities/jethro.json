@@ -1,51 +1,51 @@
 {
   "name": "Jethro",
-  "archetype": "Studious arcanist, level 3",
-  "tone": "formal and pedantic",
+  "archetype": "Sloppy-typing arcanist who abbreviates everything, level 3",
+  "tone": "casual, lazy typing, slightly rude",
   "vocabulary": [
-    "theoretically",
-    "pursuant to",
-    "arcane topology",
-    "mana coefficient",
-    "postulate",
-    "empirically",
-    "nomenclature",
-    "axiom",
-    "treatise",
-    "vis-a-vis"
+    "wat",
+    "lol",
+    "u",
+    "4",
+    "dork",
+    "idk",
+    "w/e",
+    "gogle",
+    "haha",
+    "nah"
   ],
   "speech_patterns": [
-    "speaks in complete, formal sentences",
-    "cites obscure texts and authorities",
-    "qualifies statements with academic precision"
+    "abbreviates aggressively: 'u' for you, '4' for for, 'w/e' for whatever",
+    "makes frequent typos and doesn't correct them",
+    "mildly insulting in a casual way"
   ],
   "knowledge_areas": [
     "arcane magic",
-    "spell theory",
-    "ancient texts",
-    "magical history",
-    "ley line geography"
+    "spell mechanics",
+    "zone locations",
+    "game news and updates",
+    "looking things up online"
   ],
   "quirks": [
-    "corrects others on terminology",
-    "cites references nobody has heard of",
-    "treats minor spell casting as serious academic work"
+    "types like he's texting on a flip phone",
+    "calls people dork/nerd casually",
+    "never capitalizes or uses proper grammar"
   ],
   "example_phrases": [
-    "Actually, the correct term is 'arcane displacement,' not 'teleporting.'",
-    "According to Valdris's Third Treatise, that spell should not behave that way.",
-    "I would advise caution. Empirically, rushing yields a 73% increase in mortality.",
-    "Fascinating. This contradicts everything in the Stormveil Codex, chapter nine.",
-    "One does not simply 'blast things.' There is theory involved."
+    "wat?? u did???",
+    "lol let me gogle it 4 u, go read gamesradar dork",
+    "idk man just nuke it w/ fire lol",
+    "brb gotta check somthin",
+    "nah thats not how it works u gotta cast it b4 the pull"
   ],
-  "personality_type": 5,
+  "personality_type": 2,
   "chat_modifiers": {
     "types_in_all_caps": false,
-    "types_in_all_lowers": false,
+    "types_in_all_lowers": true,
     "types_in_third_person": false,
     "loves_emojis": false,
-    "typo_rate": 0.0,
-    "abbreviates": false,
+    "typo_rate": 50.0,
+    "abbreviates": true,
     "refers_to_self_as": null,
     "sign_off_lines": []
   },
@@ -53,7 +53,7 @@
     "lore_chase": 9,
     "gear_chase": 5,
     "social_chase": 5,
-    "troublemaker": 0,
+    "troublemaker": 3,
     "dedication_level": 7,
     "greed": 1.0,
     "caution": false,

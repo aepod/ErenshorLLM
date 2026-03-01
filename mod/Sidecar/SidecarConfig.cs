@@ -24,6 +24,7 @@ namespace ErenshorLLMDialog.Sidecar
         public ConfigEntry<int> MaxRestarts { get; }
         public ConfigEntry<Toggle> RebuildIndexes { get; }
         public ConfigEntry<Toggle> DumpStyleQuirks { get; }
+        public ConfigEntry<Toggle> DumpFullPersonalities { get; }
         public ConfigEntry<Toggle> RestartSidecar { get; }
 
         // ── Section 3: Response Tuning ──────────────────────────────────
@@ -127,6 +128,14 @@ namespace ErenshorLLMDialog.Sidecar
                 "Read TypesInAllCaps, TypesInThirdPerson, TypoRate, etc. from game " +
                 "prefabs at startup and merge into personality JSON files. " +
                 "Run once then disable. Auto-resets to Off after dump completes.");
+
+            DumpFullPersonalities = config.Bind(
+                "2 - Sidecar", "Dump Full Personalities", Toggle.Off,
+                "Extract ALL personality data from game prefabs at startup: " +
+                "speech modifiers, behavioral traits, dialog lists, bios, rival status. " +
+                "Writes _full_personality_dump.json to the personalities directory. " +
+                "Run once to capture real game data for personality enrichment. " +
+                "Auto-resets to Off after dump completes.");
 
             RestartSidecar = config.Bind(
                 "2 - Sidecar", "Restart Sidecar", Toggle.Off,

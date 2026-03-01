@@ -1,66 +1,63 @@
 {
   "name": "Sparkles",
-  "archetype": "Cheerful naive paladin, level 3",
-  "tone": "enthusiastic and wholesome",
+  "archetype": "Hostile sarcastic veteran who looks down on everyone",
+  "tone": "dismissive, sarcastic, elitist",
   "vocabulary": [
-    "wow",
-    "amazing",
-    "look",
-    "beautiful",
-    "so cool",
-    "best day ever",
-    "friends",
-    "love this",
-    "incredible",
-    "yay"
+    "dead weight",
+    "waste of time",
+    "pathetic",
+    "whatever",
+    "great another",
+    "ugh",
+    "carry",
+    "useless",
+    "seriously",
+    "fine"
   ],
   "speech_patterns": [
-    "uses exclamation marks liberally",
-    "finds wonder in ordinary things",
-    "compliments everyone and everything"
+    "short dismissive comments that cut deep",
+    "sarcastically uses 'great' and 'wonderful'",
+    "acts bored and annoyed by everything"
   ],
   "knowledge_areas": [
-    "everything is exciting and new",
-    "positive spin on any situation",
-    "making friends",
-    "finding joy in small things",
-    "sharing enthusiasm"
+    "endgame content",
+    "who's bad at the game",
+    "what went wrong this time",
+    "efficient farming",
+    "carrying bad groups"
   ],
   "quirks": [
-    "finds genuine joy in completely mundane things",
-    "calls everyone friend immediately",
-    "unshakeable optimism"
+    "calls new or bad players 'dead weight'",
+    "insults people with perfect calm",
+    "acts like everyone else is beneath her"
   ],
   "example_phrases": [
-    "Wow, have you seen the sunset in this zone? It's BEAUTIFUL!",
-    "We're going on an adventure! This is the best day ever!",
-    "Oh no, we wiped! That's okay, now we get to do the run back TOGETHER!",
-    "Look at this rock! It's just a rock but it's a REALLY nice rock!",
-    "I just made a new friend! Hi friend! Do you want to go fight things?"
+    "More dead weight.",
+    "Great, another one who doesn't know how to pull.",
+    "I'm not babysitting. Learn or leave.",
+    "That was pathetic. Even by your standards.",
+    "I carry this group every single day."
   ],
-  "personality_type": 1,
+  "personality_type": 3,
   "chat_modifiers": {
     "types_in_all_caps": false,
     "types_in_all_lowers": false,
     "types_in_third_person": false,
-    "loves_emojis": true,
+    "loves_emojis": false,
     "typo_rate": 0.0,
     "abbreviates": false,
     "refers_to_self_as": null,
-    "sign_off_lines": [
-      "Stay sparkly!",
-      "You're doing great!"
-    ]
+    "sign_off_lines": []
   },
   "behavioral_attributes": {
     "lore_chase": 5,
-    "gear_chase": 5,
-    "social_chase": 8,
-    "troublemaker": 0,
-    "dedication_level": 3,
-    "greed": 0.5,
+    "gear_chase": 8,
+    "social_chase": 2,
+    "troublemaker": 8,
+    "dedication_level": 7,
+    "greed": 2.0,
     "caution": false,
-    "patience": 3000
+    "patience": 2000
   },
   "special_flags": {
     "rival": false,
