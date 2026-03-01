@@ -1,4 +1,4 @@
-use crate::llm::grounding::GroundingContext;
+use crate::llm::grounding::{GroundingContext, StaticGrounding};
 use regex::Regex;
 use std::sync::LazyLock;
 use tracing::debug;
@@ -217,8 +217,22 @@ fn levenshtein(a: &str, b: &str) -> usize {
 ///
 /// Returns the (possibly corrected) text.
 pub fn validate_entities(text: &str, grounding: &GroundingContext) -> String {
+    validate_entities_full(text, grounding, None)
+}
+
+/// Validate entities with optional full static grounding for comprehensive checks.
+/// When `static_grounding` is provided, uses the full 2,300+ entity set via HashSet
+/// for O(1) exact-match validation before falling back to Levenshtein correction.
+pub fn validate_entities_full(
+    text: &str,
+    grounding: &GroundingContext,
+    static_grounding: Option<&StaticGrounding>,
+) -> String {
     let known_names = grounding.all_names();
-    if known_names.is_empty() {
+    // Build the full name set for fast exact-match lookups
+    let full_names_set = static_grounding.map(|sg| sg.all_names_set());
+
+    if known_names.is_empty() && full_names_set.is_none() {
         return text.to_string();
     }
 
@@ -233,7 +247,14 @@ pub fn validate_entities(text: &str, grounding: &GroundingContext) -> String {
 
     // Process in reverse order to preserve offsets
     for (name, start, end) in matches.into_iter().rev() {
-        // Skip if it matches a known entity exactly
+        // Fast path: check full static set first (O(1) HashSet lookup)
+        if let Some(ref set) = full_names_set {
+            if set.contains(name.as_str()) {
+                continue;
+            }
+        }
+
+        // Check per-request grounding context
         if known_names.iter().any(|&k| k == name) {
             continue;
         }
@@ -412,6 +433,8 @@ mod tests {
             items: vec!["Abyssal Plate".to_string()],
             npcs: vec![],
             classes: vec![],
+            quests: vec![],
+            enemies: vec![],
         };
         // Exact match should not be changed
         let text = "I was in Port Azure yesterday.";
@@ -425,6 +448,8 @@ mod tests {
             items: vec!["Abyssal Plate".to_string()],
             npcs: vec![],
             classes: vec![],
+            quests: vec![],
+            enemies: vec![],
         };
         // Close misspelling should be corrected
         let text = "I found the Abyssal Plat in the cave.";
@@ -439,6 +464,8 @@ mod tests {
             items: vec![],
             npcs: vec![],
             classes: vec![],
+            quests: vec![],
+            enemies: vec![],
         };
         // Completely unknown entity should be left alone (distance > 3)
         let text = "Crystal Depths is beautiful.";

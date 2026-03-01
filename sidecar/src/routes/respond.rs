@@ -355,7 +355,11 @@ async fn handle_respond(
                         // Postprocess: clean markdown/formatting and validate entity names
                         let cleaned = postprocess::clean(&text);
                         let validated = if let Some(ref gc) = grounding_ctx {
-                            postprocess::validate_entities(&cleaned, gc)
+                            postprocess::validate_entities_full(
+                                &cleaned,
+                                gc,
+                                state.static_grounding.as_ref(),
+                            )
                         } else {
                             cleaned
                         };
