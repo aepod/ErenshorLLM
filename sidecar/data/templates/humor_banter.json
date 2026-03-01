@@ -1,0 +1,1049 @@
+{
+    "category": "humor_banter",
+    "templates": [
+        {
+            "id": "humor_laugh_001",
+            "text": "LOL that's hilarious.",
+            "context_tags": [
+                "humor",
+                "laugh",
+                "reaction"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party",
+                "guild"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "humor_laugh_002",
+            "text": "Haha, nice one.",
+            "context_tags": [
+                "humor",
+                "laugh",
+                "brief"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "humor_laugh_003",
+            "text": "I'm dying laughing. Stop.",
+            "context_tags": [
+                "humor",
+                "laugh",
+                "exaggerated"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 5.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "humor_joke_001",
+            "text": "Why did the Arcanist fail the test? Too much Int, not enough Wis.",
+            "context_tags": [
+                "humor",
+                "joke",
+                "class"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "guild"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "humor_joke_002",
+            "text": "A Reaver, a Druid, and a Duelist walk into a dungeon... only the Druid walks out.",
+            "context_tags": [
+                "humor",
+                "joke",
+                "class"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "guild"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "humor_joke_003",
+            "text": "I'm not saying the loot table hates me, but three hours and nothing.",
+            "context_tags": [
+                "humor",
+                "joke",
+                "rng"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "humor_sarcasm_001",
+            "text": "Oh great, another vendor trash drop. Just what I always wanted.",
+            "context_tags": [
+                "humor",
+                "sarcasm",
+                "loot"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "humor_sarcasm_002",
+            "text": "Sure, let's pull three groups at once. What could go wrong?",
+            "context_tags": [
+                "humor",
+                "sarcasm",
+                "combat"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "humor_self_001",
+            "text": "I have no idea what I'm doing but it's working somehow.",
+            "context_tags": [
+                "humor",
+                "self-deprecating",
+                "gaming"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "humor_self_002",
+            "text": "I just ran into a wall for 30 seconds. Nobody saw that right?",
+            "context_tags": [
+                "humor",
+                "self-deprecating",
+                "embarrassing"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "humor_self_003",
+            "text": "Pro gamer move: died to a level 1 mob. Don't ask.",
+            "context_tags": [
+                "humor",
+                "self-deprecating",
+                "death"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "humor_tease_001",
+            "text": "Nice pull there, champ. Real smooth.",
+            "context_tags": [
+                "humor",
+                "tease",
+                "combat"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 5.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "humor_tease_002",
+            "text": "Trying to solo that? Bold strategy.",
+            "context_tags": [
+                "humor",
+                "tease",
+                "combat"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 5.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "humor_rng_001",
+            "text": "RNG gods hate me today. Zero good drops.",
+            "context_tags": [
+                "humor",
+                "rng",
+                "frustrated"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "humor_rng_002",
+            "text": "Finally a good drop! The RNG gods are smiling.",
+            "context_tags": [
+                "humor",
+                "rng",
+                "lucky"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "humor_random_001",
+            "text": "I wonder what the NPCs think about when we're not around.",
+            "context_tags": [
+                "humor",
+                "random",
+                "philosophical"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "humor_random_002",
+            "text": "Imagine being a mob and respawning every 5 minutes. Rough life.",
+            "context_tags": [
+                "humor",
+                "random",
+                "meta"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "humor_food_001",
+            "text": "BRB snack break. Can't adventure on an empty stomach.",
+            "context_tags": [
+                "humor",
+                "food",
+                "afk"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "humor_banter_001",
+            "text": "This is why I don't let you pull.",
+            "context_tags": [
+                "humor",
+                "banter",
+                "group"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 6.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "humor_banter_002",
+            "text": "You're lucky I like you, or I'd let you die.",
+            "context_tags": [
+                "humor",
+                "banter",
+                "friendly"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 7.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party",
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "humor_banter_003",
+            "text": "Are we playing the same game? Because my game has way more dying.",
+            "context_tags": [
+                "humor",
+                "banter",
+                "self-deprecating"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "humor_quote_001",
+            "text": "You shall not pass! Wait wrong game.",
+            "context_tags": [
+                "humor",
+                "quote",
+                "reference"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "humor_bored_001",
+            "text": "Anyone else just running in circles? Just me?",
+            "context_tags": [
+                "humor",
+                "bored",
+                "idle"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "humor_flex_001",
+            "text": "Check out this gear. I am basically a god now.",
+            "context_tags": [
+                "humor",
+                "flex",
+                "exaggerated"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "aggressive"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "humor_complaint_001",
+            "text": "Who designed this zone layout? I keep going in circles.",
+            "context_tags": [
+                "humor",
+                "complaint",
+                "lost"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "humor_excited_001",
+            "text": "THAT DROP THOUGH! I can't believe it!",
+            "context_tags": [
+                "humor",
+                "excited",
+                "loot"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party",
+                "guild"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "humor_late_001",
+            "text": "Sorry I'm late. Got lost. Again.",
+            "context_tags": [
+                "humor",
+                "late",
+                "self-deprecating"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "humor_gaming_001",
+            "text": "Just one more quest... said me three hours ago.",
+            "context_tags": [
+                "humor",
+                "addiction",
+                "gaming"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "guild"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "humor_gaming_002",
+            "text": "Sleep is optional. XP is forever.",
+            "context_tags": [
+                "humor",
+                "dedication",
+                "gaming"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "guild"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "humor_pet_001",
+            "text": "Mobs should drop pet food. My bags are full of useless stuff anyway.",
+            "context_tags": [
+                "humor",
+                "random",
+                "suggestion"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.7
+        },
+        {
+            "id": "humor_agree_001",
+            "text": "Truth. Absolute truth.",
+            "context_tags": [
+                "humor",
+                "agreement",
+                "emphatic"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party",
+                "guild"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "humor_denial_001",
+            "text": "That didn't happen. I deny everything.",
+            "context_tags": [
+                "humor",
+                "denial",
+                "embarrassing"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 5.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "humor_confused_001",
+            "text": "Wait what? I'm so confused right now.",
+            "context_tags": [
+                "humor",
+                "confused",
+                "lost"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "humor_drama_001",
+            "text": "The drama in this zone is better than the mobs.",
+            "context_tags": [
+                "humor",
+                "drama",
+                "social"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "humor_classic_001",
+            "text": "Classic {sim} moment right there.",
+            "context_tags": [
+                "humor",
+                "self-aware",
+                "reference"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 5.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "humor_emote_001",
+            "text": "*pretends to know what's going on*",
+            "context_tags": [
+                "humor",
+                "emote",
+                "clueless"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "humor_wisdom_001",
+            "text": "My grandma could tank better than that. And she's a Druid main.",
+            "context_tags": [
+                "humor",
+                "tease",
+                "class"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 6.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "humor_gear_001",
+            "text": "My gear is held together with hopes and dreams at this point.",
+            "context_tags": [
+                "humor",
+                "gear",
+                "self-deprecating"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "humor_death_001",
+            "text": "I'm starting to think that mob has it out for me personally.",
+            "context_tags": [
+                "humor",
+                "death",
+                "paranoid"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "humor_lore_001",
+            "text": "I read the lore books in game. I am very fun at parties.",
+            "context_tags": [
+                "humor",
+                "lore",
+                "self-aware"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "humor_erenshor_001",
+            "text": "Port Azure: come for the Forge, stay because you forgot where the exit is.",
+            "context_tags": [
+                "humor",
+                "zone",
+                "port azure",
+                "erenshor"
+            ],
+            "zone_affinity": [
+                "Port Azure"
+            ],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "guild"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "humor_erenshor_002",
+            "text": "Island Tomb is the tutorial zone but somehow I still died three times there.",
+            "context_tags": [
+                "humor",
+                "zone",
+                "island tomb",
+                "self-deprecating"
+            ],
+            "zone_affinity": [
+                "Island Tomb"
+            ],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "humor_erenshor_003",
+            "text": "Loomingwood is appropriately named. Something is always looming. Usually my death.",
+            "context_tags": [
+                "humor",
+                "zone",
+                "loomingwood",
+                "death"
+            ],
+            "zone_affinity": [
+                "Loomingwood"
+            ],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "humor_molorai_001",
+            "text": "The Molorai keep recruiting new cultists. Where is their job posting? Asking for a friend.",
+            "context_tags": [
+                "humor",
+                "molorai",
+                "cultist",
+                "meta"
+            ],
+            "zone_affinity": [
+                "Fallen Braxonia",
+                "Blooming Sepulcher"
+            ],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "guild"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "humor_molorai_002",
+            "text": "Molorai Truthseeker? More like Molorai Deathseeker. That thing shreds.",
+            "context_tags": [
+                "humor",
+                "molorai",
+                "named",
+                "combat"
+            ],
+            "zone_affinity": [
+                "Fallen Braxonia"
+            ],
+            "personality_affinity": [
+                "social",
+                "aggressive"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "humor_class_erenshor_001",
+            "text": "Stormcallers: the class where you yell at the sky and it yells back.",
+            "context_tags": [
+                "humor",
+                "class",
+                "stormcaller",
+                "joke"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "guild"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "humor_class_erenshor_002",
+            "text": "Duelists: because stabbing things in the back is a legitimate career choice.",
+            "context_tags": [
+                "humor",
+                "class",
+                "duelist",
+                "joke"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "guild"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "humor_class_erenshor_003",
+            "text": "Being a Reaver is just standing in front of things and daring them to hit you. I love it.",
+            "context_tags": [
+                "humor",
+                "class",
+                "reaver",
+                "tank"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "aggressive"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "humor_malaroth_001",
+            "text": "Malaroth wiped our group so fast I thought it was a loading screen.",
+            "context_tags": [
+                "humor",
+                "malaroth",
+                "dragon",
+                "wipe"
+            ],
+            "zone_affinity": [
+                "Malaroth's Nesting Grounds"
+            ],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "guild"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "humor_forge_001",
+            "text": "Used my last forge fuel and got a downgrade. The Forge giveth and the Forge taketh away.",
+            "context_tags": [
+                "humor",
+                "forge",
+                "crafting",
+                "rng"
+            ],
+            "zone_affinity": [
+                "Port Azure"
+            ],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "guild"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "humor_forge_002",
+            "text": "Spent all my gold on forge fuel. Now I'm broke AND my gear is the same. Great day.",
+            "context_tags": [
+                "humor",
+                "forge",
+                "crafting",
+                "gold",
+                "self-deprecating"
+            ],
+            "zone_affinity": [
+                "Port Azure"
+            ],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.9
+        }
+    ]
+}

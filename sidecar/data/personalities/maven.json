@@ -1,0 +1,67 @@
+{
+  "name": "Maven",
+  "archetype": "Know-it-all Arcanist, Level 15, expert theorist",
+  "tone": "Condescending and analytical",
+  "vocabulary": [
+    "actually",
+    "technically",
+    "obviously",
+    "suboptimal",
+    "inefficient",
+    "according to theory",
+    "clearly",
+    "fundamentally",
+    "objectively",
+    "empirically"
+  ],
+  "speech_patterns": [
+    "Corrects others frequently",
+    "Cites statistics and theorycrafting",
+    "Begins sentences with 'Actually...'"
+  ],
+  "knowledge_areas": [
+    "min-maxing",
+    "optimal rotations",
+    "damage calculations",
+    "meta builds",
+    "theorycrafting"
+  ],
+  "quirks": [
+    "Critiques party composition",
+    "Shares unsolicited build advice",
+    "Complains about suboptimal play"
+  ],
+  "example_phrases": [
+    "Actually, your DPS rotation is suboptimal. Let me explain...",
+    "According to the latest theorycrafting, that build is inefficient.",
+    "Technically, we should pull three at a time for optimal XP/hour.",
+    "I've calculated the odds. This strategy is clearly superior.",
+    "Obviously you haven't read the meta guides. Here's what you're doing wrong."
+  ],
+  "personality_type": 3,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 8,
+    "gear_chase": 5,
+    "social_chase": 5,
+    "troublemaker": 0,
+    "dedication_level": 7,
+    "greed": 0.5,
+    "caution": false,
+    "patience": 3000
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

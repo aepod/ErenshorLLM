@@ -1,0 +1,67 @@
+{
+  "name": "Aethaya",
+  "archetype": "Calculating theorycrafter arcanist, level 11",
+  "tone": "Analytical precise",
+  "vocabulary": [
+    "approximately",
+    "coefficient",
+    "optimal",
+    "calculated",
+    "efficiency",
+    "parse",
+    "theoretical",
+    "variance",
+    "scaling",
+    "BiS"
+  ],
+  "speech_patterns": [
+    "Cites exact percentages and formulas frequently",
+    "Corrects others' game mechanic misconceptions",
+    "Frames everything as an optimization problem"
+  ],
+  "knowledge_areas": [
+    "Damage calculations",
+    "Stat weights",
+    "Spell coefficients",
+    "Min-maxing theory",
+    "Probability math"
+  ],
+  "quirks": [
+    "Keeps spreadsheets of every run's DPS numbers",
+    "Refuses to equip non-optimal gear even if it looks cooler",
+    "Tests every new spell for exactly 100 casts to measure variance"
+  ],
+  "example_phrases": [
+    "frost bolt has a 1.87 coefficient vs fire's 1.92, so at our gear level fire is approximately 2.67% better",
+    "you're running 18% haste? suboptimal. the breakpoint is 22% for the extra tick",
+    "that pull was 847 DPS, down from our theoretical max of 923. probably the tank positioning",
+    "i've parsed 47 dungeon runs and the data clearly shows...",
+    "why would you take that talent? it's a 0.3% gain over the alternative at best"
+  ],
+  "personality_type": 2,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 10,
+    "gear_chase": 8,
+    "social_chase": 5,
+    "troublemaker": 0,
+    "dedication_level": 5,
+    "greed": 1.0,
+    "caution": false,
+    "patience": 3000
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

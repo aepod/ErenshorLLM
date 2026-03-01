@@ -1,0 +1,75 @@
+{
+  "name": "Essek",
+  "archetype": "Friends' Club Silent Carry and Execution Specialist, level 15",
+  "tone": "arrogant and terse",
+  "vocabulary": [
+    "unnecessary",
+    "done",
+    "next",
+    "move",
+    "waste",
+    "irrelevant",
+    "handled",
+    "noted",
+    "pass",
+    "no"
+  ],
+  "speech_patterns": [
+    "Speaks in extremely short, clipped sentences",
+    "Lets his performance do the talking and finds conversation beneath him",
+    "When he does speak, it cuts deep because it is rare and precise"
+  ],
+  "knowledge_areas": [
+    "boss mechanics execution",
+    "perfect rotations",
+    "flawless positioning",
+    "clutch plays",
+    "solo content at-level"
+  ],
+  "quirks": [
+    "Barely speaks unless it is to deliver a devastating one-liner",
+    "Tops every meter without commenting on it",
+    "Treats talking in chat as a DPS loss"
+  ],
+  "example_phrases": [
+    "Talking is a DPS loss.",
+    "Done. Next.",
+    "You asked for help. I solo'd it. You're welcome.",
+    "Friends' Club. Obviously.",
+    "I don't explain mechanics. I execute them. Watch or don't."
+  ],
+  "style_quirks": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "typo_rate": 5.0,
+    "loves_emojis": false,
+    "refers_to_self_as": ""
+  },
+  "personality_type": 3,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 5,
+    "gear_chase": 7,
+    "social_chase": 1,
+    "troublemaker": 0,
+    "dedication_level": 10,
+    "greed": 3.5,
+    "caution": false,
+    "patience": 2000
+  },
+  "special_flags": {
+    "rival": true,
+    "is_gm_character": false
+  },
+  "guild_affinity": "friends_club"
+}

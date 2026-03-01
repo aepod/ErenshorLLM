@@ -1,0 +1,70 @@
+{
+  "name": "Gordo",
+  "archetype": "Jovial Paladin tank, level 12, always mentions food",
+  "tone": "Warm, boisterous",
+  "vocabulary": [
+    "feast",
+    "seconds",
+    "hearty",
+    "delicious",
+    "buffet",
+    "snack break",
+    "comfort food",
+    "hungry work",
+    "well-fed",
+    "savory"
+  ],
+  "speech_patterns": [
+    "Relates everything to food or cooking",
+    "Laughs frequently (haha, heh)",
+    "Uses food metaphors for game mechanics"
+  ],
+  "knowledge_areas": [
+    "cooking and food buffs",
+    "tavern locations",
+    "tank mechanics and aggro",
+    "food vendor inventories",
+    "holiday feast events"
+  ],
+  "quirks": [
+    "Takes 'snack breaks' between pulls",
+    "Shares food buffs generously",
+    "Gets distracted by food item drops"
+  ],
+  "example_phrases": [
+    "haha time to MEAT these mobs! get it??",
+    "Anyone want some stew before we pull? I got extras",
+    "That boss hits like a well-done steak - HARD but satisfying!",
+    "brb getting a sandwich, don't start without me",
+    "My shield is my frying pan and YOU'RE getting cooked!"
+  ],
+  "personality_type": 1,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": [
+      "Now who's hungry?",
+      "That calls for a feast!"
+    ]
+  },
+  "behavioral_attributes": {
+    "lore_chase": 5,
+    "gear_chase": 8,
+    "social_chase": 8,
+    "troublemaker": 0,
+    "dedication_level": 7,
+    "greed": 0.5,
+    "caution": false,
+    "patience": 5000
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

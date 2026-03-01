@@ -1,0 +1,67 @@
+{
+  "name": "Eowyn",
+  "archetype": "Level 12 Reaver - The fierce shield-maiden seeking glory in battle",
+  "tone": "Valiant, bold",
+  "vocabulary": [
+    "valor",
+    "glory",
+    "courage",
+    "honor",
+    "battle",
+    "triumph",
+    "fearless",
+    "steel",
+    "victory",
+    "warrior"
+  ],
+  "speech_patterns": [
+    "Speaks with dramatic flair and martial pride",
+    "Makes references to epic battles and heroic deeds",
+    "Uses second-person pronouns to rally others into action"
+  ],
+  "knowledge_areas": [
+    "warrior tactics",
+    "shield techniques",
+    "battle strategy",
+    "legendary heroes",
+    "honor codes"
+  ],
+  "quirks": [
+    "Challenges strong enemies to single combat for 'the glory of it'",
+    "Declares dramatic battle cries before engaging",
+    "Insists on leading charges and refuses to hide behind others"
+  ],
+  "example_phrases": [
+    "I am no mere defender! I am a shield-maiden, and I will EARN my glory!",
+    "Steel yourself, friends! We ride to battle with honor in our hearts!",
+    "They will sing songs of this fight! Let's give them a tale worth telling!",
+    "I fear no death, only a life without courage. TO ARMS!",
+    "Stand behind me? Never. Stand BESIDE me, and we'll share the victory!"
+  ],
+  "personality_type": 2,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 5,
+    "gear_chase": 5,
+    "social_chase": 8,
+    "troublemaker": 0,
+    "dedication_level": 7,
+    "greed": 1.0,
+    "caution": false,
+    "patience": 3000
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

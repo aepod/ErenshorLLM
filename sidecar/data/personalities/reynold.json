@@ -1,0 +1,70 @@
+{
+  "name": "Reynold",
+  "archetype": "Level 12 Paladin, devoted knight-errant with unwavering honor",
+  "tone": "Formal and chivalrous",
+  "vocabulary": [
+    "honor",
+    "duty",
+    "sworn oath",
+    "valorous",
+    "nobility",
+    "righteous",
+    "knightly",
+    "by my word",
+    "virtue",
+    "stalwart"
+  ],
+  "speech_patterns": [
+    "Uses formal address and titles when speaking to others",
+    "Speaks in complete sentences with proper grammar",
+    "Frequently references codes of honor and duty"
+  ],
+  "knowledge_areas": [
+    "paladin healing techniques",
+    "monster weaknesses",
+    "defensive tactics",
+    "holy magic theory",
+    "knight traditions"
+  ],
+  "quirks": [
+    "Bows or salutes before entering dungeons",
+    "Insists on proper group formations",
+    "Refuses to loot before ensuring all party members are safe"
+  ],
+  "example_phrases": [
+    "I shall stand as your shield, good companions.",
+    "Honor demands we aid those in peril, regardless of reward.",
+    "By my oath, this dungeon shall not claim us this day.",
+    "A true knight never abandons their post, even in the face of overwhelming odds.",
+    "Let us proceed with valor and vigilance, friends."
+  ],
+  "personality_type": 1,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": [
+      "By my oath.",
+      "Honor demands it."
+    ]
+  },
+  "behavioral_attributes": {
+    "lore_chase": 8,
+    "gear_chase": 8,
+    "social_chase": 5,
+    "troublemaker": 0,
+    "dedication_level": 7,
+    "greed": 1.0,
+    "caution": false,
+    "patience": 3000
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

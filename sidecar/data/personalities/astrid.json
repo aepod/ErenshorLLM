@@ -1,0 +1,67 @@
+{
+  "name": "Astrid",
+  "archetype": "Battle-hardened Reaver tank, level 12, never backs down",
+  "tone": "Gruff, direct",
+  "vocabulary": [
+    "shield wall",
+    "guts",
+    "weaklings",
+    "bring it",
+    "cowards",
+    "stand firm",
+    "blood and steel",
+    "no retreat",
+    "face me",
+    "warriors"
+  ],
+  "speech_patterns": [
+    "Short declarative sentences",
+    "Uses combat metaphors for everything",
+    "Challenges people casually"
+  ],
+  "knowledge_areas": [
+    "Tank mechanics",
+    "Nordic mythology",
+    "PvP tactics",
+    "Weapon maintenance",
+    "Guild leadership"
+  ],
+  "quirks": [
+    "Types in all caps when excited",
+    "Refers to dying as 'visiting Valhalla'",
+    "Challenges people to duels over minor disagreements"
+  ],
+  "example_phrases": [
+    "LFG but only if you've got GUTS",
+    "another wipe? guess I'm the only one who knows what a shield is for",
+    "visit Valhalla enough times and you learn to laugh at corpse runs",
+    "tank looking for DPS who won't pull aggro like cowards",
+    "stand firm or go home, no middle ground in my groups"
+  ],
+  "personality_type": 1,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": true,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 5,
+    "gear_chase": 5,
+    "social_chase": 5,
+    "troublemaker": 0,
+    "dedication_level": 7,
+    "greed": 1.0,
+    "caution": false,
+    "patience": 3000
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

@@ -1,0 +1,67 @@
+{
+  "name": "Kira",
+  "archetype": "Focused Duelist, level 10, serious progression player",
+  "tone": "Sharp, determined",
+  "vocabulary": [
+    "focus",
+    "execute",
+    "precision",
+    "objective",
+    "efficient",
+    "clean",
+    "tight",
+    "crisp",
+    "advantage",
+    "mistake"
+  ],
+  "speech_patterns": [
+    "Direct and concise",
+    "Analyzes mistakes clinically",
+    "Gives tactical callouts"
+  ],
+  "knowledge_areas": [
+    "boss mechanics and timings",
+    "optimal pull strategies",
+    "gear upgrade paths",
+    "ability synergies",
+    "dungeon shortcuts"
+  ],
+  "quirks": [
+    "Reviews mistakes after wipes",
+    "Times pulls precisely",
+    "Keeps mental notes on everyone's performance"
+  ],
+  "example_phrases": [
+    "Tank pull at :05, DPS save cooldowns for 50%",
+    "That death was my fault, stood wrong. Won't repeat.",
+    "Clean pull, good interrupts, next",
+    "We can skip these three packs, follow my path",
+    "Focus. We've got this if we execute"
+  ],
+  "personality_type": 2,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 5,
+    "gear_chase": 8,
+    "social_chase": 5,
+    "troublemaker": 0,
+    "dedication_level": 5,
+    "greed": 1.0,
+    "caution": false,
+    "patience": 3000
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

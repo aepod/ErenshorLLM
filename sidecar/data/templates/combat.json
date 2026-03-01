@@ -1,0 +1,1010 @@
+{
+    "category": "combat",
+    "templates": [
+        {
+            "id": "combat_help_001",
+            "text": "Incoming! Watch the adds!",
+            "context_tags": [
+                "combat",
+                "warning",
+                "adds"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.2
+        },
+        {
+            "id": "combat_help_002",
+            "text": "Need heals! Getting low.",
+            "context_tags": [
+                "combat",
+                "heal",
+                "urgent"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.3
+        },
+        {
+            "id": "combat_help_003",
+            "text": "I'll pull. Stay here and be ready.",
+            "context_tags": [
+                "combat",
+                "pull",
+                "strategy"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "combat_aggro_001",
+            "text": "I got aggro! Tank, grab it please!",
+            "context_tags": [
+                "combat",
+                "aggro",
+                "panic"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.2
+        },
+        {
+            "id": "combat_aggro_002",
+            "text": "Careful with the aggro range here. It's wider than you think.",
+            "context_tags": [
+                "combat",
+                "aggro",
+                "warning"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "combat_kill_001",
+            "text": "Nice kill! That went smooth.",
+            "context_tags": [
+                "combat",
+                "kill",
+                "positive"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "combat_kill_002",
+            "text": "Got it! Easy fight.",
+            "context_tags": [
+                "combat",
+                "kill",
+                "confident"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "combat_kill_003",
+            "text": "That mob was tougher than expected.",
+            "context_tags": [
+                "combat",
+                "kill",
+                "surprised"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "combat_death_001",
+            "text": "Ugh, I died. Gonna respawn and run back.",
+            "context_tags": [
+                "combat",
+                "death",
+                "frustrated"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "combat_death_002",
+            "text": "That was embarrassing. I should not have pulled that many.",
+            "context_tags": [
+                "combat",
+                "death",
+                "humor"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "combat_death_003",
+            "text": "RIP me. Don't make my mistakes.",
+            "context_tags": [
+                "combat",
+                "death",
+                "warning",
+                "humor"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "combat_boss_001",
+            "text": "Boss is up! Everyone ready? Let's do this.",
+            "context_tags": [
+                "combat",
+                "boss",
+                "ready"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive",
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.2
+        },
+        {
+            "id": "combat_boss_002",
+            "text": "We just downed the boss! Great teamwork everyone.",
+            "context_tags": [
+                "combat",
+                "boss",
+                "victory"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party",
+                "say"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "combat_boss_003",
+            "text": "That boss fight was intense. Almost wiped.",
+            "context_tags": [
+                "combat",
+                "boss",
+                "close-call"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "combat_dps_001",
+            "text": "DPS it down fast before more adds spawn.",
+            "context_tags": [
+                "combat",
+                "dps",
+                "strategy"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "combat_dps_002",
+            "text": "My damage output is solid with this new weapon.",
+            "context_tags": [
+                "combat",
+                "dps",
+                "satisfaction"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "combat_tank_001",
+            "text": "I'll tank. Just give me a sec to get aggro first.",
+            "context_tags": [
+                "combat",
+                "tank",
+                "strategy"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive",
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "combat_tank_002",
+            "text": "Tank holding solid. Keep the damage coming.",
+            "context_tags": [
+                "combat",
+                "tank",
+                "status"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "combat_heal_001",
+            "text": "Heals incoming, hang on.",
+            "context_tags": [
+                "combat",
+                "heal",
+                "support"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "combat_heal_002",
+            "text": "Out of mana! Give me a sec to regen.",
+            "context_tags": [
+                "combat",
+                "heal",
+                "oom"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "combat_buff_001",
+            "text": "Let me buff up before we pull.",
+            "context_tags": [
+                "combat",
+                "buff",
+                "preparation"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "combat_buff_002",
+            "text": "Buffs are wearing off. Rebuff before next pull?",
+            "context_tags": [
+                "combat",
+                "buff",
+                "reminder"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "combat_pull_001",
+            "text": "Bad pull! Run!",
+            "context_tags": [
+                "combat",
+                "pull",
+                "panic"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.3
+        },
+        {
+            "id": "combat_pull_002",
+            "text": "Good pull. Clean and easy.",
+            "context_tags": [
+                "combat",
+                "pull",
+                "positive"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "combat_strategy_001",
+            "text": "Focus fire the casters first. They hurt.",
+            "context_tags": [
+                "combat",
+                "strategy",
+                "advice"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly",
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "combat_strategy_002",
+            "text": "Don't stand in the bad stuff. Move around.",
+            "context_tags": [
+                "combat",
+                "strategy",
+                "advice"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "combat_close_001",
+            "text": "That was close! Almost died there.",
+            "context_tags": [
+                "combat",
+                "close-call",
+                "relief"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "combat_rest_001",
+            "text": "Let me sit and regen before the next pull.",
+            "context_tags": [
+                "combat",
+                "rest",
+                "regen"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "combat_wipe_001",
+            "text": "Wipe! Let's regroup and try again.",
+            "context_tags": [
+                "combat",
+                "wipe",
+                "regroup"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "combat_wipe_002",
+            "text": "That was a wipe but we almost had it. One more try.",
+            "context_tags": [
+                "combat",
+                "wipe",
+                "encouraging"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "combat_skill_001",
+            "text": "Nice use of that ability! Perfect timing.",
+            "context_tags": [
+                "combat",
+                "skill",
+                "compliment"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party",
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "combat_solo_001",
+            "text": "This mob is hard to solo. Might need help.",
+            "context_tags": [
+                "combat",
+                "solo",
+                "difficulty"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "combat_overpull_001",
+            "text": "Too many mobs! CC something if you can.",
+            "context_tags": [
+                "combat",
+                "overpull",
+                "urgent"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.2
+        },
+        {
+            "id": "combat_kite_001",
+            "text": "Kiting this one. Don't engage until I bring it to camp.",
+            "context_tags": [
+                "combat",
+                "kite",
+                "strategy"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "combat_xp_001",
+            "text": "Good XP from that kill. Let's keep pulling.",
+            "context_tags": [
+                "combat",
+                "xp",
+                "grinding"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "combat_tough_001",
+            "text": "These mobs are no joke. Watch your health.",
+            "context_tags": [
+                "combat",
+                "warning",
+                "tough"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "combat_easy_001",
+            "text": "These mobs are easy at our level. Good for chill farming.",
+            "context_tags": [
+                "combat",
+                "easy",
+                "relaxed"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "combat_named_001",
+            "text": "Named mob spotted! Want to take it down?",
+            "context_tags": [
+                "combat",
+                "named",
+                "excited"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive",
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "combat_revenge_001",
+            "text": "Payback time. That mob killed me earlier.",
+            "context_tags": [
+                "combat",
+                "revenge",
+                "determined"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "combat_pat_001",
+            "text": "Pat incoming from the left! Watch out.",
+            "context_tags": [
+                "combat",
+                "patrol",
+                "warning"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.2
+        },
+        {
+            "id": "combat_molorai_001",
+            "text": "Molorai Curator incoming! Focus it down before it heals the others.",
+            "context_tags": [
+                "combat",
+                "molorai",
+                "named",
+                "strategy"
+            ],
+            "zone_affinity": [
+                "Fallen Braxonia",
+                "Blooming Sepulcher"
+            ],
+            "personality_affinity": [
+                "aggressive",
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.2
+        },
+        {
+            "id": "combat_molorai_002",
+            "text": "Watch the Molorai Bloodwarden. That thing hits like a wagon full of bricks.",
+            "context_tags": [
+                "combat",
+                "molorai",
+                "warning",
+                "named"
+            ],
+            "zone_affinity": [
+                "Fallen Braxonia"
+            ],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party",
+                "say"
+            ],
+            "priority": 1.2
+        },
+        {
+            "id": "combat_molorai_003",
+            "text": "Another Molorai Anointed down. These cultists just keep coming.",
+            "context_tags": [
+                "combat",
+                "molorai",
+                "kill",
+                "cultist"
+            ],
+            "zone_affinity": [
+                "Fallen Braxonia",
+                "Blooming Sepulcher"
+            ],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "combat_malaroth_001",
+            "text": "Malaroth is up! Spread out and watch the fire breath. This is the real deal.",
+            "context_tags": [
+                "combat",
+                "boss",
+                "malaroth",
+                "dragon",
+                "strategy"
+            ],
+            "zone_affinity": [
+                "Malaroth's Nesting Grounds"
+            ],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.3
+        },
+        {
+            "id": "combat_malaroth_002",
+            "text": "We got Malaroth! The dragon is down! What a fight!",
+            "context_tags": [
+                "combat",
+                "boss",
+                "malaroth",
+                "dragon",
+                "victory"
+            ],
+            "zone_affinity": [
+                "Malaroth's Nesting Grounds"
+            ],
+            "personality_affinity": [
+                "social",
+                "aggressive"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party",
+                "shout"
+            ],
+            "priority": 1.2
+        },
+        {
+            "id": "combat_bonepits_001",
+            "text": "The undead in the Bone Pits are relentless. Keep your resists up.",
+            "context_tags": [
+                "combat",
+                "undead",
+                "warning",
+                "zone"
+            ],
+            "zone_affinity": [
+                "The Bone Pits"
+            ],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "combat_bonepits_002",
+            "text": "Careful pulling in here. The skeletons in the Bone Pits chain aggro fast.",
+            "context_tags": [
+                "combat",
+                "undead",
+                "pull",
+                "warning"
+            ],
+            "zone_affinity": [
+                "The Bone Pits"
+            ],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.2
+        },
+        {
+            "id": "combat_class_001",
+            "text": "Stormcaller, hold your bolts until the tank has aggro. You'll pull threat otherwise.",
+            "context_tags": [
+                "combat",
+                "class",
+                "stormcaller",
+                "strategy"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive",
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "combat_class_002",
+            "text": "Druid, big heals on the tank! Keep the HoTs rolling.",
+            "context_tags": [
+                "combat",
+                "class",
+                "druid",
+                "heal",
+                "urgent"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.2
+        },
+        {
+            "id": "combat_class_003",
+            "text": "Reaver, you're up front. Hold that line and keep aggro. We're counting on you.",
+            "context_tags": [
+                "combat",
+                "class",
+                "reaver",
+                "tank",
+                "strategy"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive",
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "combat_named_002",
+            "text": "The Molorai Dockmaster patrols near the water. Pull it back to camp.",
+            "context_tags": [
+                "combat",
+                "named",
+                "molorai",
+                "strategy"
+            ],
+            "zone_affinity": [
+                "Blacksalt Strand",
+                "Port Azure"
+            ],
+            "personality_affinity": [
+                "scholarly",
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.1
+        }
+    ]
+}

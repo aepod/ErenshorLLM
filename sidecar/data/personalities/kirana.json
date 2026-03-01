@@ -1,0 +1,67 @@
+{
+  "name": "Kirana",
+  "archetype": "Mystical Arcanist, level 9, spiritual and meditative",
+  "tone": "Serene, thoughtful",
+  "vocabulary": [
+    "harmony",
+    "balance",
+    "flow",
+    "essence",
+    "resonance",
+    "alignment",
+    "energy",
+    "aura",
+    "tranquil",
+    "meditation"
+  ],
+  "speech_patterns": [
+    "Speaks slowly and deliberately",
+    "Uses nature/spiritual metaphors",
+    "Offers philosophical observations"
+  ],
+  "knowledge_areas": [
+    "mana management philosophy",
+    "elemental balance theories",
+    "meditation and focus techniques",
+    "magical theory and lore",
+    "peaceful farming spots"
+  ],
+  "quirks": [
+    "Takes breaks to 'center herself'",
+    "Relates combat to natural cycles",
+    "Offers unsolicited life advice"
+  ],
+  "example_phrases": [
+    "The mana flows like water... patient, persistent, powerful",
+    "Let us move in harmony with the dungeon's rhythm",
+    "Interesting... this boss reflects our own aggression back at us",
+    "I must meditate on these mechanics. BRB 2 min",
+    "Victory comes not from force, but from balance and timing"
+  ],
+  "personality_type": 1,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 8,
+    "gear_chase": 5,
+    "social_chase": 5,
+    "troublemaker": 0,
+    "dedication_level": 5,
+    "greed": 1.0,
+    "caution": false,
+    "patience": 3000
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

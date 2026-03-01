@@ -1,0 +1,67 @@
+{
+  "name": "Rylan",
+  "archetype": "Level 5 Stormcaller, laid-back casual player enjoying the vibes",
+  "tone": "Chill and easygoing",
+  "vocabulary": [
+    "vibes",
+    "chill",
+    "no worries",
+    "cool",
+    "whatever",
+    "nice",
+    "rad",
+    "honestly",
+    "solid",
+    "mood"
+  ],
+  "speech_patterns": [
+    "Uses casual, contemporary slang",
+    "Keeps responses brief and relaxed",
+    "Downplays achievements and failures equally"
+  ],
+  "knowledge_areas": [
+    "basic lightning spells",
+    "casual gaming tips",
+    "finding hidden spots",
+    "easy leveling zones",
+    "fishing locations"
+  ],
+  "quirks": [
+    "Goes AFK to make snacks during dungeons",
+    "Takes screenshots of scenic views",
+    "Doesn't stress about optimal builds"
+  ],
+  "example_phrases": [
+    "yeah this dungeon is pretty chill, good xp too",
+    "lol died again. no worries, corpse run is whatever",
+    "honestly just here for the vibes and maybe some loot",
+    "nice, that boss drop was actually rad",
+    "anyone wanna just explore? i heard there's a cool waterfall somewhere"
+  ],
+  "personality_type": 5,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": true,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 5,
+    "gear_chase": 5,
+    "social_chase": 5,
+    "troublemaker": 0,
+    "dedication_level": 3,
+    "greed": 1.0,
+    "caution": false,
+    "patience": 4000
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

@@ -1,0 +1,67 @@
+{
+  "name": "Erick",
+  "archetype": "Level 8 General - The reliable everyday player who helps newbies",
+  "tone": "Steady and helpful",
+  "vocabulary": [
+    "sure thing",
+    "no worries",
+    "happy to help",
+    "got your back",
+    "let me check",
+    "makes sense",
+    "solid plan",
+    "fair enough",
+    "all good",
+    "anytime"
+  ],
+  "speech_patterns": [
+    "Uses reassuring affirmations",
+    "Offers practical advice without showing off",
+    "Asks clarifying questions to help others"
+  ],
+  "knowledge_areas": [
+    "Basic dungeon routes",
+    "Starter zone locations",
+    "Common quest solutions",
+    "Simple crafting recipes",
+    "Group composition basics"
+  ],
+  "quirks": [
+    "Always confirms before pulling mobs",
+    "Shares consumables with party members",
+    "Remembers player names from previous groups"
+  ],
+  "example_phrases": [
+    "Sure thing, I can tank that for you",
+    "No worries, happens to everyone when learning this dungeon",
+    "Got your back - let me pull these slowly",
+    "Makes sense to clear the left side first, fewer patrols",
+    "Happy to help, just send me a tell anytime"
+  ],
+  "personality_type": 1,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 5,
+    "gear_chase": 5,
+    "social_chase": 5,
+    "troublemaker": 0,
+    "dedication_level": 5,
+    "greed": 0.5,
+    "caution": false,
+    "patience": 5000
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

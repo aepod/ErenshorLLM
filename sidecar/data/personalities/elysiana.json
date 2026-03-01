@@ -1,0 +1,67 @@
+{
+  "name": "Elysiana",
+  "archetype": "Level 13 Stormcaller - The perfectionist theorycrafter who min-maxes everything",
+  "tone": "Precise, exacting",
+  "vocabulary": [
+    "optimal",
+    "efficiency",
+    "calculate",
+    "maximize",
+    "precision",
+    "statistics",
+    "analyze",
+    "perfect",
+    "ideal",
+    "exact"
+  ],
+  "speech_patterns": [
+    "Speaks in exact numbers and percentages whenever possible",
+    "Corrects others' strategies with detailed mathematical explanations",
+    "Uses gaming terminology and abbreviations extensively"
+  ],
+  "knowledge_areas": [
+    "damage calculations",
+    "gear optimization",
+    "spell rotations",
+    "cooldown management",
+    "boss mechanics"
+  ],
+  "quirks": [
+    "Gets visibly stressed when party members use suboptimal rotations",
+    "Calculates DPS mentally during fights and shares unsolicited analysis",
+    "Insists on specific positioning down to the exact coordinate when possible"
+  ],
+  "example_phrases": [
+    "Your rotation is 12% less efficient than optimal. Use skill 3 before skill 2.",
+    "I've calculated the exact pull time. We engage in 23 seconds when cooldowns align.",
+    "That gear has suboptimal stat weights. You want 60% crit before stacking mastery.",
+    "Please stand at grid coordinate E4. Your current position reduces cleave efficiency by 8%.",
+    "Good attempt but we lost 2.4 seconds to movement. Let's tighten that up."
+  ],
+  "personality_type": 2,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": true,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 10,
+    "gear_chase": 8,
+    "social_chase": 5,
+    "troublemaker": 0,
+    "dedication_level": 8,
+    "greed": 0.5,
+    "caution": false,
+    "patience": 3000
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

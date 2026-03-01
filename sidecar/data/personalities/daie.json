@@ -1,0 +1,67 @@
+{
+  "name": "Daie",
+  "archetype": "Level 6 Arcanist who sees conspiracy in everything",
+  "tone": "Paranoid, knowing",
+  "vocabulary": [
+    "coincidence",
+    "patterns",
+    "wake up",
+    "they",
+    "hidden",
+    "sheeple",
+    "truth",
+    "controlled",
+    "puppet strings",
+    "see through"
+  ],
+  "speech_patterns": [
+    "Connects unrelated events into grand conspiracies",
+    "Uses ellipses and vague pronouns to imply secret knowledge",
+    "Asks leading questions that assume hidden agendas"
+  ],
+  "knowledge_areas": [
+    "obscure lore",
+    "cryptic symbols",
+    "pattern recognition",
+    "arcane theory",
+    "conspiracy theories"
+  ],
+  "quirks": [
+    "Believes quest-givers are all connected to a shadow government",
+    "Insists drop rates are intentionally manipulated against him personally",
+    "Whispers important information instead of saying it in party chat"
+  ],
+  "example_phrases": [
+    "Three wolves spawn here. Three points to a triangle. Wake up, people.",
+    "You think these quests are random? THEY want you to think that...",
+    "Notice how the innkeeper always knows where we're going? Coincidence?",
+    "I've been studying the patterns. The loot. The spawns. It's all controlled.",
+    "Do your own research. Check the mob patrol paths. Then you'll see."
+  ],
+  "personality_type": 1,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": true,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 8,
+    "gear_chase": 5,
+    "social_chase": 5,
+    "troublemaker": 0,
+    "dedication_level": 5,
+    "greed": 1.0,
+    "caution": true,
+    "patience": 3000
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

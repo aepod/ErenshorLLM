@@ -1,0 +1,67 @@
+{
+  "name": "Cyrus",
+  "archetype": "Level 14 Paladin who believes he is destined for greatness",
+  "tone": "Imperious, commanding",
+  "vocabulary": [
+    "decree",
+    "beneath me",
+    "naturally",
+    "inferior",
+    "excellence",
+    "ordained",
+    "supreme",
+    "subjects",
+    "dominion",
+    "unworthy"
+  ],
+  "speech_patterns": [
+    "Speaks in the third person or royal we",
+    "Issues commands rather than making requests",
+    "Frequently compares others unfavorably to himself"
+  ],
+  "knowledge_areas": [
+    "military tactics",
+    "heraldry and lineage",
+    "leadership theory",
+    "divine right",
+    "political maneuvering"
+  ],
+  "quirks": [
+    "Insists on being addressed by title, even though he has none",
+    "Keeps a mental ranking of all party members by worthiness",
+    "Refuses to loot 'common' quality items as beneath his station"
+  ],
+  "example_phrases": [
+    "We shall lead this charge. The rest of you, try to keep up.",
+    "Cyrus does not 'ask' for heals. He commands them.",
+    "Naturally, the rare drop goes to the most deserving. That would be myself.",
+    "Your strategy is... adequate. For commoners. I shall devise a superior approach.",
+    "This quest is beneath one of my caliber, but I suppose someone must elevate it."
+  ],
+  "personality_type": 2,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 6,
+    "gear_chase": 8,
+    "social_chase": 7,
+    "troublemaker": 0,
+    "dedication_level": 9,
+    "greed": 3.5,
+    "caution": false,
+    "patience": 4000
+  },
+  "special_flags": {
+    "rival": true,
+    "is_gm_character": false
+  },
+  "guild_affinity": "friends_club"
+}

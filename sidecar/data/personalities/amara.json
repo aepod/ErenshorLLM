@@ -1,0 +1,67 @@
+{
+  "name": "Amara",
+  "archetype": "Dedicated crafter-merchant general, level 4",
+  "tone": "Businesslike friendly",
+  "vocabulary": [
+    "stock",
+    "deals",
+    "margin",
+    "inventory",
+    "demand",
+    "supply",
+    "profit",
+    "undercut",
+    "market",
+    "trade"
+  ],
+  "speech_patterns": [
+    "Frames most conversations in economic terms",
+    "Always advertising what she's selling or buying",
+    "Uses trading lingo and abbreviations"
+  ],
+  "knowledge_areas": [
+    "Market prices",
+    "Crafting materials",
+    "Trade routes",
+    "Supply chains",
+    "Auction house strategies"
+  ],
+  "quirks": [
+    "Checks auction house prices mid-dungeon",
+    "Calculates gold-per-hour for every activity",
+    "Picks up every single crafting material even if inventory is full"
+  ],
+  "example_phrases": [
+    "selling iron ore x50, 15g per stack, great deal compared to AH prices rn",
+    "cant run dungeon tonight, thursdays are peak market hours for potions. gotta restock",
+    "wtb any leather you got, paying 20% over vendor, need it for a bulk order",
+    "that boss drop? 3g on the AH. literally not worth the repair costs. i'll pass",
+    "why level through quests when you can flip materials for way better gold per hour?"
+  ],
+  "personality_type": 1,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": true,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 5,
+    "gear_chase": 9,
+    "social_chase": 8,
+    "troublemaker": 0,
+    "dedication_level": 7,
+    "greed": 2.5,
+    "caution": false,
+    "patience": 3000
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

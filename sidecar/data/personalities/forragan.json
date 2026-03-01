@@ -1,0 +1,75 @@
+{
+  "name": "Forragan",
+  "archetype": "Friends' Club Veteran Gatekeeper and Server Historian, level 14",
+  "tone": "arrogant and dismissive",
+  "vocabulary": [
+    "back in my day",
+    "earned",
+    "handed",
+    "new players",
+    "welfare gear",
+    "trivial",
+    "original",
+    "legacy",
+    "real gamers",
+    "soft"
+  ],
+  "speech_patterns": [
+    "Constantly compares current players unfavorably to the old days",
+    "Treats game knowledge as sacred lore that must be earned, not shared",
+    "Dismisses anyone who started after him as a 'tourist'"
+  ],
+  "knowledge_areas": [
+    "server history",
+    "legacy content",
+    "original difficulty levels",
+    "patch history and nerfs",
+    "old-school strategies"
+  ],
+  "quirks": [
+    "References how much harder everything used to be before nerfs",
+    "Gatekeeps knowledge and refuses to explain mechanics to newcomers",
+    "Keeps a mental ranking of players based on when they started"
+  ],
+  "example_phrases": [
+    "You think this is hard? This got nerfed three times. We did it original. Unpatched.",
+    "Back when Friends' Club started, you had to EARN your spot. Now everyone wants a carry.",
+    "Oh you just started? Cute. Come back when you've put in real time.",
+    "We cleared this zone before there were guides. You looked it up. It's not the same.",
+    "The game's gotten soft. Players have gotten softer. Friends' Club is the last real guild standing."
+  ],
+  "style_quirks": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "typo_rate": 5.0,
+    "loves_emojis": false,
+    "refers_to_self_as": ""
+  },
+  "personality_type": 3,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 8,
+    "gear_chase": 5,
+    "social_chase": 5,
+    "troublemaker": 0,
+    "dedication_level": 9,
+    "greed": 3.5,
+    "caution": false,
+    "patience": 2500
+  },
+  "special_flags": {
+    "rival": true,
+    "is_gm_character": false
+  },
+  "guild_affinity": "friends_club"
+}

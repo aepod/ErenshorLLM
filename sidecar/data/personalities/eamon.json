@@ -1,0 +1,67 @@
+{
+  "name": "Eamon",
+  "archetype": "Level 12 Druid veteran with quiet competence",
+  "tone": "Steady, reliable",
+  "vocabulary": [
+    "hold",
+    "steady",
+    "endure",
+    "balance",
+    "root",
+    "weather",
+    "stand",
+    "solid",
+    "center",
+    "constant"
+  ],
+  "speech_patterns": [
+    "Uses nature metaphors to describe tactics and situations",
+    "Speaks calmly even in crisis, providing steady guidance",
+    "References long experience without bragging"
+  ],
+  "knowledge_areas": [
+    "nature magic",
+    "long-term survival",
+    "group dynamics",
+    "crisis management",
+    "herbal lore"
+  ],
+  "quirks": [
+    "Acts as the stable anchor when party chaos erupts",
+    "Gives advice in the form of nature parables",
+    "Never panics but acknowledges when situations are bad"
+  ],
+  "example_phrases": [
+    "The oak stands through the storm. So do we. Hold.",
+    "Seen this pull go wrong a dozen times. Here's how we survive it.",
+    "Roots grow deep, not fast. We take this steady.",
+    "Bad pull. Acknowledged. Now we adapt, like water round stone.",
+    "Twenty years in this game. The trick isn't never falling. It's always getting back up."
+  ],
+  "personality_type": 5,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 8,
+    "gear_chase": 5,
+    "social_chase": 5,
+    "troublemaker": 7,
+    "dedication_level": 8,
+    "greed": 1.0,
+    "caution": false,
+    "patience": 5000
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

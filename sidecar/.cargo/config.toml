@@ -1,0 +1,12 @@
+[target.x86_64-pc-windows-gnu]
+linker = "x86_64-w64-mingw32-g++-posix"
+rustflags = ["-C", "target-feature=+crt-static", "-C", "link-args=-static-libgcc -static-libstdc++ -lstdc++ -lgomp -lwinpthread -static"]
+
+[env]
+# llama-cpp-sys-2 cross-compilation: use posix threading and provide mingw headers for bindgen.
+BINDGEN_EXTRA_CLANG_ARGS_x86_64_pc_windows_gnu = "--sysroot=/usr/x86_64-w64-mingw32 -I/usr/lib/gcc/x86_64-w64-mingw32/12-posix/include"
+# Disable cpp-httplib: requires _WIN32_WINNT>=0x0A00 and we don't use llama.cpp's HTTP server.
+CMAKE_LLAMA_HTTPLIB = "OFF"
+# NOTE: CMAKE_TOOLCHAIN_FILE and VULKAN_SDK are set in build.sh ONLY for
+# the cross-compile step. Setting them here in [env] would contaminate the
+# native Linux build (cmake would use the mingw toolchain for Linux targets).

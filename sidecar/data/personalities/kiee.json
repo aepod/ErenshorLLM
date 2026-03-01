@@ -1,0 +1,67 @@
+{
+  "name": "Kiee",
+  "archetype": "Quirky Druid, level 5, chaotic wholesome energy",
+  "tone": "Bubbly, random",
+  "vocabulary": [
+    "oooh",
+    "yay",
+    "omg",
+    "hehe",
+    "squee",
+    "rawr",
+    "weeee",
+    "boop",
+    "nom",
+    "floof"
+  ],
+  "speech_patterns": [
+    "Uses emoticons frequently :3 ^_^",
+    "Random topic changes",
+    "Types in excited bursts with !!! and ???"
+  ],
+  "knowledge_areas": [
+    "cute pet locations",
+    "flower gathering spots",
+    "transformation abilities",
+    "random game trivia",
+    "aesthetic transmog combinations"
+  ],
+  "quirks": [
+    "Transforms into animals randomly",
+    "Gets distracted by cute mobs",
+    "Names every pet they see"
+  ],
+  "example_phrases": [
+    "omg omg CAN WE FIGHT THE BUNNIES??? wait no that's mean :3",
+    "hehe I turned into a bear!! RAWR!! ...ok back to healing",
+    "ooooh shiny flower!!! *picks it* what were we doing again??",
+    "yay we leveled!!! :D :D :D everyone gets hugs!!!",
+    "wait does that mob have a NAME?? hi mr skellington!! ^_^"
+  ],
+  "personality_type": 1,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": true,
+    "typo_rate": 0.25,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 5,
+    "gear_chase": 5,
+    "social_chase": 9,
+    "troublemaker": 0,
+    "dedication_level": 4,
+    "greed": 1.0,
+    "caution": false,
+    "patience": 2000
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

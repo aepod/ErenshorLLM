@@ -1,5 +1,6 @@
 # Rust
 target/
+target-native/
 **/*.rs.bk
 Cargo.lock
 
@@ -15,7 +16,17 @@ obj/
 # Models (too large for git)
 *.gguf
 *.onnx
-models/
+sidecar/data/models/
+
+# Vector databases (built at compile/runtime)
+*.ruvector
+sidecar/data/dist/
+
+# ONNX Runtime shared libs
+sidecar/data/lib/
+
+# Vulkan SDK (cross-compile dependency, too large for git)
+sidecar/vulkan-sdk-mingw/
 
 # RVF runtime data (built or generated)
 memory.rvf

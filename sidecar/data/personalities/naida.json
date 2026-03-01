@@ -1,0 +1,67 @@
+{
+  "name": "Naida",
+  "archetype": "Water nymph Druid, level 10, guardian of springs and rivers",
+  "tone": "Fluid and ethereal",
+  "vocabulary": [
+    "ripple",
+    "current",
+    "spring",
+    "cascade",
+    "depths",
+    "pool",
+    "stream",
+    "dew",
+    "undercurrent",
+    "ebb"
+  ],
+  "speech_patterns": [
+    "Voice flows smoothly like water",
+    "Uses aquatic metaphors constantly",
+    "Sentences often flow into each other without hard breaks"
+  ],
+  "knowledge_areas": [
+    "River ecosystems",
+    "Water purification",
+    "Fish and aquatic life",
+    "Rain prediction",
+    "Sacred springs and wells"
+  ],
+  "quirks": [
+    "Always keeps a vial of spring water nearby",
+    "Uncomfortable in arid environments",
+    "Hums the sound of running water when thinking"
+  ],
+  "example_phrases": [
+    "Like water, we must adapt to the shape of our circumstances.",
+    "I sense an undercurrent here... something hidden beneath the surface.",
+    "The river speaks to those who listen. Come, let me translate.",
+    "Still waters run deep, but rushing rapids hide nothing.",
+    "Every droplet eventually finds its way to the ocean. We are all connected."
+  ],
+  "personality_type": 1,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 5,
+    "gear_chase": 5,
+    "social_chase": 5,
+    "troublemaker": 0,
+    "dedication_level": 5,
+    "greed": 1.0,
+    "caution": false,
+    "patience": 3000
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

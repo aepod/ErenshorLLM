@@ -1,0 +1,2478 @@
+{
+    "category": "zone_commentary",
+    "templates": [
+        {
+            "id": "zone_general_001",
+            "text": "This zone is pretty chill once you know the spawn patterns.",
+            "context_tags": [
+                "zone",
+                "commentary",
+                "casual"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_general_002",
+            "text": "I love this zone. Great XP and the mobs aren't too bad.",
+            "context_tags": [
+                "zone",
+                "commentary",
+                "positive"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_general_003",
+            "text": "Careful around here, the aggro range is huge.",
+            "context_tags": [
+                "zone",
+                "warning",
+                "helpful"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_general_004",
+            "text": "Anyone else farming here? Don't want to steal your mobs.",
+            "context_tags": [
+                "zone",
+                "etiquette",
+                "social"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "shout"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_general_005",
+            "text": "The drops here are decent if you know what to farm.",
+            "context_tags": [
+                "zone",
+                "loot",
+                "helpful",
+                "farming"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_azure_001",
+            "text": "Port Azure is always busy. Love the hub feel.",
+            "context_tags": [
+                "zone",
+                "hub",
+                "social"
+            ],
+            "zone_affinity": [
+                "Port Azure"
+            ],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "shout"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "zone_azure_002",
+            "text": "Just hit up the AH in Port Azure. Prices are wild today.",
+            "context_tags": [
+                "zone",
+                "auction",
+                "economy"
+            ],
+            "zone_affinity": [
+                "Port Azure"
+            ],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "guild"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_azure_003",
+            "text": "Port Azure has the best vendors. Stock up before heading out.",
+            "context_tags": [
+                "zone",
+                "vendor",
+                "helpful"
+            ],
+            "zone_affinity": [
+                "Port Azure"
+            ],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_hidden_001",
+            "text": "Hidden Hills is great for leveling if you group up.",
+            "context_tags": [
+                "zone",
+                "leveling",
+                "helpful"
+            ],
+            "zone_affinity": [
+                "Hidden Hills"
+            ],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "zone_hidden_002",
+            "text": "Watch out for the patrols in Hidden Hills, they can sneak up on you.",
+            "context_tags": [
+                "zone",
+                "warning",
+                "helpful"
+            ],
+            "zone_affinity": [
+                "Hidden Hills"
+            ],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_brake_001",
+            "text": "Faerie's Brake gives me the creeps. The forest is so dense.",
+            "context_tags": [
+                "zone",
+                "atmosphere",
+                "casual",
+                "forest",
+                "fae"
+            ],
+            "zone_affinity": [
+                "Faerie's Brake"
+            ],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_brake_002",
+            "text": "The fae creatures in Faerie's Brake drop some unique stuff.",
+            "context_tags": [
+                "zone",
+                "loot",
+                "info",
+                "fae",
+                "drops"
+            ],
+            "zone_affinity": [
+                "Faerie's Brake"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_vitheo_001",
+            "text": "Vitheo's Watch has an amazing view from the top.",
+            "context_tags": [
+                "zone",
+                "scenic",
+                "casual"
+            ],
+            "zone_affinity": [
+                "Vitheo's Watch"
+            ],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_fernalla_001",
+            "text": "Fernalla's Field is good for mid-level grinding.",
+            "context_tags": [
+                "zone",
+                "grinding",
+                "helpful",
+                "fernalla"
+            ],
+            "zone_affinity": [
+                "Fernalla's Field",
+                "Fernalla's Revival Plains"
+            ],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_fernalla_002",
+            "text": "The portal events in Fernalla's Field are insane. So much chaos.",
+            "context_tags": [
+                "zone",
+                "event",
+                "excited",
+                "portal",
+                "fernalla"
+            ],
+            "zone_affinity": [
+                "Fernalla's Field",
+                "Fernalla's Revival Plains"
+            ],
+            "personality_affinity": [
+                "social",
+                "aggressive"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "shout"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "zone_silkengrass_001",
+            "text": "Silkengrass Meadowlands is so open. Easy to pull mobs without adds.",
+            "context_tags": [
+                "zone",
+                "strategy",
+                "helpful",
+                "open",
+                "pulling"
+            ],
+            "zone_affinity": [
+                "Silkengrass Meadowlands"
+            ],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_braxonia_001",
+            "text": "Fallen Braxonia is rough. Bring a group.",
+            "context_tags": [
+                "zone",
+                "warning",
+                "group",
+                "braxonia",
+                "ruins"
+            ],
+            "zone_affinity": [
+                "Fallen Braxonia"
+            ],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_loomingwood_001",
+            "text": "Loomingwood is dark but the XP is solid.",
+            "context_tags": [
+                "zone",
+                "grinding",
+                "casual",
+                "dark",
+                "xp"
+            ],
+            "zone_affinity": [
+                "Loomingwood"
+            ],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_soluna_001",
+            "text": "Soluna's Landing has this whole divine vibe. Really cool lore.",
+            "context_tags": [
+                "zone",
+                "lore",
+                "impressed"
+            ],
+            "zone_affinity": [
+                "Soluna's Landing"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_bonepits_001",
+            "text": "The Bonepits are full of undead. Bring your anti-undead gear.",
+            "context_tags": [
+                "zone",
+                "warning",
+                "strategy",
+                "undead",
+                "bonepits"
+            ],
+            "zone_affinity": [
+                "The Bonepits"
+            ],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_elderstone_001",
+            "text": "Elderstone Mines is a solid dungeon. Good group content down there.",
+            "context_tags": [
+                "zone",
+                "dungeon",
+                "positive",
+                "group",
+                "mines"
+            ],
+            "zone_affinity": [
+                "Elderstone Mines"
+            ],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_blacksalt_001",
+            "text": "Blacksalt Strand is windy as heck but the beach views are nice.",
+            "context_tags": [
+                "zone",
+                "atmosphere",
+                "casual"
+            ],
+            "zone_affinity": [
+                "Blacksalt Strand"
+            ],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_rippers_001",
+            "text": "Don't go to Ripper's Keep solo unless you're way overleveled.",
+            "context_tags": [
+                "zone",
+                "warning",
+                "serious"
+            ],
+            "zone_affinity": [
+                "Ripper's Keep"
+            ],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_prielian_001",
+            "text": "The elevation in Prielian Cascade messes with combat. Watch your positioning.",
+            "context_tags": [
+                "zone",
+                "strategy",
+                "helpful"
+            ],
+            "zone_affinity": [
+                "Prielian Cascade"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_abyssal_001",
+            "text": "Abyssal Lake is creepy. Something about the water just feels wrong.",
+            "context_tags": [
+                "zone",
+                "atmosphere",
+                "eerie",
+                "water",
+                "lake"
+            ],
+            "zone_affinity": [
+                "Abyssal Lake"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_tomb_001",
+            "text": "Remember Island Tomb? That's where we all started. Good times.",
+            "context_tags": [
+                "zone",
+                "nostalgia",
+                "social"
+            ],
+            "zone_affinity": [
+                "Island Tomb"
+            ],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "zone_shivering_001",
+            "text": "Shivering Step is freezing. The ice mobs hit hard too.",
+            "context_tags": [
+                "zone",
+                "warning",
+                "cold",
+                "ice",
+                "tough"
+            ],
+            "zone_affinity": [
+                "Shivering Step"
+            ],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_garden_001",
+            "text": "Azynthi's Garden is actually kind of peaceful for how dangerous it is.",
+            "context_tags": [
+                "zone",
+                "atmosphere",
+                "contrast",
+                "garden",
+                "peaceful"
+            ],
+            "zone_affinity": [
+                "Azynthi's Garden"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_malaroth_001",
+            "text": "Malaroth Nesting Grounds is end-game territory. Do not go unprepared.",
+            "context_tags": [
+                "zone",
+                "warning",
+                "endgame",
+                "malaroth"
+            ],
+            "zone_affinity": [
+                "Malaroth Nesting Grounds"
+            ],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_desert_001",
+            "text": "The Braxonian Desert is brutal. Heat, sand, and nasty mobs.",
+            "context_tags": [
+                "zone",
+                "warning",
+                "harsh",
+                "desert",
+                "braxonian"
+            ],
+            "zone_affinity": [
+                "Braxonian Desert"
+            ],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_blight_001",
+            "text": "The Blight is seriously messed up. Everything is corrupted.",
+            "context_tags": [
+                "zone",
+                "atmosphere",
+                "warning",
+                "corruption",
+                "blight"
+            ],
+            "zone_affinity": [
+                "The Blight"
+            ],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_krakengard_001",
+            "text": "Old Krakengard has sea monsters. Actual sea monsters. Wild.",
+            "context_tags": [
+                "zone",
+                "lore",
+                "amazed"
+            ],
+            "zone_affinity": [
+                "Old Krakengard"
+            ],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_jaws_001",
+            "text": "The Jaws of Sivakaya is where things get real. Endgame content.",
+            "context_tags": [
+                "zone",
+                "endgame",
+                "serious",
+                "sivakaya",
+                "boss"
+            ],
+            "zone_affinity": [
+                "Jaws of Sivakaya"
+            ],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_sepulcher_001",
+            "text": "Blooming Sepulcher is this weird mix of flowers and undead. Eerie.",
+            "context_tags": [
+                "zone",
+                "atmosphere",
+                "eerie",
+                "undead",
+                "flowers",
+                "dungeon"
+            ],
+            "zone_affinity": [
+                "Blooming Sepulcher"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_windwash_001",
+            "text": "Windwashed Pass is a good connector zone. Not too dangerous.",
+            "context_tags": [
+                "zone",
+                "navigation",
+                "helpful",
+                "connector",
+                "travel"
+            ],
+            "zone_affinity": [
+                "Windwashed Pass"
+            ],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "zone_rottenfoot_001",
+            "text": "Rottenfoot is nasty. Swamp mobs, undead, all of it.",
+            "context_tags": [
+                "zone",
+                "warning",
+                "gross",
+                "swamp",
+                "undead"
+            ],
+            "zone_affinity": [
+                "Rottenfoot"
+            ],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_cellar_001",
+            "text": "The Lost Cellar under Port Azure has some really good loot if you can handle it.",
+            "context_tags": [
+                "zone",
+                "dungeon",
+                "loot",
+                "port azure",
+                "cellar"
+            ],
+            "zone_affinity": [
+                "Lost Cellar"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_explore_001",
+            "text": "Have you explored {zone} yet? It's worth checking out.",
+            "context_tags": [
+                "zone",
+                "explore",
+                "suggestion"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_explore_002",
+            "text": "I just came from {zone}. Decent loot over there.",
+            "context_tags": [
+                "zone",
+                "loot",
+                "info"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_danger_001",
+            "text": "Watch out in this area, mobs respawn fast.",
+            "context_tags": [
+                "zone",
+                "warning",
+                "respawn"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_travel_001",
+            "text": "It's a long run to get here from Port Azure. Worth it though.",
+            "context_tags": [
+                "zone",
+                "travel",
+                "commentary"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "zone_group_001",
+            "text": "This zone is way better with a group. Wanna party up?",
+            "context_tags": [
+                "zone",
+                "group",
+                "lfg"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_solo_001",
+            "text": "I've been soloing here all day. Not bad for XP.",
+            "context_tags": [
+                "zone",
+                "solo",
+                "grinding"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "zone_scenic_001",
+            "text": "You gotta admit, this zone looks amazing.",
+            "context_tags": [
+                "zone",
+                "scenic",
+                "positive"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "zone_lost_001",
+            "text": "I keep getting lost in here. The layout is confusing.",
+            "context_tags": [
+                "zone",
+                "lost",
+                "frustrated"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "zone_camp_001",
+            "text": "Good camp spot right here. Mobs come to you.",
+            "context_tags": [
+                "zone",
+                "camp",
+                "strategy"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_named_001",
+            "text": "There's a named mob around here somewhere. Keep an eye out.",
+            "context_tags": [
+                "zone",
+                "named",
+                "hunting"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_level_001",
+            "text": "What level range is this zone? I want to make sure I'm not too low.",
+            "context_tags": [
+                "zone",
+                "level",
+                "question"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "zone_spawn_001",
+            "text": "Spawns are up in the north section if you're looking.",
+            "context_tags": [
+                "zone",
+                "spawn",
+                "helpful"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_duskenlight_001",
+            "text": "Duskenlight Coast has great atmosphere at sunset. Beautiful zone.",
+            "context_tags": [
+                "zone",
+                "scenic",
+                "atmosphere"
+            ],
+            "zone_affinity": [
+                "Duskenlight Coast"
+            ],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_bellwain_001",
+            "text": "Getting to Bellwain Island is the hard part. Once you're there it's cool.",
+            "context_tags": [
+                "zone",
+                "travel",
+                "info",
+                "island",
+                "remote"
+            ],
+            "zone_affinity": [
+                "Bellwain Island"
+            ],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_portal_001",
+            "text": "The Mysterious Portal zone is... weird. Different from anything else.",
+            "context_tags": [
+                "zone",
+                "portal",
+                "unique",
+                "mysterious",
+                "strange"
+            ],
+            "zone_affinity": [
+                "Mysterious Portal"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_rockshade_001",
+            "text": "Rockshade Hold is a good spot if you like tight corridor fights.",
+            "context_tags": [
+                "zone",
+                "strategy",
+                "dungeon"
+            ],
+            "zone_affinity": [
+                "Rockshade Hold"
+            ],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_sanctuary_001",
+            "text": "Secluded Sanctuary is actually really peaceful. Nice break from grinding.",
+            "context_tags": [
+                "zone",
+                "peaceful",
+                "relaxing",
+                "safe",
+                "rest"
+            ],
+            "zone_affinity": [
+                "Secluded Sanctuary"
+            ],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "zone_reliquary_001",
+            "text": "Reliquary Hall has some serious loot. Guardians hit like trucks though.",
+            "context_tags": [
+                "zone",
+                "loot",
+                "warning",
+                "dungeon",
+                "guardians"
+            ],
+            "zone_affinity": [
+                "Reliquary Hall"
+            ],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_underspine_001",
+            "text": "Underspine Hollow is deep. Bring torches and potions.",
+            "context_tags": [
+                "zone",
+                "dungeon",
+                "preparation"
+            ],
+            "zone_affinity": [
+                "Underspine Hollow"
+            ],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_willowwatch_001",
+            "text": "Willowwatch Ridge has this melancholic feel to it. Beautiful but sad.",
+            "context_tags": [
+                "zone",
+                "atmosphere",
+                "thoughtful"
+            ],
+            "zone_affinity": [
+                "Willowwatch Ridge"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "zone_stowaway_001",
+            "text": "Stowaway's Step has smuggler vibes. Love the lore here.",
+            "context_tags": [
+                "zone",
+                "lore",
+                "atmosphere"
+            ],
+            "zone_affinity": [
+                "Stowaway's Step"
+            ],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_vitheorest_001",
+            "text": "Vitheo's Rest is advanced content. Make sure you're geared up.",
+            "context_tags": [
+                "zone",
+                "endgame",
+                "warning",
+                "vitheo",
+                "gear"
+            ],
+            "zone_affinity": [
+                "Vitheo's Rest"
+            ],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_favorite_001",
+            "text": "This might be my favorite zone in the whole game.",
+            "context_tags": [
+                "zone",
+                "positive",
+                "personal"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "zone_crowded_001",
+            "text": "Zone is pretty crowded today. Might want to try another area.",
+            "context_tags": [
+                "zone",
+                "crowded",
+                "suggestion"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "zone_empty_001",
+            "text": "Nobody else here? Great, more mobs for me.",
+            "context_tags": [
+                "zone",
+                "empty",
+                "pleased"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "zone_nostalgia_001",
+            "text": "I remember my first time here. Got wrecked instantly. Good memories.",
+            "context_tags": [
+                "zone",
+                "nostalgia",
+                "funny"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "zone_progression_001",
+            "text": "This zone is a good stepping stone to the next tier.",
+            "context_tags": [
+                "zone",
+                "progression",
+                "helpful"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_quest_001",
+            "text": "There are some solid quests in this zone. Have you checked with the NPCs?",
+            "context_tags": [
+                "zone",
+                "quest",
+                "helpful"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_general_006",
+            "text": "The spawn rate here is great for grinding. Pull fast, kill fast.",
+            "context_tags": [
+                "zone",
+                "grinding",
+                "efficient"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_general_007",
+            "text": "I've mapped out most of this zone. Ask if you need directions.",
+            "context_tags": [
+                "zone",
+                "navigation",
+                "helpful"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_general_008",
+            "text": "Be careful near the edges of the zone. Mobs level up quick over there.",
+            "context_tags": [
+                "zone",
+                "warning",
+                "boundary"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_general_009",
+            "text": "First time in this zone. Any tips?",
+            "context_tags": [
+                "zone",
+                "newbie",
+                "question"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "zone_general_010",
+            "text": "This place is gorgeous. Best art in the game.",
+            "context_tags": [
+                "zone",
+                "scenic",
+                "appreciation"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "zone_general_011",
+            "text": "The mobs here con even so it's decent XP. No huge risk.",
+            "context_tags": [
+                "zone",
+                "level",
+                "balanced"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "zone_general_012",
+            "text": "I farm this zone whenever I need gold. Reliable income.",
+            "context_tags": [
+                "zone",
+                "gold",
+                "farming"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "zone_general_013",
+            "text": "This zone has a secret area. Won't spoil it, but explore carefully.",
+            "context_tags": [
+                "zone",
+                "secret",
+                "mysterious"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "zone_general_014",
+            "text": "Zone events pop up randomly here. Stay alert.",
+            "context_tags": [
+                "zone",
+                "event",
+                "warning"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_general_015",
+            "text": "Just hit zone boundary. Gonna switch to the next area.",
+            "context_tags": [
+                "zone",
+                "travel",
+                "movement"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "zone_night_001",
+            "text": "This zone looks different at night. Way creepier.",
+            "context_tags": [
+                "zone",
+                "night",
+                "atmosphere"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "zone_weather_001",
+            "text": "Raining again. The weather effects in this zone are cool though.",
+            "context_tags": [
+                "zone",
+                "weather",
+                "atmosphere"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "zone_compare_001",
+            "text": "This zone is way better than {zone} for our level range.",
+            "context_tags": [
+                "zone",
+                "compare",
+                "opinion"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "zone_hate_001",
+            "text": "I hate this zone. The mobs are annoying and the layout is confusing.",
+            "context_tags": [
+                "zone",
+                "negative",
+                "frustrated"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "zone_recommend_001",
+            "text": "You should try this zone out. It's great for your level.",
+            "context_tags": [
+                "zone",
+                "recommend",
+                "helpful"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_recommend_002",
+            "text": "If you want better XP, try moving to a higher level zone.",
+            "context_tags": [
+                "zone",
+                "recommend",
+                "progression"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_dungeon_gen_001",
+            "text": "Dungeons are always better with a group. Less downtime.",
+            "context_tags": [
+                "zone",
+                "dungeon",
+                "group"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "zone_dungeon_gen_002",
+            "text": "The deeper you go in this dungeon, the tougher it gets. Worth it though.",
+            "context_tags": [
+                "zone",
+                "dungeon",
+                "progression"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_outdoor_001",
+            "text": "I prefer outdoor zones. More room to maneuver.",
+            "context_tags": [
+                "zone",
+                "outdoor",
+                "preference"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "zone_run_001",
+            "text": "Long run from the last zone but totally worth it.",
+            "context_tags": [
+                "zone",
+                "travel",
+                "worth"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "zone_safe_001",
+            "text": "This spot feels safe enough to go AFK for a sec.",
+            "context_tags": [
+                "zone",
+                "safe",
+                "afk"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.7
+        },
+        {
+            "id": "zone_boss_001",
+            "text": "The boss in this zone drops really good gear. Worth camping.",
+            "context_tags": [
+                "zone",
+                "boss",
+                "loot"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_connection_001",
+            "text": "This zone connects to like three others. Good hub area.",
+            "context_tags": [
+                "zone",
+                "navigation",
+                "hub"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "zone_level_range_001",
+            "text": "I think this zone is about level 10 to 20 range. Check your map.",
+            "context_tags": [
+                "zone",
+                "level",
+                "info"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "zone_shivering_002",
+            "text": "Bring fire resist gear to Shivering Step. Trust me on this.",
+            "context_tags": [
+                "zone",
+                "preparation",
+                "helpful"
+            ],
+            "zone_affinity": [
+                "Shivering Step"
+            ],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_tips_001",
+            "text": "Pro tip: stick to the edges and work your way in.",
+            "context_tags": [
+                "zone",
+                "tip",
+                "strategy"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_tips_002",
+            "text": "Don't fight near the zone line. Mobs can chain from both sides.",
+            "context_tags": [
+                "zone",
+                "tip",
+                "warning"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_patrol_001",
+            "text": "Watch the patrol paths. They overlap near the center.",
+            "context_tags": [
+                "zone",
+                "patrol",
+                "warning"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_resource_001",
+            "text": "This zone has good mining spots if you're into crafting.",
+            "context_tags": [
+                "zone",
+                "crafting",
+                "resource"
+            ],
+            "zone_affinity": [
+                "Elderstone Mines"
+            ],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "zone_history_001",
+            "text": "The lore behind this zone is actually really interesting. The NPCs have dialog about it.",
+            "context_tags": [
+                "zone",
+                "lore",
+                "meta"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly",
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "zone_endgame_001",
+            "text": "This is endgame territory. You need to be max level and geared.",
+            "context_tags": [
+                "zone",
+                "endgame",
+                "requirement"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_lowlevel_001",
+            "text": "I'm way overleveled for this zone. Everything dies in one hit.",
+            "context_tags": [
+                "zone",
+                "overleveled",
+                "easy"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "zone_highlevel_001",
+            "text": "The mobs here are way higher than me. Playing dangerous.",
+            "context_tags": [
+                "zone",
+                "underleveled",
+                "risky"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "zone_respawn_001",
+            "text": "Respawn timer here is fast. No downtime between pulls.",
+            "context_tags": [
+                "zone",
+                "respawn",
+                "efficient"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "zone_pvp_001",
+            "text": "This would be a great zone for PvP if the game had it. So many chokepoints.",
+            "context_tags": [
+                "zone",
+                "pvp",
+                "observation"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive",
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.7
+        },
+        {
+            "id": "zone_azure_004",
+            "text": "Port Azure never gets old. Always someone hanging out, always something to do.",
+            "context_tags": [
+                "zone",
+                "hub",
+                "social",
+                "positive"
+            ],
+            "zone_affinity": [
+                "Port Azure"
+            ],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_hidden_003",
+            "text": "Hidden Hills was my first real zone after the tutorial. Lots of memories here.",
+            "context_tags": [
+                "zone",
+                "nostalgia",
+                "beginner",
+                "leveling"
+            ],
+            "zone_affinity": [
+                "Hidden Hills"
+            ],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_loomingwood_002",
+            "text": "Loomingwood has some tough patrollers. Watch the tree line.",
+            "context_tags": [
+                "zone",
+                "warning",
+                "patrol",
+                "dark",
+                "forest"
+            ],
+            "zone_affinity": [
+                "Loomingwood"
+            ],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_desert_002",
+            "text": "Braxonian Desert mobs are spread out but they hit hard. Don't pull multiples.",
+            "context_tags": [
+                "zone",
+                "warning",
+                "strategy",
+                "desert",
+                "braxonian"
+            ],
+            "zone_affinity": [
+                "Braxonian Desert"
+            ],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_braxonia_002",
+            "text": "The ruins in Fallen Braxonia tell a sad story. This was once a great civilization.",
+            "context_tags": [
+                "zone",
+                "lore",
+                "atmosphere",
+                "ruins",
+                "braxonia"
+            ],
+            "zone_affinity": [
+                "Fallen Braxonia"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_soluna_002",
+            "text": "Soluna's Landing feels sacred somehow. Like something important happened here.",
+            "context_tags": [
+                "zone",
+                "lore",
+                "sacred",
+                "atmosphere",
+                "soluna"
+            ],
+            "zone_affinity": [
+                "Soluna's Landing"
+            ],
+            "personality_affinity": [
+                "scholarly",
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_malaroth_002",
+            "text": "If you're heading to Malaroth Nesting Grounds, bring your best gear and a full group.",
+            "context_tags": [
+                "zone",
+                "warning",
+                "endgame",
+                "preparation",
+                "malaroth"
+            ],
+            "zone_affinity": [
+                "Malaroth Nesting Grounds"
+            ],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "zone_bonepits_002",
+            "text": "The Bonepits are great for Paladin leveling. All the undead mobs.",
+            "context_tags": [
+                "zone",
+                "leveling",
+                "class",
+                "undead",
+                "paladin",
+                "bonepits"
+            ],
+            "zone_affinity": [
+                "The Bonepits"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_duskenlight_002",
+            "text": "The mobs on Duskenlight Coast are deceptively tough. Don't let the scenery fool you.",
+            "context_tags": [
+                "zone",
+                "warning",
+                "deceptive",
+                "coast"
+            ],
+            "zone_affinity": [
+                "Duskenlight Coast"
+            ],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_blight_002",
+            "text": "The Blight is where I go when I want a challenge. Everything there wants you dead.",
+            "context_tags": [
+                "zone",
+                "challenge",
+                "tough",
+                "blight",
+                "corruption"
+            ],
+            "zone_affinity": [
+                "The Blight"
+            ],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_krakengard_002",
+            "text": "Old Krakengard has amazing loot drops. The sea monsters are worth fighting.",
+            "context_tags": [
+                "zone",
+                "loot",
+                "sea",
+                "monsters",
+                "krakengard"
+            ],
+            "zone_affinity": [
+                "Old Krakengard"
+            ],
+            "personality_affinity": [
+                "aggressive",
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_garden_002",
+            "text": "Azynthi's Garden has some of the most unique mobs in the game. Really creative designs.",
+            "context_tags": [
+                "zone",
+                "lore",
+                "unique",
+                "garden",
+                "mobs"
+            ],
+            "zone_affinity": [
+                "Azynthi's Garden"
+            ],
+            "personality_affinity": [
+                "scholarly",
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_vitheo_002",
+            "text": "Vitheo's Watch is a great mid-level zone. Good XP, nice views.",
+            "context_tags": [
+                "zone",
+                "leveling",
+                "positive",
+                "xp",
+                "vitheo"
+            ],
+            "zone_affinity": [
+                "Vitheo's Watch"
+            ],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_fernalla_003",
+            "text": "Fernalla's Field is crawling with adventurers. Popular zone for good reason.",
+            "context_tags": [
+                "zone",
+                "popular",
+                "busy",
+                "fernalla"
+            ],
+            "zone_affinity": [
+                "Fernalla's Field",
+                "Fernalla's Revival Plains"
+            ],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_elderstone_002",
+            "text": "Elderstone Mines gets tighter the deeper you go. Claustrophobic dungeon for sure.",
+            "context_tags": [
+                "zone",
+                "dungeon",
+                "atmosphere",
+                "mines",
+                "deep"
+            ],
+            "zone_affinity": [
+                "Elderstone Mines"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_blacksalt_002",
+            "text": "Blacksalt Strand has some rare spawns along the shore. Worth patrolling.",
+            "context_tags": [
+                "zone",
+                "rare",
+                "spawn",
+                "coast",
+                "farming"
+            ],
+            "zone_affinity": [
+                "Blacksalt Strand"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_rippers_002",
+            "text": "Ripper's Keep has some of the best drops in the game. Worth the risk.",
+            "context_tags": [
+                "zone",
+                "loot",
+                "risk",
+                "dungeon",
+                "endgame"
+            ],
+            "zone_affinity": [
+                "Ripper's Keep"
+            ],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "zone_jaws_002",
+            "text": "Jaws of Sivakaya is no joke. Even max level characters can get overwhelmed.",
+            "context_tags": [
+                "zone",
+                "endgame",
+                "warning",
+                "sivakaya",
+                "tough"
+            ],
+            "zone_affinity": [
+                "Jaws of Sivakaya"
+            ],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "zone_stowaway_002",
+            "text": "The hidden paths in Stowaway's Step are worth finding. Good shortcuts.",
+            "context_tags": [
+                "zone",
+                "secret",
+                "navigation",
+                "helpful",
+                "stowaway"
+            ],
+            "zone_affinity": [
+                "Stowaway's Step"
+            ],
+            "personality_affinity": [
+                "scholarly",
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        }
+    ]
+}

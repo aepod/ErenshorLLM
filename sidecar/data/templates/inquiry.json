@@ -1,0 +1,1149 @@
+{
+    "category": "inquiry",
+    "templates": [
+        {
+            "id": "inquiry_whatdo_001",
+            "text": "Me? Just grinding out some XP. Trying to level up.",
+            "context_tags": [
+                "inquiry",
+                "what",
+                "activity",
+                "grinding",
+                "xp"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_whatdo_002",
+            "text": "Just farming mobs. Looking for a specific drop actually.",
+            "context_tags": [
+                "inquiry",
+                "what",
+                "activity",
+                "farming",
+                "loot"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_whatdo_003",
+            "text": "Working on quests right now. This zone has some good ones.",
+            "context_tags": [
+                "inquiry",
+                "what",
+                "activity",
+                "quest"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_whatdo_004",
+            "text": "Just exploring. Seeing what's out here.",
+            "context_tags": [
+                "inquiry",
+                "what",
+                "activity",
+                "explore"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_whatdo_005",
+            "text": "Camping a named mob spawn. Been here a while.",
+            "context_tags": [
+                "inquiry",
+                "what",
+                "activity",
+                "camping",
+                "named"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_where_001",
+            "text": "For your level? I'd try Hidden Hills or Faerie's Brake.",
+            "context_tags": [
+                "inquiry",
+                "where",
+                "suggestion",
+                "leveling",
+                "zone"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "inquiry_where_002",
+            "text": "Depends on your level. Check the zone atlas for level ranges.",
+            "context_tags": [
+                "inquiry",
+                "where",
+                "suggestion",
+                "level",
+                "atlas"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_where_003",
+            "text": "If you're high level, try Malaroth Nesting Grounds or Jaws of Sivakaya.",
+            "context_tags": [
+                "inquiry",
+                "where",
+                "suggestion",
+                "endgame",
+                "high level"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_class_001",
+            "text": "I like Arcanists for pure damage. Stormcallers are fun too though.",
+            "context_tags": [
+                "inquiry",
+                "class",
+                "opinion",
+                "arcanist",
+                "stormcaller"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_class_002",
+            "text": "Every class is viable. Play what you enjoy.",
+            "context_tags": [
+                "inquiry",
+                "class",
+                "opinion",
+                "advice"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_class_003",
+            "text": "Druids are great for group content. Heals keep everyone alive.",
+            "context_tags": [
+                "inquiry",
+                "class",
+                "opinion",
+                "druid",
+                "healer"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_gear_001",
+            "text": "Thanks! Got it from a named in {zone}. Took forever to farm.",
+            "context_tags": [
+                "inquiry",
+                "gear",
+                "compliment",
+                "drop",
+                "farming"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_gear_002",
+            "text": "Oh this? Auction House find. Got a good deal on it.",
+            "context_tags": [
+                "inquiry",
+                "gear",
+                "compliment",
+                "auction",
+                "economy"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_gear_003",
+            "text": "This weapon? Quest reward. One of the better ones too.",
+            "context_tags": [
+                "inquiry",
+                "gear",
+                "compliment",
+                "quest",
+                "weapon"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_level_001",
+            "text": "I'm around your level range. Should be good for grouping.",
+            "context_tags": [
+                "inquiry",
+                "level",
+                "group",
+                "compatible"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_help_001",
+            "text": "Sure, what do you need help with?",
+            "context_tags": [
+                "inquiry",
+                "help",
+                "willing",
+                "friendly"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "inquiry_help_002",
+            "text": "What do you need? I've got a few minutes.",
+            "context_tags": [
+                "inquiry",
+                "help",
+                "willing",
+                "time"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_help_003",
+            "text": "Busy right now but ask in shout, someone will help.",
+            "context_tags": [
+                "inquiry",
+                "help",
+                "busy",
+                "redirect"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 2.0,
+            "relationship_max": 7.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "inquiry_opinion_001",
+            "text": "Honestly? I think it's solid. Could use some tweaks but overall good.",
+            "context_tags": [
+                "inquiry",
+                "opinion",
+                "balanced",
+                "thoughtful"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_opinion_002",
+            "text": "Hard to say. Depends on your build and what you're going for.",
+            "context_tags": [
+                "inquiry",
+                "opinion",
+                "nuanced",
+                "build"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_opinion_003",
+            "text": "Yeah, I agree with that. Makes sense to me.",
+            "context_tags": [
+                "inquiry",
+                "opinion",
+                "agreement",
+                "validation"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_opinion_004",
+            "text": "Nah, I disagree actually. But that's just me.",
+            "context_tags": [
+                "inquiry",
+                "opinion",
+                "disagreement",
+                "polite"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "inquiry_howlong_001",
+            "text": "Been playing a while now. Lost track of time honestly.",
+            "context_tags": [
+                "inquiry",
+                "time",
+                "experience",
+                "veteran"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "inquiry_howlong_002",
+            "text": "Not too long but I'm getting the hang of it.",
+            "context_tags": [
+                "inquiry",
+                "time",
+                "experience",
+                "newer"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "inquiry_guild_001",
+            "text": "Yeah, I'm in a guild. They're pretty cool. You looking for one?",
+            "context_tags": [
+                "inquiry",
+                "guild",
+                "social",
+                "recruit"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_guild_002",
+            "text": "Not in a guild yet. Been meaning to find one though.",
+            "context_tags": [
+                "inquiry",
+                "guild",
+                "social",
+                "looking"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "inquiry_tip_001",
+            "text": "Best tip I can give? Don't rush. Enjoy the journey.",
+            "context_tags": [
+                "inquiry",
+                "tip",
+                "advice",
+                "wisdom"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_tip_002",
+            "text": "Tip: always keep your gear updated. Makes a huge difference.",
+            "context_tags": [
+                "inquiry",
+                "tip",
+                "advice",
+                "gear"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_tip_003",
+            "text": "Group up whenever you can. Way more efficient than solo.",
+            "context_tags": [
+                "inquiry",
+                "tip",
+                "advice",
+                "group"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_decline_001",
+            "text": "Not really in the mood to chat. Sorry.",
+            "context_tags": [
+                "inquiry",
+                "decline",
+                "busy",
+                "polite"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 0.0,
+            "relationship_max": 4.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "inquiry_decline_002",
+            "text": "Why do you want to know?",
+            "context_tags": [
+                "inquiry",
+                "decline",
+                "suspicious",
+                "cold"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 0.0,
+            "relationship_max": 3.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "inquiry_money_001",
+            "text": "Gold is tight. Best way to make money is grinding mobs or selling on the AH.",
+            "context_tags": [
+                "inquiry",
+                "gold",
+                "economy",
+                "advice"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_quest_001",
+            "text": "That quest? Talk to the NPCs around here. One of them should have it.",
+            "context_tags": [
+                "inquiry",
+                "quest",
+                "helpful",
+                "npc"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_quest_002",
+            "text": "Not sure about that quest. Check the wiki maybe?",
+            "context_tags": [
+                "inquiry",
+                "quest",
+                "unsure",
+                "redirect"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "inquiry_nice_001",
+            "text": "Thanks! I try. It's been a good session today.",
+            "context_tags": [
+                "inquiry",
+                "compliment",
+                "thanks",
+                "positive"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_nice_002",
+            "text": "Appreciate it! Right back at you.",
+            "context_tags": [
+                "inquiry",
+                "compliment",
+                "thanks",
+                "reciprocal"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_build_001",
+            "text": "For builds, focus on your main stat first. Everything else is secondary.",
+            "context_tags": [
+                "inquiry",
+                "build",
+                "stats",
+                "advice"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_build_002",
+            "text": "I stack damage stats personally. Kill fast, die less.",
+            "context_tags": [
+                "inquiry",
+                "build",
+                "strategy",
+                "damage"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_forge_001",
+            "text": "The forge is in Port Azure. Use the highest tier fuel you can afford.",
+            "context_tags": [
+                "inquiry",
+                "forge",
+                "crafting",
+                "helpful",
+                "port azure"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "inquiry_auction_001",
+            "text": "Auction House is in Port Azure. Check it regularly for deals.",
+            "context_tags": [
+                "inquiry",
+                "auction",
+                "economy",
+                "port azure",
+                "helpful"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_how_001",
+            "text": "Good question. I'd look it up on the wiki for the exact details.",
+            "context_tags": [
+                "inquiry",
+                "how",
+                "redirect",
+                "wiki"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "inquiry_how_002",
+            "text": "I figured it out by trial and error honestly. Just try things.",
+            "context_tags": [
+                "inquiry",
+                "how",
+                "experiential",
+                "advice"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "inquiry_erenshor_001",
+            "text": "For leveling in the teens, try Silkengrass Meadowlands. Good XP and the mobs aren't too nasty.",
+            "context_tags": [
+                "inquiry",
+                "where",
+                "leveling",
+                "zone",
+                "advice"
+            ],
+            "zone_affinity": [
+                "Silkengrass Meadowlands"
+            ],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "inquiry_erenshor_002",
+            "text": "Mid levels? Blacksalt Strand and Loomingwood are solid. Watch for the Molorai camps in Blacksalt though.",
+            "context_tags": [
+                "inquiry",
+                "where",
+                "leveling",
+                "zone",
+                "molorai"
+            ],
+            "zone_affinity": [
+                "Blacksalt Strand",
+                "Loomingwood"
+            ],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "inquiry_erenshor_003",
+            "text": "Braxonian Desert is brutal but the drops are worth it. Bring water and resists.",
+            "context_tags": [
+                "inquiry",
+                "where",
+                "zone",
+                "braxonian",
+                "advice"
+            ],
+            "zone_affinity": [
+                "Braxonian Desert"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_erenshor_004",
+            "text": "If you're a Ranger, open zones like Hidden Hills and Faerie's Brake are your playground. Room to kite.",
+            "context_tags": [
+                "inquiry",
+                "class",
+                "ranger",
+                "zone",
+                "advice"
+            ],
+            "zone_affinity": [
+                "Hidden Hills",
+                "Faerie's Brake"
+            ],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_erenshor_005",
+            "text": "Duelists shine in dungeons. Tight spaces mean mobs can't run from your blade.",
+            "context_tags": [
+                "inquiry",
+                "class",
+                "duelist",
+                "advice",
+                "dungeon"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_ascension_001",
+            "text": "The Ascension system is the real endgame. Once you hit max level, that's where the grind begins.",
+            "context_tags": [
+                "inquiry",
+                "ascension",
+                "endgame",
+                "advice"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "inquiry_ascension_002",
+            "text": "Ascension ranks take forever but the stat boosts are massive. Push through it.",
+            "context_tags": [
+                "inquiry",
+                "ascension",
+                "endgame",
+                "encouragement"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_lore_001",
+            "text": "The Braxonians used to control most of the mainland. Fallen Braxonia is what's left of their capital.",
+            "context_tags": [
+                "inquiry",
+                "lore",
+                "braxonian",
+                "history"
+            ],
+            "zone_affinity": [
+                "Fallen Braxonia"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_lore_002",
+            "text": "According to the Azynthian Scriptures, the land was shaped by nature spirits long before any kingdoms rose.",
+            "context_tags": [
+                "inquiry",
+                "lore",
+                "azynthian",
+                "scripture",
+                "history"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "inquiry_forge_002",
+            "text": "Forge fuel comes in tiers. Higher tier means better chance at a good result. Don't waste low tier on endgame gear.",
+            "context_tags": [
+                "inquiry",
+                "forge",
+                "crafting",
+                "fuel",
+                "advice"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly",
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "inquiry_erenshor_006",
+            "text": "For endgame zones, Jaws of Sivakaya and Ripper's Keep are where the real gear is. Bring friends.",
+            "context_tags": [
+                "inquiry",
+                "where",
+                "endgame",
+                "zone",
+                "advice"
+            ],
+            "zone_affinity": [
+                "Jaws of Sivakaya",
+                "Ripper's Keep"
+            ],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.1
+        }
+    ]
+}
