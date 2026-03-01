@@ -7,6 +7,7 @@ use crate::intelligence::memory::MemoryStore;
 use crate::intelligence::personality_store::VectorPersonalityStore;
 use crate::intelligence::sona_integration::SonaManager;
 use crate::intelligence::templates::ResponseStore;
+use crate::llm::grounding::StaticGrounding;
 use crate::llm::personality::PersonalityStore;
 use crate::llm::router::LlmRouter;
 use std::sync::Arc;
@@ -40,6 +41,8 @@ pub struct AppState {
     pub vector_personalities: RwLock<VectorPersonalityStore>,
     /// LLM router (local/cloud/hybrid). None when LLM is disabled.
     pub llm_router: Option<Arc<LlmRouter>>,
+    /// Static grounding data for GEPA prompt anchoring.
+    pub static_grounding: Option<StaticGrounding>,
 }
 
 impl AppState {
@@ -54,6 +57,7 @@ impl AppState {
         personality_store: Arc<PersonalityStore>,
         vector_personalities: VectorPersonalityStore,
         llm_router: Option<Arc<LlmRouter>>,
+        static_grounding: Option<StaticGrounding>,
     ) -> Arc<Self> {
         Arc::new(Self {
             config,
@@ -67,6 +71,7 @@ impl AppState {
             personality_store,
             vector_personalities: RwLock::new(vector_personalities),
             llm_router,
+            static_grounding,
         })
     }
 

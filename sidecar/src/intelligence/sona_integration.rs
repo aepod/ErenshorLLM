@@ -50,6 +50,7 @@ pub struct SonaStats {
     pub pattern_count: usize,
     pub learning_cycles: u64,
     pub queries_enhanced: u64,
+    pub llm_trajectories_learned: u64,
 }
 
 /// Manager wrapping ruvector-sona's SonaEngine.
@@ -62,6 +63,7 @@ pub struct SonaManager {
     enabled: bool,
     queries_enhanced: AtomicU64,
     learning_cycles: AtomicU64,
+    llm_trajectories_count: AtomicU64,
     background_interval_ms: u64,
 }
 
@@ -93,6 +95,7 @@ impl SonaManager {
             enabled: config.enabled,
             queries_enhanced: AtomicU64::new(0),
             learning_cycles: AtomicU64::new(0),
+            llm_trajectories_count: AtomicU64::new(0),
             background_interval_ms: config.background_interval_ms,
         })
     }
@@ -190,6 +193,52 @@ impl SonaManager {
         );
     }
 
+    /// Record an LLM response trajectory for learning.
+    ///
+    /// 1. Records query -> LLM response trajectory in SONA
+    /// 2. Finds nearest template to LLM response
+    /// 3. If cosine > 0.7, reinforces query -> template path
+    pub fn record_llm_trajectory(
+        &self,
+        query_embedding: &[f32],
+        llm_response_embedding: &[f32],
+        response_store: &crate::intelligence::templates::ResponseStore,
+    ) {
+        if !self.enabled {
+            return;
+        }
+
+        let engine = match self.engine.lock() {
+            Ok(e) => e,
+            Err(_) => return,
+        };
+
+        if !engine.is_enabled() {
+            return;
+        }
+
+        // Record query -> LLM response trajectory
+        let mut builder = engine.begin_trajectory(query_embedding.to_vec());
+        builder.add_step(llm_response_embedding.to_vec(), vec![], 1.0);
+        engine.end_trajectory(builder, 1.0);
+        self.llm_trajectories_count.fetch_add(1, Ordering::Relaxed);
+
+        // Find nearest template to LLM response and reinforce if close
+        let candidates = response_store.search(llm_response_embedding, 1, 0.3);
+        if let Some(best) = candidates.first() {
+            if best.semantic_score > 0.7 {
+                // Reinforce query -> template path with the similarity as quality
+                let mut builder2 = engine.begin_trajectory(query_embedding.to_vec());
+                builder2.add_step(query_embedding.to_vec(), vec![], best.semantic_score);
+                engine.end_trajectory(builder2, best.semantic_score);
+                debug!(
+                    "SONA: LLM response reinforced template {} (cosine: {:.3})",
+                    best.template.id, best.semantic_score
+                );
+            }
+        }
+    }
+
     /// Background tick: process accumulated trajectories.
     ///
     /// Called periodically by the background tokio task.
@@ -230,6 +279,7 @@ impl SonaManager {
             pattern_count,
             learning_cycles: self.learning_cycles.load(Ordering::Relaxed),
             queries_enhanced: self.queries_enhanced.load(Ordering::Relaxed),
+            llm_trajectories_learned: self.llm_trajectories_count.load(Ordering::Relaxed),
         }
     }
 }

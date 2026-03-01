@@ -39,6 +39,7 @@ pub struct SonaStatus {
     pub pattern_count: usize,
     pub learning_cycles: u64,
     pub queries_enhanced: u64,
+    pub llm_trajectories_learned: u64,
 }
 
 #[derive(Serialize)]
@@ -90,6 +91,7 @@ async fn handle_health(State(state): State<Arc<AppState>>) -> Json<HealthRespons
                 pattern_count: stats.pattern_count,
                 learning_cycles: stats.learning_cycles,
                 queries_enhanced: stats.queries_enhanced,
+                llm_trajectories_learned: stats.llm_trajectories_learned,
             }
         }),
         llm: if state.config.llm.enabled {

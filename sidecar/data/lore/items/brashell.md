@@ -1,31 +1,11 @@
 ---
+
 title: "Brashell"
 source: "wiki"
 wiki_source: "https://erenshor.wiki.gg/wiki/Brashell"
 categories: ["Items", "Quest_Items"]
 lore_category: "items"
+level: 25
 ---
 
-# Brashell
-
-# Brashell
-
-## Brashell
-
-### Type
-
-Quest Item
-
-### Dropped by
-
-Evadne the Corrupted (100.0%)
-
-### Related quest(s)
-
-The Scent of Brashell
-
-Required for The Scent of Brashell
-
-Brashell
-
-A spice long thought to be extinct.
+Brashell is a solid upgrade gear piece. Dropped by Evadne the Corrupted (Boss) in Braxonian Desert (100.0% drop rate).

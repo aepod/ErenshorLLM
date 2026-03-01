@@ -1,4 +1,7 @@
+using System.IO;
+using System.Text.RegularExpressions;
 using BepInEx.Configuration;
+using BepInEx.Logging;
 
 namespace ErenshorLLMDialog.Sidecar
 {
@@ -21,6 +24,7 @@ namespace ErenshorLLMDialog.Sidecar
         public ConfigEntry<int> MaxRestarts { get; }
         public ConfigEntry<Toggle> RebuildIndexes { get; }
         public ConfigEntry<Toggle> DumpStyleQuirks { get; }
+        public ConfigEntry<Toggle> RestartSidecar { get; }
 
         // ── Section 3: Response Tuning ──────────────────────────────────
 
@@ -123,6 +127,13 @@ namespace ErenshorLLMDialog.Sidecar
                 "Read TypesInAllCaps, TypesInThirdPerson, TypoRate, etc. from game " +
                 "prefabs at startup and merge into personality JSON files. " +
                 "Run once then disable. Auto-resets to Off after dump completes.");
+
+            RestartSidecar = config.Bind(
+                "2 - Sidecar", "Restart Sidecar", Toggle.Off,
+                "Toggle On to restart the sidecar and shimmy processes. " +
+                "Use after changing LLM Mode or other sidecar settings. " +
+                "Syncs BepInEx LLM settings to erenshor-llm.toml before restart. " +
+                "Auto-resets to Off after restart completes.");
 
             // ── Section 3: Response Tuning ──────────────────────────────
 
@@ -287,6 +298,98 @@ namespace ErenshorLLMDialog.Sidecar
                     "1 = one reaction layer (sim A -> sim B reacts). " +
                     "Higher values risk rate limit exhaustion.",
                     new AcceptableValueRange<int>(0, 3)));
+        }
+
+        /// <summary>
+        /// Syncs BepInEx LLM config values into the sidecar's erenshor-llm.toml.
+        /// Uses line-by-line replacement so comments and non-LLM sections are preserved.
+        /// Returns true if the file was updated.
+        /// </summary>
+        public bool SyncToSidecarToml(string tomlPath, ManualLogSource log)
+        {
+            if (!File.Exists(tomlPath))
+            {
+                log.LogWarning("[SidecarConfig] TOML not found at " + tomlPath +
+                    ", cannot sync settings.");
+                return false;
+            }
+
+            try
+            {
+                string content = File.ReadAllText(tomlPath);
+
+                // Derive sidecar-side values from BepInEx config
+                string modeStr = LlmModeEntry.Value.ToString().ToLowerInvariant();
+                bool enabled = LlmModeEntry.Value != LlmMode.Off;
+
+                // [llm] section
+                content = SetTomlValue(content, "enabled", enabled ? "true" : "false");
+                content = SetTomlValue(content, "mode", "\"" + modeStr + "\"");
+                content = SetTomlValue(content, "enhance_threshold",
+                    EnhanceThreshold.Value.ToString("F2",
+                        System.Globalization.CultureInfo.InvariantCulture));
+                content = SetTomlValue(content, "max_tokens", MaxTokens.Value.ToString());
+                content = SetTomlValue(content, "temperature",
+                    Temperature.Value.ToString("F1",
+                        System.Globalization.CultureInfo.InvariantCulture));
+
+                // [llm.local] section
+                content = SetTomlValue(content, "endpoint",
+                    "\"http://127.0.0.1:" + ShimmyPort.Value + "\"");
+                content = SetTomlValue(content, "gpu_backend",
+                    "\"" + ShimmyGpuBackend.Value + "\"");
+
+                // [llm.cloud] section
+                if (!string.IsNullOrEmpty(ApiKey.Value))
+                    content = SetTomlValue(content, "api_key",
+                        "\"" + ApiKey.Value + "\"");
+                if (!string.IsNullOrEmpty(ApiEndpoint.Value))
+                    content = SetTomlValue(content, "api_endpoint",
+                        "\"" + ApiEndpoint.Value + "\"");
+
+                // [respond] section weights
+                content = SetTomlValue(content, "template_candidates",
+                    TemplateCandidates.Value.ToString());
+                content = SetTomlValue(content, "lore_candidates",
+                    LoreContextCount.Value.ToString());
+                content = SetTomlValue(content, "memory_candidates",
+                    MemoryContextCount.Value.ToString());
+                content = SetTomlValue(content, "zone_weight",
+                    ZoneWeight.Value.ToString("F2",
+                        System.Globalization.CultureInfo.InvariantCulture));
+                content = SetTomlValue(content, "personality_weight",
+                    PersonalityWeight.Value.ToString("F2",
+                        System.Globalization.CultureInfo.InvariantCulture));
+                content = SetTomlValue(content, "relationship_weight",
+                    RelationshipWeight.Value.ToString("F2",
+                        System.Globalization.CultureInfo.InvariantCulture));
+                content = SetTomlValue(content, "channel_weight",
+                    ChannelWeight.Value.ToString("F2",
+                        System.Globalization.CultureInfo.InvariantCulture));
+
+                File.WriteAllText(tomlPath, content);
+                log.LogInfo("[SidecarConfig] Synced BepInEx settings to " + tomlPath);
+                log.LogInfo("[SidecarConfig] LLM mode=" + modeStr +
+                    ", enabled=" + enabled +
+                    ", threshold=" + EnhanceThreshold.Value);
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                log.LogError("[SidecarConfig] Failed to sync TOML: " + e.Message);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Replace a TOML key = value on its line, preserving inline comments.
+        /// Matches "key = ..." at line start (with optional whitespace).
+        /// </summary>
+        private static string SetTomlValue(string content, string key, string value)
+        {
+            // Match: optional whitespace, key, optional whitespace, =, value, optional comment
+            string pattern = @"(?m)^(\s*" + Regex.Escape(key) + @"\s*=\s*)([^\n#]*)(.*)$";
+            return Regex.Replace(content, pattern, "${1}" + value + " ${3}");
         }
     }
 }

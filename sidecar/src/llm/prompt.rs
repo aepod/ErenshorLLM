@@ -1,3 +1,4 @@
+use crate::llm::grounding::GroundingContext;
 use crate::llm::personality::Personality;
 use crate::routes::respond::RespondRequest;
 
@@ -21,18 +22,26 @@ impl PromptBuilder {
     ///
     /// Token budget management: personality and instructions are never truncated.
     /// Memory is truncated first, then lore, to fit within context_budget_tokens.
+    /// The optional `grounding` parameter adds a GEPA section with real entity
+    /// names to prevent hallucination.
     pub fn build(
         personality: &Personality,
         lore_results: &[LoreContext],
         memory_results: &[MemoryContext],
         request: &RespondRequest,
         context_budget_tokens: usize,
+        grounding: Option<&GroundingContext>,
     ) -> String {
         let system_section = build_system_section(personality, request);
         let instruction_section = build_instruction_section(request);
 
+        // Build GEPA grounding section (~200-300 chars, from lore budget)
+        let grounding_section = grounding
+            .map(|g| g.format_prompt_section())
+            .unwrap_or_default();
+
         // Calculate remaining budget for lore + memory
-        let fixed_chars = system_section.len() + instruction_section.len();
+        let fixed_chars = system_section.len() + instruction_section.len() + grounding_section.len();
         let total_budget_chars = context_budget_tokens * CHARS_PER_TOKEN;
         let remaining_chars = total_budget_chars.saturating_sub(fixed_chars);
 
@@ -44,6 +53,11 @@ impl PromptBuilder {
         let memory_section = build_memory_section(memory_results, memory_budget);
 
         let mut prompt = system_section;
+
+        // GEPA grounding goes after system section, before lore
+        if !grounding_section.is_empty() {
+            prompt.push_str(&grounding_section);
+        }
 
         if !lore_section.is_empty() {
             prompt.push_str(&lore_section);
@@ -282,7 +296,7 @@ mod tests {
     fn test_build_prompt_basic() {
         let personality = test_personality();
         let request = test_request();
-        let prompt = PromptBuilder::build(&personality, &[], &[], &request, 2048);
+        let prompt = PromptBuilder::build(&personality, &[], &[], &request, 2048, None);
 
         assert!(prompt.contains("TestSim"));
         assert!(prompt.contains("warrior"));
@@ -298,7 +312,7 @@ mod tests {
         let lore = vec![LoreContext {
             text: "The Sunken Blade is a legendary weapon found in Coral Depths.".to_string(),
         }];
-        let prompt = PromptBuilder::build(&personality, &lore, &[], &request, 2048);
+        let prompt = PromptBuilder::build(&personality, &lore, &[], &request, 2048, None);
 
         assert!(prompt.contains("WORLD KNOWLEDGE"));
         assert!(prompt.contains("Sunken Blade"));
@@ -311,7 +325,7 @@ mod tests {
         let memory = vec![MemoryContext {
             text: "Hero asked about the Drowned Keep earlier.".to_string(),
         }];
-        let prompt = PromptBuilder::build(&personality, &[], &memory, &request, 2048);
+        let prompt = PromptBuilder::build(&personality, &[], &memory, &request, 2048, None);
 
         assert!(prompt.contains("RECENT MEMORY"));
         assert!(prompt.contains("Drowned Keep"));
@@ -326,7 +340,7 @@ mod tests {
             ..Default::default()
         });
         let request = test_request();
-        let prompt = PromptBuilder::build(&personality, &[], &[], &request, 2048);
+        let prompt = PromptBuilder::build(&personality, &[], &[], &request, 2048, None);
 
         assert!(prompt.contains("Writing style:"));
         assert!(prompt.contains("ALL CAPS"));
@@ -336,7 +350,7 @@ mod tests {
     fn test_build_without_style_quirks() {
         let personality = test_personality();
         let request = test_request();
-        let prompt = PromptBuilder::build(&personality, &[], &[], &request, 2048);
+        let prompt = PromptBuilder::build(&personality, &[], &[], &request, 2048, None);
 
         assert!(!prompt.contains("Writing style:"));
     }

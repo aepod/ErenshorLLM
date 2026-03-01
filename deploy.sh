@@ -172,6 +172,12 @@ echo "    $PCOUNT personality files"
 echo "  Deploying template files..."
 cp -r "$DATA_SRC/templates/"* "$TARGET/data/templates/" 2>/dev/null || true
 
+# Grounding data (GEPA entity lists for LLM hallucination prevention)
+if [ -f "$DATA_SRC/grounding.json" ]; then
+    echo "  Deploying grounding.json..."
+    cp "$DATA_SRC/grounding.json" "$TARGET/data/grounding.json"
+fi
+
 # --- Summary ---
 
 sync 2>/dev/null || true

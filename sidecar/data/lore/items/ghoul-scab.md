@@ -1,43 +1,11 @@
 ---
+
 title: "Ghoul Scab"
 source: "wiki"
 wiki_source: "https://erenshor.wiki.gg/wiki/Ghoul_Scab"
 categories: ["Items", "Crafting"]
 lore_category: "items"
+level: 35
 ---
 
-# Ghoul Scab
-
-# Ghoul Scab
-
-## Ghoul Scab
-
-### Type
-
-Crafting
-
-### Sold by
-
-Enterprising Spirit
-
-### Dropped by
-
-Ghoul (87.1%)
-Shambler (87.1%)
-Shadow of Sleep (51.4%)
-
-### Component for
-
-Mold: Soldier's Charm
-
-### Buy
-
-1
-
-### Sell
-
-1
-
-Ghoul Scab
-
-You're not really sure why you took it.
+Ghoul Scab is a endgame gear piece. Dropped by Ghoul in Azynthi's Garden (Dimensional Rift) (87.1% drop rate). Also drops from Shambler and Shadow of Sleep. Costs 1g from vendors.

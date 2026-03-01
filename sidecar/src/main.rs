@@ -13,6 +13,8 @@ mod server;
 mod state;
 
 use clap::{Parser, Subcommand};
+use std::collections::hash_map::DefaultHasher;
+use std::hash::{Hash, Hasher};
 use std::path::PathBuf;
 use std::sync::Arc;
 use tracing::{debug, error, info, warn};
@@ -114,6 +116,20 @@ enum Commands {
         /// Output lore directory to write categorized files
         #[arg(long, default_value = "lore")]
         output_dir: PathBuf,
+    },
+    /// Clean wiki-imported item files: transform raw stat dumps into
+    /// conversational prose suitable for LLM context injection.
+    /// Cross-references enemies and zones for drop source grounding.
+    CleanItems {
+        /// Items directory containing wiki-imported .md files
+        #[arg(long, default_value = "lore/items")]
+        items_dir: PathBuf,
+        /// Enemies directory for cross-referencing drop sources
+        #[arg(long, default_value = "lore/enemies")]
+        enemies_dir: PathBuf,
+        /// Zones directory for zone name validation
+        #[arg(long, default_value = "lore/zones")]
+        zones_dir: PathBuf,
     },
 }
 
@@ -233,9 +249,38 @@ fn load_personalities(config: &config::AppConfig) -> Arc<llm::personality::Perso
     Arc::new(llm::personality::PersonalityStore::load(&dir))
 }
 
+/// Hash the personality directory contents for change detection.
+///
+/// Concatenates file names, sizes, and modification times, then hashes
+/// with DefaultHasher. This is fast and sufficient for detecting edits.
+fn hash_personality_dir(dir: &std::path::Path) -> String {
+    let mut hasher = DefaultHasher::new();
+    let mut entries: Vec<_> = match std::fs::read_dir(dir) {
+        Ok(rd) => rd.filter_map(|e| e.ok()).collect(),
+        Err(_) => return String::new(),
+    };
+    entries.sort_by_key(|e| e.file_name());
+
+    for entry in &entries {
+        let name = entry.file_name();
+        name.to_string_lossy().hash(&mut hasher);
+        if let Ok(meta) = entry.metadata() {
+            hasher.write_u64(meta.len());
+            if let Ok(mtime) = meta.modified() {
+                if let Ok(dur) = mtime.duration_since(std::time::SystemTime::UNIX_EPOCH) {
+                    hasher.write_u64(dur.as_secs());
+                }
+            }
+        }
+    }
+
+    format!("{:x}", hasher.finish())
+}
+
 /// Build and load vector-backed personality store at startup.
 ///
-/// Always rebuilds from personality JSON files to pick up any changes.
+/// Skips rebuild if personality files haven't changed (hash-based detection).
+/// The `init-data` command always forces a full rebuild (deletes the ruvector).
 /// Requires the embedding engine to be available.
 fn load_vector_personalities(
     config: &config::AppConfig,
@@ -244,26 +289,49 @@ fn load_vector_personalities(
     let ruvector_path = config.resolve_path(&config.indexes.personality_path);
     let personalities_dir = config.resolve_path("personalities");
     let adapter_config = config.vectordb.to_adapter_config();
+    let hash_path = config.resolve_path("dist/personality.hash");
 
-    // Always rebuild from JSON source files at startup
-    if let Some(ref emb) = embedder {
-        debug!("Building personality vectors from {:?}...", personalities_dir);
-        // Remove stale .ruvector if present
-        if ruvector_path.exists() {
-            if let Err(e) = std::fs::remove_file(&ruvector_path) {
-                warn!("Failed to remove stale personality DB: {}", e);
-            }
+    // Check if rebuild is needed by comparing directory hash
+    let current_hash = hash_personality_dir(&personalities_dir);
+
+    let needs_rebuild = if ruvector_path.exists() && hash_path.exists() {
+        let stored_hash = std::fs::read_to_string(&hash_path).unwrap_or_default();
+        let changed = stored_hash.trim() != current_hash;
+        if !changed {
+            debug!("Personality files unchanged (hash: {}), skipping rebuild", &current_hash[..8.min(current_hash.len())]);
         }
-        match builder::personality_builder::build_personality_index(&personalities_dir, &ruvector_path, emb) {
-            Ok(()) => {
-                debug!("Personality vectors rebuilt successfully");
-            }
-            Err(e) => {
-                warn!("Failed to build personality vectors: {}. Personality vector search will be unavailable.", e);
-            }
-        }
+        changed
     } else {
-        warn!("Embedding engine unavailable; cannot build personality vectors at startup.");
+        true
+    };
+
+    if needs_rebuild {
+        if let Some(ref emb) = embedder {
+            debug!("Building personality vectors from {:?}...", personalities_dir);
+            // Remove stale .ruvector if present
+            if ruvector_path.exists() {
+                if let Err(e) = std::fs::remove_file(&ruvector_path) {
+                    warn!("Failed to remove stale personality DB: {}", e);
+                }
+            }
+            match builder::personality_builder::build_personality_index(&personalities_dir, &ruvector_path, emb) {
+                Ok(()) => {
+                    debug!("Personality vectors rebuilt successfully");
+                    // Store hash for next startup
+                    if let Some(parent) = hash_path.parent() {
+                        std::fs::create_dir_all(parent).ok();
+                    }
+                    if let Err(e) = std::fs::write(&hash_path, &current_hash) {
+                        warn!("Failed to write personality hash: {}", e);
+                    }
+                }
+                Err(e) => {
+                    warn!("Failed to build personality vectors: {}. Personality vector search will be unavailable.", e);
+                }
+            }
+        } else {
+            warn!("Embedding engine unavailable; cannot build personality vectors at startup.");
+        }
     }
 
     let store = intelligence::personality_store::VectorPersonalityStore::open(&ruvector_path, &adapter_config);
@@ -490,6 +558,23 @@ async fn main() {
                 info!("Wiki import complete.");
                 return;
             }
+            Commands::CleanItems { items_dir, enemies_dir, zones_dir } => {
+                let items_dir = config.resolve_path(&items_dir.to_string_lossy());
+                let enemies_dir = config.resolve_path(&enemies_dir.to_string_lossy());
+                let zones_dir = config.resolve_path(&zones_dir.to_string_lossy());
+                info!("Cleaning item files: {:?}", items_dir);
+
+                match builder::item_cleaner::clean_items(&items_dir, &enemies_dir, &zones_dir) {
+                    Ok(count) => {
+                        info!("Item cleaning complete: {} files processed.", count);
+                    }
+                    Err(e) => {
+                        error!("Item cleaning failed: {}", e);
+                        std::process::exit(1);
+                    }
+                }
+                return;
+            }
         }
     }
 
@@ -584,9 +669,15 @@ async fn main() {
 
     let llm_router = load_llm_router(&config);
 
+    // Load GEPA grounding data for hallucination prevention
+    let static_grounding = llm::grounding::StaticGrounding::load(
+        &config.resolve_path("grounding.json"),
+    );
+
     let app_state = state::AppState::new(
         config, embedder, lore, responses, memory, sona,
         personality_store, vector_personalities, llm_router,
+        static_grounding,
     );
 
     // Start SONA background tick task

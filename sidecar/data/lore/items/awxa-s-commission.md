@@ -1,31 +1,11 @@
 ---
+
 title: "Awxa's Commission"
 source: "wiki"
 wiki_source: "https://erenshor.wiki.gg/wiki/Awxa's_Commission"
 categories: ["Items"]
 lore_category: "items"
+level: 32
 ---
 
-# Awxa's Commission
-
-# Awxa's Commission
-
-## Awxa's Commission
-
-### Type
-
-Lore
-
-### Dropped by
-
-Darkwarden Awxa (100.0%)
-
-Awxa's Commission
-
-Commission Rank: Darkwarden
-Recipient: Awxa Visheros
-
-Orders: Serve the vision by proxy of Sivakaya and her people.
-
-Signatory:
-Azynthi Lysenthir
+Awxa's Commission is a endgame gear piece. Dropped by Darkwarden Awxa (Boss) in Abyssal Lake (100.0% drop rate). Also drops from Awxa's Commission and Commission Rank: Darkwarden.

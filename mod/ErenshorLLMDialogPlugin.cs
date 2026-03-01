@@ -178,10 +178,97 @@ namespace ErenshorLLMDialog
 
         /// <summary>
         /// Periodic health poll callback, invoked via InvokeRepeating.
+        /// Also checks if the user toggled "Restart Sidecar" in config.
         /// </summary>
         void HealthPoll()
         {
+            // Check for restart request
+            if (_sidecarConfig.RestartSidecar.Value == Toggle.On)
+            {
+                _sidecarConfig.RestartSidecar.Value = Toggle.Off;
+                RestartSidecarAndShimmy();
+            }
+
             _sidecarManager?.HealthPoll();
+        }
+
+        /// <summary>
+        /// Syncs BepInEx LLM config to erenshor-llm.toml, then restarts
+        /// shimmy (if needed) and the sidecar process.
+        /// </summary>
+        private void RestartSidecarAndShimmy()
+        {
+            Log.LogInfo("[Plugin] Restart Sidecar triggered. Syncing config and restarting...");
+
+            // Resolve the TOML path
+            string tomlPath = ResolveTomlPath();
+            if (tomlPath != null)
+            {
+                _sidecarConfig.SyncToSidecarToml(tomlPath, Log);
+            }
+            else
+            {
+                Log.LogWarning("[Plugin] Could not find erenshor-llm.toml to sync settings. " +
+                    "Restarting with existing sidecar config.");
+            }
+
+            // Restart shimmy based on the current LLM mode
+            var llmMode = _sidecarConfig.LlmModeEntry.Value;
+            if (llmMode == LlmMode.Local || llmMode == LlmMode.Hybrid)
+            {
+                _shimmyManager.Restart();
+                if (_shimmyManager.IsRunning)
+                {
+                    bool ready = _shimmyManager.WaitForReady(15f);
+                    if (!ready)
+                    {
+                        Log.LogWarning("[Plugin] Shimmy did not become ready after restart.");
+                    }
+                }
+            }
+            else
+            {
+                // LLM mode doesn't need shimmy -- stop it if running
+                _shimmyManager?.Stop();
+            }
+
+            // Restart the sidecar
+            _sidecarManager.Restart();
+
+            Log.LogInfo("[Plugin] Restart complete. LLM mode: " + llmMode);
+        }
+
+        /// <summary>
+        /// Resolves the path to erenshor-llm.toml in the sidecar data directory.
+        /// Uses the same resolution logic as SidecarManager.ResolveDataDir.
+        /// </summary>
+        private string ResolveTomlPath()
+        {
+            // Try explicit DataDir config first (same as SidecarManager uses)
+            string dataDir = _sidecarConfig.DataDir.Value;
+            if (!string.IsNullOrEmpty(dataDir))
+            {
+                string path = System.IO.Path.Combine(dataDir, "erenshor-llm.toml");
+                if (System.IO.File.Exists(path)) return path;
+            }
+
+            // Same resolution as SidecarManager.ResolveDataDir:
+            // data/ next to the sidecar binary
+            string dllDir = System.IO.Path.GetDirectoryName(
+                System.Reflection.Assembly.GetExecutingAssembly().Location);
+            if (!string.IsNullOrEmpty(dllDir))
+            {
+                // DLL is in plugins/ErenshorLLMDialog/, data is alongside
+                string path = System.IO.Path.Combine(dllDir, "data", "erenshor-llm.toml");
+                if (System.IO.File.Exists(path)) return path;
+
+                // DLL might be in plugins/, sidecar in ErenshorLLMDialog/
+                path = System.IO.Path.Combine(dllDir, "ErenshorLLMDialog", "data", "erenshor-llm.toml");
+                if (System.IO.File.Exists(path)) return path;
+            }
+
+            Log.LogWarning("[Plugin] Could not resolve erenshor-llm.toml path. DLL dir: " + dllDir);
+            return null;
         }
 
         /// <summary>

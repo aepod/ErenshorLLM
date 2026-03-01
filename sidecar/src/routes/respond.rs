@@ -11,6 +11,8 @@
 use crate::error::{AppError, AppResult};
 use crate::intelligence::enricher;
 use crate::intelligence::ranker::{self, RankWeights};
+use crate::llm::grounding::GroundingContext;
+use crate::llm::postprocess;
 use crate::llm::prompt::{LoreContext, MemoryContext, PromptBuilder};
 use crate::llm::router::LlmResult;
 use crate::state::AppState;
@@ -319,6 +321,11 @@ async fn handle_respond(
                     })
                     .collect();
 
+                // Build GEPA grounding context to prevent hallucinated entity names
+                let grounding_ctx = state.static_grounding.as_ref().map(|sg| {
+                    GroundingContext::from_search_results(&lore_ctx, &request, sg)
+                });
+
                 // Token budget for prompt assembly (shimmy/cloud handle actual context window)
                 let context_budget = 2048;
                 let prompt = PromptBuilder::build(
@@ -327,6 +334,7 @@ async fn handle_respond(
                     &memory_ctx,
                     &request,
                     context_budget,
+                    grounding_ctx.as_ref(),
                 );
 
                 let result = router
@@ -343,7 +351,30 @@ async fn handle_respond(
                             "LLM enhanced response for '{}' ({}ms, source={})",
                             request.sim_name, latency_ms, source
                         );
-                        (text, source, None)
+
+                        // Postprocess: clean markdown/formatting and validate entity names
+                        let cleaned = postprocess::clean(&text);
+                        let validated = if let Some(ref gc) = grounding_ctx {
+                            postprocess::validate_entities(&cleaned, gc)
+                        } else {
+                            cleaned
+                        };
+
+                        // SONA LLM trajectory learning: embed the response
+                        // and record a trajectory so SONA learns from LLM output
+                        if let Some(ref sona) = state.sona {
+                            if let Some(ref emb) = state.embedder {
+                                if let Ok(llm_vec) = emb.embed_async(validated.clone()).await {
+                                    sona.record_llm_trajectory(
+                                        &query_embedding,
+                                        &llm_vec,
+                                        &state.responses,
+                                    );
+                                }
+                            }
+                        }
+
+                        (validated, source, None)
                     }
                     LlmResult::Fallback { reason } => {
                         debug!("LLM fallback: {}", reason);

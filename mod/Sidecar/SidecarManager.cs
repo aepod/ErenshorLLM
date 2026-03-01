@@ -362,9 +362,33 @@ namespace ErenshorLLMDialog.Sidecar
         }
 
         /// <summary>
-        /// Graceful shutdown: sends POST /shutdown, waits, then kills if necessary.
-        /// This is a blocking call intended for OnApplicationQuit/OnDestroy.
-        /// Since we cannot yield in OnApplicationQuit, we use synchronous waits.
+        /// Restarts the sidecar process. Kills the current process and starts a new one.
+        /// Resets restart counter and shutdown flag so the new process is fully managed.
+        /// </summary>
+        public void Restart()
+        {
+            _log.LogInfo("[SidecarManager] Restart requested.");
+
+            // Kill existing process
+            _shutdownRequested = false;
+            if (_process != null && !_process.HasExited)
+            {
+                _log.LogInfo("[SidecarManager] Killing current sidecar process...");
+                KillProcess();
+            }
+
+            _process = null;
+            _restartCount = 0;
+            Status = SidecarStatus.NotStarted;
+
+            // Re-start
+            Start();
+        }
+
+        /// <summary>
+        /// Shutdown: kills the sidecar process immediately.
+        /// Called from OnApplicationQuit where Unity may terminate us at any moment,
+        /// so we kill immediately rather than waiting.
         /// </summary>
         public void Stop()
         {
@@ -379,38 +403,9 @@ namespace ErenshorLLMDialog.Sidecar
                 return;
             }
 
-            _log.LogInfo("[SidecarManager] Sending POST /shutdown to sidecar...");
-
-            // We cannot use coroutines in OnApplicationQuit (MonoBehaviour is being destroyed).
-            // Send a simple synchronous-ish shutdown via the process approach:
-            // Just kill after a brief wait. The sidecar's own signal handler will flush memory.
-            try
-            {
-                // Try to let the sidecar shut down gracefully
-                // Give it 3 seconds to exit on its own (it has signal handlers)
-                if (!_process.HasExited)
-                {
-                    // Send a shutdown signal via the process
-                    // On Windows, CloseMainWindow or Kill; the sidecar handles SIGTERM/Ctrl+C
-                    bool exited = _process.WaitForExit(3000);
-                    if (!exited)
-                    {
-                        _log.LogWarning("[SidecarManager] Sidecar did not exit within 3s, killing.");
-                        KillProcess();
-                    }
-                    else
-                    {
-                        _log.LogInfo("[SidecarManager] Sidecar exited gracefully " +
-                            "(exit code: " + _process.ExitCode + ")");
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                _log.LogWarning("[SidecarManager] Error during shutdown: " + e.Message);
-                KillProcess();
-            }
-
+            _log.LogInfo("[SidecarManager] Killing sidecar...");
+            KillProcess();
+            _process = null;
             Status = SidecarStatus.Stopped;
         }
 

@@ -1,5 +1,7 @@
+use crate::llm::grounding::GroundingContext;
 use regex::Regex;
 use std::sync::LazyLock;
+use tracing::debug;
 
 static MARKDOWN_BOLD: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\*\*(.+?)\*\*").unwrap());
 static MARKDOWN_ITALIC: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\*(.+?)\*").unwrap());
@@ -12,6 +14,8 @@ static INSTRUCTION_LEAK: LazyLock<Regex> = LazyLock::new(|| {
 });
 static MULTI_SPACE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"  +").unwrap());
 static MULTI_NEWLINE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\n{2,}").unwrap());
+/// Minimum consecutive repetitions before collapsing.
+const MIN_REPETITIONS: usize = 3;
 
 const MAX_RESPONSE_CHARS: usize = 2000;
 
@@ -34,6 +38,9 @@ pub fn clean(raw: &str) -> String {
     text = MULTI_NEWLINE.replace_all(&text, " ").to_string();
     text = MULTI_SPACE.replace_all(&text, " ").to_string();
 
+    // Collapse LLM repetition (e.g. "2H 2H 2H 2H" -> "2H")
+    text = collapse_repetition(&text);
+
     // Trim
     text = text.trim().to_string();
 
@@ -47,6 +54,66 @@ pub fn clean(raw: &str) -> String {
     }
 
     text
+}
+
+/// Collapse repeated words/phrases that small LLMs produce.
+/// "2H 2H 2H 2H 2H 2H" -> "2H"
+/// "the sword the sword the sword" -> "the sword"
+/// Only triggers on 3+ consecutive repetitions to avoid false positives.
+///
+/// Checks phrase lengths from 4 words down to 1 word, so longer repeated
+/// phrases are caught before shorter ones.
+fn collapse_repetition(text: &str) -> String {
+    let words: Vec<&str> = text.split_whitespace().collect();
+    if words.len() < MIN_REPETITIONS {
+        return text.to_string();
+    }
+
+    let mut result_words = words.clone();
+    let mut changed = false;
+
+    // Try phrase lengths shortest first (1 word up to 4 words).
+    // Shortest first ensures "2H 2H 2H 2H" is caught as single-token repeat
+    // before a multi-word pattern like "2H 2H" could claim it.
+    for phrase_len in 1..=4 {
+        let mut i = 0;
+        let mut new_words: Vec<&str> = Vec::with_capacity(result_words.len());
+        while i < result_words.len() {
+            // Check if a phrase of `phrase_len` words starting at `i` repeats
+            if i + phrase_len * MIN_REPETITIONS <= result_words.len() {
+                let phrase = &result_words[i..i + phrase_len];
+                let mut reps = 1;
+                let mut j = i + phrase_len;
+                while j + phrase_len <= result_words.len()
+                    && result_words[j..j + phrase_len] == *phrase
+                {
+                    reps += 1;
+                    j += phrase_len;
+                }
+                if reps >= MIN_REPETITIONS {
+                    // Keep one copy of the phrase, skip the rest
+                    new_words.extend_from_slice(phrase);
+                    i = j; // skip past all repetitions
+                    changed = true;
+                    debug!(
+                        "Collapsed {} repetitions of {:?} in LLM output",
+                        reps,
+                        phrase.join(" ")
+                    );
+                    continue;
+                }
+            }
+            new_words.push(result_words[i]);
+            i += 1;
+        }
+        result_words = new_words;
+    }
+
+    if changed {
+        result_words.join(" ")
+    } else {
+        text.to_string()
+    }
 }
 
 /// Minimum length before we attempt sentence-completion trimming.
@@ -105,6 +172,109 @@ fn truncate_at_sentence(text: &str, max_chars: usize) -> String {
     // Hard cut (shouldn't happen with normal text)
     let mut result = text[..max_chars].to_string();
     result.push_str("...");
+    result
+}
+
+/// Regex to find capitalized multi-word sequences that look like entity names.
+/// Matches 2+ capitalized words (e.g. "Crystal Depths", "Abyssal Plate").
+static PROPER_NOUN: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(r"\b([A-Z][a-z]+(?:'s)?(?:\s+(?:of\s+(?:the\s+)?)?[A-Z][a-z]+(?:'s?)?)+)\b").unwrap()
+});
+
+/// Levenshtein distance between two strings.
+fn levenshtein(a: &str, b: &str) -> usize {
+    let a_len = a.len();
+    let b_len = b.len();
+
+    if a_len == 0 { return b_len; }
+    if b_len == 0 { return a_len; }
+
+    let mut prev: Vec<usize> = (0..=b_len).collect();
+    let mut curr = vec![0usize; b_len + 1];
+
+    for (i, ca) in a.chars().enumerate() {
+        curr[0] = i + 1;
+        for (j, cb) in b.chars().enumerate() {
+            let cost = if ca == cb { 0 } else { 1 };
+            curr[j + 1] = (prev[j] + cost)
+                .min(prev[j + 1] + 1)
+                .min(curr[j] + 1);
+        }
+        std::mem::swap(&mut prev, &mut curr);
+    }
+
+    prev[b_len]
+}
+
+/// Validate that proper nouns in the response match known entities from grounding.
+///
+/// This is a lightweight safety net -- GEPA grounding should prevent most
+/// hallucinations. This catches stragglers by:
+/// 1. Extracting capitalized multi-word sequences (potential entity names)
+/// 2. Checking each against the grounding lists
+/// 3. If a close match exists (Levenshtein distance <= 3), replacing it
+/// 4. If no close match, leaving it alone (might be valid common speech)
+///
+/// Returns the (possibly corrected) text.
+pub fn validate_entities(text: &str, grounding: &GroundingContext) -> String {
+    let known_names = grounding.all_names();
+    if known_names.is_empty() {
+        return text.to_string();
+    }
+
+    let mut result = text.to_string();
+    let mut corrections = 0;
+
+    // Find all potential entity names in the text
+    let matches: Vec<(String, usize, usize)> = PROPER_NOUN
+        .find_iter(text)
+        .map(|m| (m.as_str().to_string(), m.start(), m.end()))
+        .collect();
+
+    // Process in reverse order to preserve offsets
+    for (name, start, end) in matches.into_iter().rev() {
+        // Skip if it matches a known entity exactly
+        if known_names.iter().any(|&k| k == name) {
+            continue;
+        }
+
+        // Skip common phrases that look like proper nouns but aren't entities
+        let lower = name.to_lowercase();
+        if lower.starts_with("friends' club")
+            || lower.starts_with("sim player")
+            || lower.starts_with("the ")
+        {
+            continue;
+        }
+
+        // Find closest match by Levenshtein distance
+        let mut best_match: Option<(&str, usize)> = None;
+        for &known in &known_names {
+            let dist = levenshtein(&name, known);
+            if dist <= 3 {
+                if best_match.is_none() || dist < best_match.unwrap().1 {
+                    best_match = Some((known, dist));
+                }
+            }
+        }
+
+        if let Some((replacement, dist)) = best_match {
+            if dist > 0 {
+                debug!(
+                    "Entity validation: '{}' -> '{}' (distance: {})",
+                    name, replacement, dist
+                );
+                result.replace_range(start..end, replacement);
+                corrections += 1;
+            }
+        }
+        // If no close match found, leave it alone -- might be valid dialog
+    }
+
+    if corrections > 0 {
+        debug!("Entity validation made {} corrections", corrections);
+    }
+
     result
 }
 
@@ -204,5 +374,74 @@ mod tests {
         let result = clean(raw);
         assert!(result.ends_with('.') || result.ends_with('!') || result.ends_with('?'),
             "Expected sentence-ending punctuation, got: {}", result);
+    }
+
+    #[test]
+    fn test_collapse_repeated_token() {
+        // Classic LLM parrot: single token repeated
+        assert_eq!(clean("2H Weapons like the 2H 2H 2H 2H 2H 2H"), "2H Weapons like the 2H");
+    }
+
+    #[test]
+    fn test_collapse_repeated_phrase() {
+        // Multi-word phrase repeated
+        assert_eq!(
+            clean("Try the sword the sword the sword for combat."),
+            "Try the sword for combat."
+        );
+    }
+
+    #[test]
+    fn test_no_collapse_normal_text() {
+        // Two repetitions shouldn't trigger (threshold is 3+)
+        assert_eq!(clean("go go adventurer"), "go go adventurer");
+    }
+
+    #[test]
+    fn test_levenshtein() {
+        assert_eq!(levenshtein("Port Azure", "Port Azure"), 0);
+        assert_eq!(levenshtein("Port Azur", "Port Azure"), 1);
+        assert_eq!(levenshtein("Port Azyre", "Port Azure"), 1);
+        assert_eq!(levenshtein("", "abc"), 3);
+    }
+
+    #[test]
+    fn test_validate_entities_exact_match() {
+        let ctx = GroundingContext {
+            zones: vec!["Port Azure".to_string(), "Hidden Hills".to_string()],
+            items: vec!["Abyssal Plate".to_string()],
+            npcs: vec![],
+            classes: vec![],
+        };
+        // Exact match should not be changed
+        let text = "I was in Port Azure yesterday.";
+        assert_eq!(validate_entities(text, &ctx), text);
+    }
+
+    #[test]
+    fn test_validate_entities_close_match() {
+        let ctx = GroundingContext {
+            zones: vec!["Port Azure".to_string(), "Hidden Hills".to_string()],
+            items: vec!["Abyssal Plate".to_string()],
+            npcs: vec![],
+            classes: vec![],
+        };
+        // Close misspelling should be corrected
+        let text = "I found the Abyssal Plat in the cave.";
+        let result = validate_entities(text, &ctx);
+        assert!(result.contains("Abyssal Plate"), "Got: {}", result);
+    }
+
+    #[test]
+    fn test_validate_entities_unknown_left_alone() {
+        let ctx = GroundingContext {
+            zones: vec!["Port Azure".to_string()],
+            items: vec![],
+            npcs: vec![],
+            classes: vec![],
+        };
+        // Completely unknown entity should be left alone (distance > 3)
+        let text = "Crystal Depths is beautiful.";
+        assert_eq!(validate_entities(text, &ctx), text);
     }
 }

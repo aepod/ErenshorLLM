@@ -1,30 +1,11 @@
 ---
+
 title: "Golden Statue: Soluna"
 source: "wiki"
 wiki_source: "https://erenshor.wiki.gg/wiki/Golden_Statue:_Soluna"
 categories: ["Items", "Furniture"]
 lore_category: "items"
+level: 32
 ---
 
-# Golden Statue: Soluna
-
-# Golden Statue: Soluna
-
-## Golden Statue: Soluna
-
-### Dropped by
-
-Raval, The First Paladin (1.0%)
-Ancient Guard (0.2%)
-
-### Buy
-
-25000
-
-### Sell
-
-16250
-
-Golden Statue: Soluna
-
-Used to decorate a building
+Golden Statue: Soluna is a endgame gear piece. Dropped by Raval, The First Paladin (Boss) in Soluna's Landing (1.0% drop rate). Also drops from Ancient Guard. Costs 25000g from vendors.
