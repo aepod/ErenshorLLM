@@ -178,6 +178,23 @@ if [ -f "$DATA_SRC/grounding.json" ]; then
     cp "$DATA_SRC/grounding.json" "$TARGET/data/grounding.json"
 fi
 
+# --- Clean up stale directories from previous builds ---
+
+for stale in "$TARGET/dist" "$TARGET/databuild-index" "$TARGET/erenshor-llm.exe.old"; do
+    if [ -e "$stale" ]; then
+        rm -rf "$stale"
+        echo "  Removed stale: $(basename "$stale")"
+    fi
+done
+
+# Remove legacy .json index files (replaced by .ruvector)
+for legacy_json in "$TARGET/data/dist/lore.json" "$TARGET/data/dist/responses.json"; do
+    if [ -f "$legacy_json" ]; then
+        rm "$legacy_json"
+        echo "  Removed legacy $(basename "$legacy_json") (using .ruvector)"
+    fi
+done
+
 # --- Summary ---
 
 sync 2>/dev/null || true
