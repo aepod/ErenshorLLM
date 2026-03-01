@@ -30,7 +30,7 @@
 use anyhow::{Context, Result};
 use std::collections::HashMap;
 use std::path::Path;
-use tracing::{info, warn};
+use tracing::{debug, info, warn};
 
 use crate::intelligence::embedder::EmbeddingEngine;
 use crate::intelligence::vector_store::{VectorStoreAdapter, VectorStoreConfig};
@@ -139,7 +139,7 @@ pub fn build_personality_index(
     output_path: &Path,
     embedder: &EmbeddingEngine,
 ) -> Result<()> {
-    info!(
+    debug!(
         "Building personality index from {:?} -> {:?}",
         input_dir, output_path
     );
@@ -163,7 +163,7 @@ pub fn build_personality_index(
 
     json_files.sort();
 
-    info!("Found {} personality files", json_files.len());
+    debug!("Found {} personality files", json_files.len());
 
     // Parse all personalities
     let mut personalities: Vec<PersonalityJson> = Vec::new();
@@ -179,7 +179,7 @@ pub fn build_personality_index(
         }
     }
 
-    info!("Parsed {} personalities", personalities.len());
+    debug!("Parsed {} personalities", personalities.len());
 
     // Prepare entries: (id, embedding, metadata)
     let mut entries: Vec<(String, Vec<f32>, HashMap<String, serde_json::Value>)> = Vec::new();
@@ -349,7 +349,7 @@ pub fn build_personality_index(
         }
     }
 
-    info!(
+    debug!(
         "Embedded {} archetype vectors + {} phrase vectors = {} total ({} rivals)",
         archetype_count,
         phrase_count,
@@ -365,11 +365,7 @@ pub fn build_personality_index(
     // Write to .ruvector
     write_personality_ruvector(&entries, output_path)?;
 
-    info!(
-        "Personality index built successfully: {} entries -> {:?}",
-        entries.len(),
-        output_path
-    );
+    info!("Personality index: {} entries", entries.len());
 
     Ok(())
 }
@@ -388,7 +384,7 @@ fn write_personality_ruvector(
     if output_path.exists() {
         std::fs::remove_file(output_path)
             .with_context(|| format!("Failed to remove existing {:?}", output_path))?;
-        info!("Removed existing personality database at {:?}", output_path);
+        debug!("Removed existing personality database at {:?}", output_path);
     }
 
     let config = VectorStoreConfig {
@@ -433,7 +429,7 @@ fn write_personality_ruvector(
 
     let count = adapter.insert_batch(batch)?;
 
-    info!(
+    debug!(
         "Wrote {} personality entries to VectorDB at {:?}",
         count, output_path
     );

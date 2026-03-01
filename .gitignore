@@ -25,6 +25,9 @@ sidecar/data/dist/
 # ONNX Runtime shared libs
 sidecar/data/lib/
 
+# Shimmy binary (downloaded during build)
+sidecar/shimmy.exe
+
 # Vulkan SDK (cross-compile dependency, too large for git)
 sidecar/vulkan-sdk-mingw/
 

@@ -15,10 +15,10 @@ mod state;
 use clap::{Parser, Subcommand};
 use std::path::PathBuf;
 use std::sync::Arc;
-use tracing::{error, info, warn};
+use tracing::{debug, error, info, warn};
 
 #[derive(Parser)]
-#[command(name = "erenshor-llm", version = "0.2.0", about = "RuVector intelligence sidecar for Erenshor")]
+#[command(name = "erenshor-llm", version = "0.3.0", about = "RuVector intelligence sidecar for Erenshor")]
 struct Cli {
     /// Port to listen on
     #[arg(long, default_value = "11435")]
@@ -247,7 +247,7 @@ fn load_vector_personalities(
 
     // Always rebuild from JSON source files at startup
     if let Some(ref emb) = embedder {
-        info!("Building personality vectors from {:?}...", personalities_dir);
+        debug!("Building personality vectors from {:?}...", personalities_dir);
         // Remove stale .ruvector if present
         if ruvector_path.exists() {
             if let Err(e) = std::fs::remove_file(&ruvector_path) {
@@ -256,7 +256,7 @@ fn load_vector_personalities(
         }
         match builder::personality_builder::build_personality_index(&personalities_dir, &ruvector_path, emb) {
             Ok(()) => {
-                info!("Personality vectors rebuilt successfully");
+                debug!("Personality vectors rebuilt successfully");
             }
             Err(e) => {
                 warn!("Failed to build personality vectors: {}. Personality vector search will be unavailable.", e);
@@ -276,6 +276,7 @@ fn load_vector_personalities(
 }
 
 /// Initialize the LLM router based on configuration.
+/// Both local (shimmy) and cloud (OpenRouter) backends are HTTP clients.
 fn load_llm_router(config: &config::AppConfig) -> Option<Arc<llm::router::LlmRouter>> {
     if !config.llm.enabled {
         info!("LLM text generation disabled");
@@ -284,17 +285,18 @@ fn load_llm_router(config: &config::AppConfig) -> Option<Arc<llm::router::LlmRou
 
     let mode = config.llm.mode;
 
-    // Load local backend if needed
+    // Create local backend HTTP client (shimmy) if needed
     let local = if matches!(mode, config::LlmMode::Local | config::LlmMode::Hybrid) {
-        let model_path = config.resolve_path(&config.llm.local.model_path);
-
-        match llm::local::LocalBackend::load(&model_path, &config.llm.local) {
+        match llm::local::LocalBackend::new(&config.llm.local) {
             Ok(backend) => {
-                info!("Local LLM backend loaded");
+                info!(
+                    "Local LLM backend configured (shimmy at {})",
+                    config.llm.local.endpoint
+                );
                 Some(Arc::new(backend))
             }
             Err(e) => {
-                warn!("Failed to load local LLM backend: {}. Continuing without.", e);
+                warn!("Failed to configure local LLM backend: {}. Continuing without.", e);
                 None
             }
         }
@@ -302,7 +304,7 @@ fn load_llm_router(config: &config::AppConfig) -> Option<Arc<llm::router::LlmRou
         None
     };
 
-    // Load cloud backend if needed
+    // Create cloud backend HTTP client (OpenRouter) if needed
     let cloud = if matches!(mode, config::LlmMode::Cloud | config::LlmMode::Hybrid) {
         match llm::cloud::CloudBackend::new(&config.llm.cloud) {
             Ok(backend) => {
@@ -510,13 +512,10 @@ async fn main() {
     // Load intelligence components (graceful degradation if files missing)
     let embedder = load_embedder(&config);
 
-    // Warm-up embedding to pre-initialize ONNX thread pools and catch
-    // segfaults at startup rather than on first HTTP request.
+    // Warm-up embedding to pre-initialize ONNX thread pools
     if let Some(ref emb) = embedder {
-        info!("Warming up embedding engine...");
         match emb.embed("warm-up test") {
-            Ok(v) => info!("Embedding warm-up OK: {}d, norm={:.4}", v.len(),
-                v.iter().map(|x| x * x).sum::<f32>().sqrt()),
+            Ok(_) => {}
             Err(e) => error!("Embedding warm-up FAILED: {}", e),
         }
     }
@@ -524,7 +523,9 @@ async fn main() {
     let lore = load_lore(&config);
     let responses = load_responses(&config);
     let memory = load_memory(&config);
-    let vector_personalities = load_vector_personalities(&config, &embedder);
+
+    // Start with empty personality vectors -- built in background after server starts
+    let vector_personalities = intelligence::personality_store::VectorPersonalityStore::empty();
 
     // Initialize SONA adaptive learning
     let sona = if config.sona.enabled {
@@ -545,6 +546,42 @@ async fn main() {
 
     // Load Phase 3 components
     let personality_store = load_personalities(&config);
+
+    // Start shimmy if local LLM mode is enabled
+    let _shimmy = if config.llm.enabled
+        && matches!(config.llm.mode, config::LlmMode::Local | config::LlmMode::Hybrid)
+        && config.llm.local.auto_start
+    {
+        // Extract bind address from endpoint URL (e.g. "http://127.0.0.1:8012" -> "127.0.0.1:8012")
+        let bind_addr = config.llm.local.endpoint
+            .trim_start_matches("http://")
+            .trim_start_matches("https://")
+            .to_string();
+
+        let shimmy = llm::shimmy::ShimmyProcess::start(
+            &config.data_dir,
+            &bind_addr,
+            &config.llm.local.gpu_backend,
+            &config.llm.local.model_dir,
+        );
+
+        if shimmy.is_some() {
+            // Wait for shimmy to become ready before accepting requests
+            let ready = llm::shimmy::ShimmyProcess::wait_ready(
+                &config.llm.local.endpoint,
+                std::time::Duration::from_secs(60),
+            ).await;
+
+            if !ready {
+                warn!("Shimmy not ready; local LLM may fail on first requests");
+            }
+        }
+
+        shimmy
+    } else {
+        None
+    };
+
     let llm_router = load_llm_router(&config);
 
     let app_state = state::AppState::new(
@@ -572,6 +609,34 @@ async fn main() {
                         info!("SONA background tick shutting down");
                         break;
                     }
+                }
+            }
+        });
+    }
+
+    // Spawn background task to build personality vectors without blocking startup.
+    // The server is already listening; personality search will return empty results
+    // until the build completes, at which point the RwLock is swapped.
+    {
+        let state_for_build = Arc::clone(&app_state);
+        tokio::spawn(async move {
+            // Clone what the blocking closure needs so state_for_build stays available
+            let config_clone = state_for_build.config.clone();
+            let embedder_clone = state_for_build.embedder.clone();
+
+            let result = tokio::task::spawn_blocking(move || {
+                load_vector_personalities(&config_clone, &embedder_clone)
+            })
+            .await;
+
+            match result {
+                Ok(store) => {
+                    let mut guard = state_for_build.vector_personalities.write().await;
+                    *guard = store;
+                    info!("Background personality vector build complete");
+                }
+                Err(e) => {
+                    warn!("Background personality build task failed: {}", e);
                 }
             }
         });

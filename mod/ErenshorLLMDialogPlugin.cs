@@ -21,13 +21,12 @@ namespace ErenshorLLMDialog
 
     /// <summary>
     /// LLM mode for Phase 3 response generation.
-    /// Currently only Off is functional; other modes are placeholders.
     /// </summary>
     public enum LlmMode
     {
         /// <summary>Template-only responses (Phase 2 behavior).</summary>
         Off,
-        /// <summary>Use a local GGUF model for response generation.</summary>
+        /// <summary>Shimmy local inference server (GPU auto-detect).</summary>
         Local,
         /// <summary>Use a cloud LLM endpoint (e.g. OpenRouter) for response generation.</summary>
         Cloud,
@@ -47,6 +46,7 @@ namespace ErenshorLLMDialog
         private SidecarConfig _sidecarConfig;
         private SidecarClient _sidecarClient;
         private SidecarManager _sidecarManager;
+        private ShimmyManager _shimmyManager;
 
         void Awake()
         {
@@ -122,6 +122,24 @@ namespace ErenshorLLMDialog
                 }
             }
 
+            // --- Start shimmy if LLM mode requires local inference ---
+            var llmMode = _sidecarConfig.LlmModeEntry.Value;
+            _shimmyManager = new ShimmyManager(_sidecarConfig, Log);
+
+            if (llmMode == LlmMode.Local || llmMode == LlmMode.Hybrid)
+            {
+                _shimmyManager.Start();
+                if (_shimmyManager.IsRunning)
+                {
+                    bool ready = _shimmyManager.WaitForReady(15f);
+                    if (!ready)
+                    {
+                        Log.LogWarning("Shimmy did not become ready. " +
+                            "Local LLM inference may not work.");
+                    }
+                }
+            }
+
             // --- Start sidecar if auto-start is enabled ---
             if (_sidecarConfig.AutoStart.Value == Toggle.On)
             {
@@ -191,6 +209,8 @@ namespace ErenshorLLMDialog
                 CancelInvoke(nameof(HealthPoll));
                 _sidecarManager.Stop();
             }
+
+            _shimmyManager?.Stop();
         }
 
         /// <summary>

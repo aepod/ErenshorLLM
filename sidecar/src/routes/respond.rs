@@ -319,12 +319,14 @@ async fn handle_respond(
                     })
                     .collect();
 
+                // Token budget for prompt assembly (shimmy/cloud handle actual context window)
+                let context_budget = 2048;
                 let prompt = PromptBuilder::build(
                     personality,
                     &lore_ctx,
                     &memory_ctx,
                     &request,
-                    llm_config.local.context_size,
+                    context_budget,
                 );
 
                 let result = router

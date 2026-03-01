@@ -10,12 +10,15 @@ use crate::intelligence::templates::ResponseStore;
 use crate::llm::personality::PersonalityStore;
 use crate::llm::router::LlmRouter;
 use std::sync::Arc;
-use tokio::sync::Notify;
+use tokio::sync::{Notify, RwLock};
 
 /// Shared application state passed to all route handlers via axum State.
 ///
 /// Stores are accessed directly (no RwLock) because VectorDB handles its own
 /// internal locking via redb. MemoryStore.ingest() takes &self, not &mut self.
+///
+/// Exception: `vector_personalities` is behind a RwLock because it is built
+/// in a background task after the server starts (deferred startup).
 pub struct AppState {
     pub config: AppConfig,
     pub shutdown: Arc<Notify>,
@@ -33,7 +36,8 @@ pub struct AppState {
     /// Personality store for LLM prompt construction (HashMap-based).
     pub personality_store: Arc<PersonalityStore>,
     /// Vector-backed personality store for semantic search.
-    pub vector_personalities: VectorPersonalityStore,
+    /// Wrapped in RwLock: starts empty, populated by background build task.
+    pub vector_personalities: RwLock<VectorPersonalityStore>,
     /// LLM router (local/cloud/hybrid). None when LLM is disabled.
     pub llm_router: Option<Arc<LlmRouter>>,
 }
@@ -61,7 +65,7 @@ impl AppState {
             memory,
             sona,
             personality_store,
-            vector_personalities,
+            vector_personalities: RwLock::new(vector_personalities),
             llm_router,
         })
     }

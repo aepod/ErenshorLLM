@@ -39,6 +39,8 @@ namespace ErenshorLLMDialog.Sidecar
         // ── Section 5: LLM (Phase 3) ───────────────────────────────────
 
         public ConfigEntry<LlmMode> LlmModeEntry { get; }
+        public ConfigEntry<int> ShimmyPort { get; }
+        public ConfigEntry<string> ShimmyGpuBackend { get; }
 
         // ── Section 6: Multi-Sim ─────────────────────────────────────────
 
@@ -181,9 +183,22 @@ namespace ErenshorLLMDialog.Sidecar
                 "5 - LLM (Phase 3)", "LLM Mode", LlmMode.Off,
                 "Whether to use an LLM for response generation. " +
                 "Off = template-only (Phase 2 behavior). " +
-                "Local = Candle GGUF inference on CPU. " +
+                "Local = shimmy local inference server (GPU auto-detect). " +
                 "Cloud = OpenRouter API. " +
                 "Hybrid = local first, cloud fallback.");
+
+            ShimmyPort = config.Bind(
+                "5 - LLM (Phase 3)", "Shimmy Port", 8012,
+                new ConfigDescription(
+                    "TCP port for the shimmy local inference server. " +
+                    "Must match [llm.local] endpoint in erenshor-llm.toml.",
+                    new AcceptableValueRange<int>(1024, 65535)));
+
+            ShimmyGpuBackend = config.Bind(
+                "5 - LLM (Phase 3)", "Shimmy GPU Backend", "auto",
+                "GPU backend for shimmy inference. " +
+                "auto = let shimmy detect available GPU. " +
+                "Other values: vulkan, cuda, metal, cpu.");
 
             ApiKey = config.Bind(
                 "5 - LLM (Phase 3)", "API Key", "",

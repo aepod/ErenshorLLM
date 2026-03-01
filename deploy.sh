@@ -16,10 +16,9 @@
 # What gets deployed:
 #   TARGET_DIR/
 #   +-- ErenshorLLMDialog.dll        # C# BepInEx mod
-#   +-- erenshor-llm.exe             # Rust sidecar (CPU build)
+#   +-- erenshor-llm.exe             # Rust sidecar (RAG + routing)
+#   +-- shimmy.exe                   # Local LLM inference server (GPU/CPU)
 #   +-- onnxruntime.dll              # ONNX Runtime (if present)
-#   +-- libstdc++-6.dll              # MinGW C++ runtime
-#   +-- libgomp-1.dll                # MinGW OpenMP runtime (llama.cpp)
 #   +-- data/
 #       +-- erenshor-llm.toml        # Config (only if not already present)
 #       +-- dist/                    # Pre-built vector indexes
@@ -93,6 +92,18 @@ cp "$SIDECAR_EXE" "$TARGET/erenshor-llm.exe"
 echo "  Deploying ErenshorLLMDialog.dll..."
 cp "$MOD_DLL" "$TARGET/ErenshorLLMDialog.dll"
 
+# Shimmy local inference server (for local/hybrid LLM mode)
+SHIMMY_EXE="$SIDECAR_DIR/shimmy.exe"
+if [ -f "$SHIMMY_EXE" ]; then
+    echo "  Deploying shimmy.exe..."
+    cp "$SHIMMY_EXE" "$TARGET/shimmy.exe"
+elif [ -f "$TARGET/shimmy.exe" ]; then
+    echo "  shimmy.exe already in target (keeping)"
+else
+    echo "  Warning: shimmy.exe not found. Local LLM inference will not be available."
+    echo "           Run: cd sidecar && curl -L -o shimmy.exe https://github.com/Michael-A-Kuykendall/shimmy/releases/download/v1.9.0/shimmy-windows-x86_64.exe"
+fi
+
 # ONNX Runtime DLL (optional, may be alongside the sidecar or in lib/)
 ONNX_DLL=""
 for candidate in "$SIDECAR_DIR/onnxruntime.dll" "$SIDECAR_DIR/data/lib/onnxruntime.dll" "$TARGET/onnxruntime.dll"; do
@@ -110,27 +121,13 @@ else
     echo "  Warning: onnxruntime.dll not found. ONNX embedding may not work."
 fi
 
-# MinGW runtime DLLs (required by llama.cpp cross-compiled with mingw)
-MINGW_GCC_DIR="/usr/lib/gcc/x86_64-w64-mingw32/12-posix"
-MINGW_SYS_DIR="/usr/x86_64-w64-mingw32/lib"
-echo "  Deploying MinGW runtime DLLs..."
-MINGW_DLLS=(
-    "$MINGW_GCC_DIR/libstdc++-6.dll"
-    "$MINGW_GCC_DIR/libgcc_s_seh-1.dll"
-    "$MINGW_GCC_DIR/libgomp-1.dll"
-    "$MINGW_SYS_DIR/libwinpthread-1.dll"
-)
-for dll_path in "${MINGW_DLLS[@]}"; do
-    dll_name="$(basename "$dll_path")"
-    if [ -f "$dll_path" ]; then
-        cp "$dll_path" "$TARGET/$dll_name"
-    elif [ -f "$TARGET/$dll_name" ]; then
-        echo "    $dll_name already in target (keeping)"
-    else
-        echo "    Warning: $dll_name not found. Sidecar may fail to start."
+# Clean up legacy MinGW runtime DLLs (no longer needed since shimmy handles native code)
+for legacy_dll in libstdc++-6.dll libgcc_s_seh-1.dll libgomp-1.dll libwinpthread-1.dll; do
+    if [ -f "$TARGET/$legacy_dll" ]; then
+        rm "$TARGET/$legacy_dll"
+        echo "  Removed legacy $legacy_dll"
     fi
 done
-echo "    $(ls "$TARGET"/lib*.dll 2>/dev/null | wc -l) runtime DLLs"
 
 # --- Deploy config (don't overwrite user edits) ---
 
@@ -183,6 +180,7 @@ echo ""
 echo "=== Deployment complete ==="
 echo "  Target:        $TARGET"
 echo "  Sidecar:       $(ls -lh "$TARGET/erenshor-llm.exe" | awk '{print $5}')"
+echo "  Shimmy:        $(ls -lh "$TARGET/shimmy.exe" 2>/dev/null | awk '{print $5}' || echo 'not deployed')"
 echo "  Mod DLL:       $(ls -lh "$TARGET/ErenshorLLMDialog.dll" | awk '{print $5}')"
 echo "  Personalities: $PCOUNT files"
 echo "  Indexes:       $(ls "$TARGET/data/dist/" | wc -l) files"

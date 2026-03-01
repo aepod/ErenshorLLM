@@ -9,7 +9,7 @@
 use anyhow::{Context, Result};
 use std::collections::HashMap;
 use std::path::Path;
-use tracing::{info, warn};
+use tracing::{debug, info, warn};
 
 use crate::intelligence::embedder::EmbeddingEngine;
 use crate::intelligence::templates::{save_template_index, RawTemplateFile, ResponseTemplate};
@@ -26,7 +26,7 @@ pub fn build_response_index(
     output_path: &Path,
     embedder: &EmbeddingEngine,
 ) -> Result<()> {
-    info!(
+    debug!(
         "Building response index from {:?} -> {:?}",
         input_dir, output_path
     );
@@ -60,7 +60,7 @@ pub fn build_response_index(
     for path in &files {
         file_count += 1;
 
-        info!("Processing {:?}", path);
+        debug!("Processing {:?}", path);
 
         let contents = std::fs::read_to_string(path)
             .with_context(|| format!("Failed to read {:?}", path))?;
@@ -89,7 +89,7 @@ pub fn build_response_index(
                     template_count += 1;
 
                     if template_count % 50 == 0 {
-                        info!("Embedded {}/{} templates...", template_count, template_count);
+                        debug!("Embedded {} templates...", template_count);
                     }
                 }
                 Err(e) => {
@@ -102,7 +102,7 @@ pub fn build_response_index(
         }
     }
 
-    info!(
+    debug!(
         "Embedded {} templates from {} files",
         template_count, file_count
     );
@@ -117,11 +117,7 @@ pub fn build_response_index(
         save_template_index(&all_templates, output_path)?;
     }
 
-    info!(
-        "Response index built successfully: {} entries -> {:?}",
-        all_templates.len(),
-        output_path
-    );
+    info!("Response index: {} entries", all_templates.len());
 
     Ok(())
 }
@@ -137,7 +133,7 @@ fn write_ruvector_templates(templates: &[ResponseTemplate], output_path: &Path) 
     if output_path.exists() {
         std::fs::remove_file(output_path)
             .with_context(|| format!("Failed to remove existing {:?}", output_path))?;
-        info!("Removed existing database at {:?}", output_path);
+        debug!("Removed existing database at {:?}", output_path);
     }
 
     let config = VectorStoreConfig {
@@ -197,7 +193,7 @@ fn write_ruvector_templates(templates: &[ResponseTemplate], output_path: &Path) 
 
     let count = adapter.insert_batch(batch)?;
 
-    info!(
+    debug!(
         "Wrote {} templates to VectorDB at {:?}",
         count, output_path
     );

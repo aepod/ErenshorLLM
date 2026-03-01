@@ -10,31 +10,33 @@ PLUGIN_DIR="$GAME_DIR/BepInEx/plugins/ErenshorLLMDialog"
 # ONNX Runtime is loaded dynamically; point to the shipped copy for Linux index builds.
 export ORT_DYLIB_PATH="${ORT_DYLIB_PATH:-$SCRIPT_DIR/data/lib/libonnxruntime.so}"
 
-# llama-cpp-sys-2 uses bindgen which needs libclang.
-export LIBCLANG_PATH="${LIBCLANG_PATH:-/usr/lib/llvm-14/lib}"
-
 WIN_TARGET="x86_64-pc-windows-gnu"
 WIN_EXE="target/$WIN_TARGET/release/erenshor-llm.exe"
 
 # Isolate native Linux build into a separate target directory to prevent
-# cargo/cmake cache contamination of the Windows Vulkan cross-compile.
+# cargo cache contamination of the Windows cross-compile.
 NATIVE_TARGET_DIR="target-native"
 NATIVE_EXE="$NATIVE_TARGET_DIR/release/erenshor-llm"
+
+SHIMMY_VERSION="v1.9.0"
+SHIMMY_URL="https://github.com/Michael-A-Kuykendall/shimmy/releases/download/${SHIMMY_VERSION}/shimmy-windows-x86_64.exe"
+SHIMMY_EXE="shimmy.exe"
+
+if [ ! -f "$SHIMMY_EXE" ]; then
+    echo "=== Downloading shimmy ${SHIMMY_VERSION} ==="
+    curl -L -o "$SHIMMY_EXE" "$SHIMMY_URL"
+    echo "Downloaded: $(ls -lh "$SHIMMY_EXE" | awk '{print $5}')"
+else
+    echo "=== shimmy already downloaded ==="
+fi
 
 echo "=== Building native binary (for index generation) ==="
 cargo build --release --target-dir "$NATIVE_TARGET_DIR"
 
-echo "=== Building Windows binary (cross-compile with Vulkan) ==="
-# Clear stale llama cmake cache to ensure GGML_VULKAN=ON is picked up.
-# Cargo doesn't detect env var changes for cmake rebuilds, so a stale
-# cache with GGML_VULKAN=OFF would persist silently.
-rm -rf "target/$WIN_TARGET/release/build/llama-cpp-sys-2-"*/
-# Set CMAKE_TOOLCHAIN_FILE and VULKAN_SDK only for cross-compile.
-# These MUST NOT be set globally (e.g. in .cargo/config.toml [env]) because
-# they would contaminate the native Linux build with mingw settings.
-CMAKE_TOOLCHAIN_FILE="$SCRIPT_DIR/mingw-posix-toolchain.cmake" \
-VULKAN_SDK="$SCRIPT_DIR/vulkan-sdk-mingw" \
-cargo build --release --target "$WIN_TARGET" --features vulkan
+echo "=== Building Windows binary (cross-compile) ==="
+# No cmake, no Vulkan SDK, no C++ compiler needed.
+# Local LLM inference is handled by shimmy (separate pre-built binary).
+cargo build --release --target "$WIN_TARGET"
 
 echo "=== Ensuring dist directory exists ==="
 mkdir -p data/dist
@@ -48,6 +50,7 @@ echo "=== Building response templates ==="
 echo "=== Deploying to game directory ==="
 if [ -d "$PLUGIN_DIR" ]; then
     cp "$WIN_EXE" "$PLUGIN_DIR/erenshor-llm.exe"
+    cp "$SHIMMY_EXE" "$PLUGIN_DIR/shimmy.exe"
     cp data/dist/*.ruvector "$PLUGIN_DIR/dist/"
     sync
     echo "Deployed to $PLUGIN_DIR"
@@ -60,9 +63,11 @@ echo ""
 echo "=== Build complete ==="
 echo "Windows binary:"
 ls -lh "$WIN_EXE" 2>/dev/null || echo "  (not found)"
+echo "Shimmy binary:"
+ls -lh "$SHIMMY_EXE" 2>/dev/null || echo "  (not found)"
 echo ""
 echo "Shipped artifacts (data/dist/):"
 ls -lh data/dist/*.ruvector 2>/dev/null || echo "  (no .ruvector files found)"
 echo ""
 echo "Note: personality.ruvector is NOT pre-built."
-echo "It is rebuilt at sidecar startup from data/personalities/*.json"
+echo "It is rebuilt at sidecar startup from data/personalities/*.md"

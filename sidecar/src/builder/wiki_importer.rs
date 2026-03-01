@@ -10,7 +10,7 @@
 use anyhow::{Context, Result};
 use std::collections::HashMap;
 use std::path::Path;
-use tracing::{info, warn};
+use tracing::{debug, info, warn};
 
 use crate::builder::wiki_parser;
 
@@ -114,21 +114,20 @@ pub fn import_wiki(wiki_dir: &Path, output_dir: &Path) -> Result<()> {
         total_processed += 1;
 
         if total_processed % 100 == 0 {
-            info!("Imported {} wiki pages so far...", total_processed);
+            debug!("Imported {} wiki pages so far...", total_processed);
         }
     }
 
     // Print summary
-    info!("=== Wiki Import Summary ===");
-    info!("Total files processed: {}", total_processed);
-    info!("Skipped (curated exists): {}", skipped_curated);
-    info!("Skipped (parse error): {}", skipped_parse_error);
-    info!("Files per category:");
+    info!(
+        "Wiki import: {} processed, {} skipped (curated), {} skipped (error)",
+        total_processed, skipped_curated, skipped_parse_error
+    );
 
     let mut sorted_categories: Vec<_> = category_counts.iter().collect();
     sorted_categories.sort_by_key(|(k, _)| (*k).clone());
     for (category, count) in sorted_categories {
-        info!("  {}: {}", category, count);
+        debug!("  {}: {}", category, count);
     }
 
     Ok(())

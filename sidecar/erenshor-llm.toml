@@ -40,9 +40,12 @@ temperature = 0.7
 queue_depth = 5
 
 [llm.local]
-model_path = "models/qwen3-1.7b-q4_k_m.gguf"
-context_size = 2048
-gpu_layers = 999            # 0=CPU only, 999=offload all layers to GPU (CUDA/Vulkan)
+endpoint = "http://127.0.0.1:8012"    # shimmy inference server endpoint
+model = "gemma3npc-1b-q4_k_m"          # model name (shimmy auto-discovers GGUFs)
+timeout_ms = 30000                      # 30s timeout for local inference
+auto_start = true                       # sidecar auto-starts shimmy
+gpu_backend = "cuda"                    # cuda, vulkan, auto, cpu
+model_dir = "models"                    # GGUF model directory (relative to data-dir)
 
 [llm.cloud]
 provider = "openrouter"

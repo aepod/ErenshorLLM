@@ -448,42 +448,61 @@ fn default_queue_depth() -> usize {
     5
 }
 
-/// Local LLM backend configuration (llama.cpp via llama-cpp-2).
-/// Tokenizer is embedded in the GGUF file -- no separate tokenizer needed.
+/// Local LLM backend configuration (shimmy external inference server).
+/// Shimmy runs as a separate process and handles GPU acceleration natively.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct LocalLlmConfig {
-    /// Path to GGUF model file (relative to data_dir).
-    #[serde(default = "default_llm_model_path")]
-    pub model_path: String,
-    /// Context window size in tokens.
-    #[serde(default = "default_context_size")]
-    pub context_size: usize,
-    /// Number of model layers to offload to GPU. 0 = CPU only, 999 = all layers.
-    /// Requires build with `cuda` or `vulkan` feature. Ignored on CPU-only builds.
-    #[serde(default = "default_gpu_layers")]
-    pub gpu_layers: u32,
+    /// HTTP endpoint for the local inference server (shimmy).
+    #[serde(default = "default_local_endpoint")]
+    pub endpoint: String,
+    /// Model name to request from the local inference server.
+    #[serde(default = "default_local_model")]
+    pub model: String,
+    /// Request timeout in milliseconds.
+    #[serde(default = "default_local_timeout_ms")]
+    pub timeout_ms: u64,
+    /// Whether the sidecar should auto-start shimmy.
+    #[serde(default = "default_true")]
+    pub auto_start: bool,
+    /// GPU backend for shimmy: "cuda", "vulkan", "auto", "cpu".
+    #[serde(default = "default_gpu_backend")]
+    pub gpu_backend: String,
+    /// Directory containing GGUF model files (relative to data-dir).
+    #[serde(default = "default_model_dir")]
+    pub model_dir: String,
 }
 
 impl Default for LocalLlmConfig {
     fn default() -> Self {
         Self {
-            model_path: default_llm_model_path(),
-            context_size: default_context_size(),
-            gpu_layers: default_gpu_layers(),
+            endpoint: default_local_endpoint(),
+            model: default_local_model(),
+            timeout_ms: default_local_timeout_ms(),
+            auto_start: true,
+            gpu_backend: default_gpu_backend(),
+            model_dir: default_model_dir(),
         }
     }
 }
 
-fn default_llm_model_path() -> String {
-    "models/qwen3-1.7b-q4_k_m.gguf".to_string()
+fn default_local_endpoint() -> String {
+    "http://127.0.0.1:8012".to_string()
 }
 
-fn default_context_size() -> usize {
-    2048
+fn default_local_model() -> String {
+    "gemma3npc-1b-q4_k_m".to_string()
 }
 
-fn default_gpu_layers() -> u32 {
-    999 // Offload all layers to GPU by default; falls back to CPU if no GPU available
+fn default_local_timeout_ms() -> u64 {
+    30_000
+}
+
+fn default_gpu_backend() -> String {
+    "cuda".to_string()
+}
+
+fn default_model_dir() -> String {
+    "models".to_string()
 }
 
 /// Cloud LLM backend configuration (OpenRouter).

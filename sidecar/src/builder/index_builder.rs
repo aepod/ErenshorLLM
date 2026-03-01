@@ -16,7 +16,7 @@
 use anyhow::{Context, Result};
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
-use tracing::{info, warn};
+use tracing::{debug, info, warn};
 
 use crate::builder::wiki_parser;
 use crate::intelligence::embedder::EmbeddingEngine;
@@ -74,7 +74,7 @@ pub fn build_lore_index_multi(
     output_path: &Path,
     embedder: &EmbeddingEngine,
 ) -> Result<()> {
-    info!(
+    debug!(
         "Building lore index from {} source(s) -> {:?}",
         sources.len(),
         output_path
@@ -90,7 +90,7 @@ pub fn build_lore_index_multi(
         match source {
             LoreSource::CuratedLore { path } => {
                 let (entries, count) = process_curated_lore(path, embedder)?;
-                info!(
+                debug!(
                     "Curated lore: {} entries from {:?}",
                     count, path
                 );
@@ -99,7 +99,7 @@ pub fn build_lore_index_multi(
             }
             LoreSource::WikiDump { path } => {
                 let (entries, count) = process_wiki_dump(path, embedder)?;
-                info!(
+                debug!(
                     "Wiki dump: {} entries from {:?}",
                     count, path
                 );
@@ -109,7 +109,7 @@ pub fn build_lore_index_multi(
         }
     }
 
-    info!("Total embedded passages: {}", total_passage_count);
+    debug!("Total embedded passages: {}", total_passage_count);
 
     if all_entries.is_empty() {
         warn!("No passages found. Output will be empty.");
@@ -121,11 +121,7 @@ pub fn build_lore_index_multi(
         save_lore_index(&all_entries, output_path)?;
     }
 
-    info!(
-        "Lore index built successfully: {} entries -> {:?}",
-        all_entries.len(),
-        output_path
-    );
+    info!("Lore index: {} entries", all_entries.len());
 
     Ok(())
 }
@@ -135,7 +131,7 @@ fn process_curated_lore(
     input_dir: &Path,
     embedder: &EmbeddingEngine,
 ) -> Result<(Vec<LoreEntry>, usize)> {
-    info!("Processing curated lore from {:?}", input_dir);
+    debug!("Processing curated lore from {:?}", input_dir);
 
     if !input_dir.exists() {
         anyhow::bail!("Input directory {:?} does not exist", input_dir);
@@ -164,7 +160,7 @@ fn process_curated_lore(
             .and_then(|n| n.to_str())
             .unwrap_or("unknown");
 
-        info!(
+        debug!(
             "Processing {:?} (category={}, page={})",
             path, category, page
         );
@@ -194,7 +190,7 @@ fn process_curated_lore(
                     passage_count += 1;
 
                     if passage_count % 50 == 0 {
-                        info!("Curated: embedded {} passages...", passage_count);
+                        debug!("Curated: embedded {} passages...", passage_count);
                     }
                 }
                 Err(e) => {
@@ -208,7 +204,7 @@ fn process_curated_lore(
         }
     }
 
-    info!(
+    debug!(
         "Curated lore: {} passages from {} files",
         passage_count, file_count
     );
@@ -221,7 +217,7 @@ fn process_wiki_dump(
     wiki_dir: &Path,
     embedder: &EmbeddingEngine,
 ) -> Result<(Vec<LoreEntry>, usize)> {
-    info!("Processing wiki dump from {:?}", wiki_dir);
+    debug!("Processing wiki dump from {:?}", wiki_dir);
 
     let wiki_passages = wiki_parser::parse_wiki_dump(wiki_dir)?;
 
@@ -253,7 +249,7 @@ fn process_wiki_dump(
                 passage_count += 1;
 
                 if passage_count % 100 == 0 {
-                    info!("Wiki: embedded {} passages...", passage_count);
+                    debug!("Wiki: embedded {} passages...", passage_count);
                 }
             }
             Err(e) => {
@@ -267,7 +263,7 @@ fn process_wiki_dump(
         }
     }
 
-    info!("Wiki dump: {} passages embedded", passage_count);
+    debug!("Wiki dump: {} passages embedded", passage_count);
 
     Ok((entries, passage_count))
 }
@@ -283,7 +279,7 @@ fn write_ruvector_lore(entries: &[LoreEntry], output_path: &Path) -> Result<()> 
     if output_path.exists() {
         std::fs::remove_file(output_path)
             .with_context(|| format!("Failed to remove existing {:?}", output_path))?;
-        info!("Removed existing database at {:?}", output_path);
+        debug!("Removed existing database at {:?}", output_path);
     }
 
     let config = VectorStoreConfig {
@@ -310,7 +306,7 @@ fn write_ruvector_lore(entries: &[LoreEntry], output_path: &Path) -> Result<()> 
 
     let count = adapter.insert_batch(batch)?;
 
-    info!(
+    debug!(
         "Wrote {} lore entries to VectorDB at {:?}",
         count, output_path
     );

@@ -3,7 +3,7 @@ use std::time::Instant;
 use tracing::{debug, info, warn};
 
 use crate::config::LlmMode;
-use crate::llm::cloud::{ChatMessage, CloudBackend};
+use crate::llm::cloud::CloudBackend;
 use crate::llm::local::LocalBackend;
 use crate::llm::postprocess;
 
@@ -19,7 +19,8 @@ pub enum LlmResult {
     Fallback { reason: String },
 }
 
-/// Routes LLM requests to local, cloud, or hybrid backends.
+/// Routes LLM requests to local (shimmy), cloud (OpenRouter), or hybrid backends.
+/// Both backends use OpenAI-compatible HTTP APIs.
 pub struct LlmRouter {
     local: Option<Arc<LocalBackend>>,
     cloud: Option<Arc<CloudBackend>>,
@@ -62,48 +63,37 @@ impl LlmRouter {
         }
     }
 
-    /// Run local llama.cpp inference on a blocking thread to avoid segfaults
-    /// from cross-compiled mingw native code on tokio worker threads.
+    /// Generate via the local inference server (shimmy).
     async fn generate_local(&self, prompt: &str, max_tokens: usize, temperature: f32) -> LlmResult {
         let Some(local) = &self.local else {
             return LlmResult::Fallback {
-                reason: "Local backend not loaded".to_string(),
+                reason: "Local backend not configured".to_string(),
             };
         };
 
-        let local = Arc::clone(local);
-        let prompt = prompt.to_string();
-
-        match tokio::task::spawn_blocking(move || {
-            let start = Instant::now();
-            match local.generate(&prompt, max_tokens, temperature) {
-                Ok(raw) => {
-                    let text = postprocess::clean(&raw);
-                    if text.is_empty() {
-                        return LlmResult::Fallback {
-                            reason: "LLM generated empty response".to_string(),
-                        };
-                    }
-                    let latency_ms = start.elapsed().as_millis() as u64;
-                    debug!("Local LLM generated in {}ms", latency_ms);
-                    LlmResult::Success {
-                        text,
-                        source: "llm_local".to_string(),
-                        latency_ms,
-                    }
+        let start = Instant::now();
+        match local.generate(prompt, max_tokens, temperature).await {
+            Ok(raw) => {
+                let text = postprocess::clean(&raw);
+                if text.is_empty() {
+                    return LlmResult::Fallback {
+                        reason: "LLM generated empty response".to_string(),
+                    };
                 }
-                Err(e) => {
-                    warn!("Local LLM error: {}", e);
-                    LlmResult::Fallback {
-                        reason: format!("Local LLM error: {}", e),
-                    }
+                let latency_ms = start.elapsed().as_millis() as u64;
+                debug!("Local LLM generated in {}ms", latency_ms);
+                LlmResult::Success {
+                    text,
+                    source: "llm_local".to_string(),
+                    latency_ms,
                 }
             }
-        }).await {
-            Ok(result) => result,
-            Err(e) => LlmResult::Fallback {
-                reason: format!("Local LLM task panicked: {}", e),
-            },
+            Err(e) => {
+                warn!("Local LLM error: {}", e);
+                LlmResult::Fallback {
+                    reason: format!("Local LLM error: {}", e),
+                }
+            }
         }
     }
 
@@ -119,7 +109,7 @@ impl LlmRouter {
             };
         };
 
-        let messages = vec![ChatMessage {
+        let messages = vec![crate::llm::cloud::ChatMessage {
             role: "user".to_string(),
             content: prompt.to_string(),
         }];
@@ -156,7 +146,7 @@ impl LlmRouter {
         max_tokens: usize,
         temperature: f32,
     ) -> LlmResult {
-        // Try local first (primary), fall back to cloud
+        // Try local first (shimmy), fall back to cloud (OpenRouter)
         let local_result = self.generate_local(prompt, max_tokens, temperature).await;
 
         match local_result {
@@ -196,8 +186,8 @@ impl LlmRouter {
     pub fn model_name(&self) -> String {
         match self.mode {
             LlmMode::Local | LlmMode::Hybrid => {
-                if self.local.is_some() {
-                    "local_gguf".to_string()
+                if let Some(ref local) = self.local {
+                    format!("shimmy:{}", local.model_name())
                 } else {
                     "none".to_string()
                 }
