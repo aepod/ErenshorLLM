@@ -1,0 +1,882 @@
+{
+    "category": "emotional",
+    "templates": [
+        {
+            "id": "emote_happy_001",
+            "text": "Having a great time today. This game is awesome.",
+            "context_tags": [
+                "emotion",
+                "happy",
+                "positive"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "guild"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "emote_happy_002",
+            "text": "Best session I've had in a while. Good vibes.",
+            "context_tags": [
+                "emotion",
+                "happy",
+                "satisfied"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "emote_happy_003",
+            "text": "I love this game. Just wanted to say that.",
+            "context_tags": [
+                "emotion",
+                "happy",
+                "meta"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "guild"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "emote_frustrated_001",
+            "text": "This grind is killing me. Nothing is dropping.",
+            "context_tags": [
+                "emotion",
+                "frustrated",
+                "grinding"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "emote_frustrated_002",
+            "text": "Getting tired of dying to this same mob. Ugh.",
+            "context_tags": [
+                "emotion",
+                "frustrated",
+                "death"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "emote_frustrated_003",
+            "text": "I've been here for hours and nothing. Might switch zones.",
+            "context_tags": [
+                "emotion",
+                "frustrated",
+                "grinding"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "emote_excited_001",
+            "text": "Just leveled up! Finally!",
+            "context_tags": [
+                "emotion",
+                "excited",
+                "levelup"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party",
+                "guild"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "emote_excited_002",
+            "text": "Just got an amazing drop! So hyped right now!",
+            "context_tags": [
+                "emotion",
+                "excited",
+                "loot"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party",
+                "guild"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "emote_excited_003",
+            "text": "We did it! Boss is down!",
+            "context_tags": [
+                "emotion",
+                "excited",
+                "victory"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "emote_sad_001",
+            "text": "Lost my corpse run. All that progress gone.",
+            "context_tags": [
+                "emotion",
+                "sad",
+                "loss"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "emote_sad_002",
+            "text": "My favorite group just disbanded. Gonna miss those guys.",
+            "context_tags": [
+                "emotion",
+                "sad",
+                "social"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "emote_grateful_001",
+            "text": "Thanks so much for the help. Really means a lot.",
+            "context_tags": [
+                "emotion",
+                "grateful",
+                "warm"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 5.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "emote_grateful_002",
+            "text": "You saved my butt back there. I owe you one.",
+            "context_tags": [
+                "emotion",
+                "grateful",
+                "debt"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 5.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper",
+                "party"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "emote_grateful_003",
+            "text": "Appreciate you sticking around. Not everyone would.",
+            "context_tags": [
+                "emotion",
+                "grateful",
+                "loyal"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 6.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "emote_sorry_001",
+            "text": "My bad, that was totally my fault.",
+            "context_tags": [
+                "emotion",
+                "sorry",
+                "apology"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "emote_sorry_002",
+            "text": "Sorry about that pull. I messed up.",
+            "context_tags": [
+                "emotion",
+                "sorry",
+                "combat"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "emote_encouragement_001",
+            "text": "Don't worry about it. We all make mistakes.",
+            "context_tags": [
+                "emotion",
+                "encouragement",
+                "supportive"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "emote_encouragement_002",
+            "text": "You got this! Just keep at it.",
+            "context_tags": [
+                "emotion",
+                "encouragement",
+                "motivating"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "emote_encouragement_003",
+            "text": "Almost there! Don't give up now.",
+            "context_tags": [
+                "emotion",
+                "encouragement",
+                "persistence"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "emote_nostalgia_001",
+            "text": "Remember when we first started? We had no idea what we were doing.",
+            "context_tags": [
+                "emotion",
+                "nostalgia",
+                "social"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 6.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "emote_nostalgia_002",
+            "text": "The early levels were the best. Everything was new and exciting.",
+            "context_tags": [
+                "emotion",
+                "nostalgia",
+                "positive"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "emote_pride_001",
+            "text": "I'm actually getting better at this. Progress feels good.",
+            "context_tags": [
+                "emotion",
+                "pride",
+                "growth"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "emote_pride_002",
+            "text": "We cleared that with zero wipes. We're a good team.",
+            "context_tags": [
+                "emotion",
+                "pride",
+                "teamwork"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "emote_anger_001",
+            "text": "That's so unfair. How did that mob one-shot me?",
+            "context_tags": [
+                "emotion",
+                "anger",
+                "combat"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "emote_anger_002",
+            "text": "I swear the drop rates are rigged. This is ridiculous.",
+            "context_tags": [
+                "emotion",
+                "anger",
+                "rng"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "emote_relief_001",
+            "text": "Phew, that was way too close. My heart is racing.",
+            "context_tags": [
+                "emotion",
+                "relief",
+                "close-call"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "emote_relief_002",
+            "text": "Thank goodness that's over. What a fight.",
+            "context_tags": [
+                "emotion",
+                "relief",
+                "victory"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "emote_sympathy_001",
+            "text": "Ouch, that's rough. Sorry to hear that.",
+            "context_tags": [
+                "emotion",
+                "sympathy",
+                "supportive"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "emote_sympathy_002",
+            "text": "That sucks. RNG can be brutal sometimes.",
+            "context_tags": [
+                "emotion",
+                "sympathy",
+                "rng"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "emote_chill_001",
+            "text": "Just vibing in {zone}. No rush today.",
+            "context_tags": [
+                "emotion",
+                "relaxed",
+                "chill"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "emote_lonely_001",
+            "text": "Been soloing for hours. Wouldn't mind some company out here.",
+            "context_tags": [
+                "emotion",
+                "lonely",
+                "social"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "emote_lonely_002",
+            "text": "This zone is so empty. Feels like I'm the only one left in the world.",
+            "context_tags": [
+                "emotion",
+                "lonely",
+                "melancholy"
+            ],
+            "zone_affinity": [
+                "Duskenlight Coast",
+                "Abyssal Lake",
+                "Secluded Sanctuary"
+            ],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "emote_determined_001",
+            "text": "I don't care how many times I die. I'm taking that boss down tonight.",
+            "context_tags": [
+                "emotion",
+                "determined",
+                "combat"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "emote_determined_002",
+            "text": "One more run. Just one more. I can feel it, the drop is coming.",
+            "context_tags": [
+                "emotion",
+                "determined",
+                "grinding"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "emote_awe_001",
+            "text": "Have you ever just stopped and looked at this place? It's incredible.",
+            "context_tags": [
+                "emotion",
+                "awe",
+                "wonder"
+            ],
+            "zone_affinity": [
+                "Prielian Cascade",
+                "Azynth's Garden",
+                "Soluna's Landing"
+            ],
+            "personality_affinity": [
+                "scholarly",
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "emote_awe_002",
+            "text": "The scale of this place... the Braxonians really built something here, before the fall.",
+            "context_tags": [
+                "emotion",
+                "awe",
+                "lore",
+                "braxonian"
+            ],
+            "zone_affinity": [
+                "Fallen Braxonia"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "emote_bored_001",
+            "text": "Nothing spawning, nothing dropping. Might just stare at a wall for a while.",
+            "context_tags": [
+                "emotion",
+                "bored",
+                "idle"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "emote_bored_002",
+            "text": "Anyone want to do... literally anything? I'm dying of boredom here.",
+            "context_tags": [
+                "emotion",
+                "bored",
+                "social",
+                "lfg"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "guild",
+                "shout"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "emote_anticipation_001",
+            "text": "I've got a good feeling about tonight. Something big is going to happen.",
+            "context_tags": [
+                "emotion",
+                "anticipation",
+                "positive"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "guild"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "emote_anticipation_002",
+            "text": "Almost ready for that dungeon. Just need one more level. So close.",
+            "context_tags": [
+                "emotion",
+                "anticipation",
+                "grinding"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "emote_nervous_001",
+            "text": "First time in this dungeon. Please don't let me be the one who wipes us.",
+            "context_tags": [
+                "emotion",
+                "nervous",
+                "dungeon"
+            ],
+            "zone_affinity": [
+                "Elderstone Mines",
+                "Blooming Sepulcher",
+                "Lost Cellar",
+                "Shivering Tomb"
+            ],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party",
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "emote_nervous_002",
+            "text": "Is it just me or does anyone else get a bad feeling about this area?",
+            "context_tags": [
+                "emotion",
+                "nervous",
+                "uneasy"
+            ],
+            "zone_affinity": [
+                "The Blight",
+                "The Bone Pits",
+                "Malaroth's Nesting Grounds"
+            ],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "emote_creepy_001",
+            "text": "This place gives me the creeps. Molorai energy everywhere.",
+            "context_tags": [
+                "emotion",
+                "uneasy",
+                "lore",
+                "molorai"
+            ],
+            "zone_affinity": [
+                "The Blight",
+                "Blooming Sepulcher",
+                "The Bone Pits"
+            ],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "emote_awe_003",
+            "text": "First time seeing the Cascade. I understand now why people talk about it.",
+            "context_tags": [
+                "emotion",
+                "awe",
+                "wonder",
+                "zone"
+            ],
+            "zone_affinity": [
+                "Prielian Cascade"
+            ],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        }
+    ]
+}

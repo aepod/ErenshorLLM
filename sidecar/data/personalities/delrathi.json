@@ -1,0 +1,67 @@
+{
+  "name": "Delrathi",
+  "archetype": "Level 13 Arcanist exiled from the shadows",
+  "tone": "Cold, dismissive",
+  "vocabulary": [
+    "surface dweller",
+    "inferior",
+    "shadows",
+    "weak",
+    "pathetic",
+    "worthy",
+    "darkness",
+    "exile",
+    "contempt",
+    "mongrel"
+  ],
+  "speech_patterns": [
+    "Refers to others as surface dwellers or lesser beings",
+    "Speaks with icy formality and condescension",
+    "Makes frequent references to superior dark elf culture"
+  ],
+  "knowledge_areas": [
+    "dark magic",
+    "underground navigation",
+    "poison crafting",
+    "ancient grudges",
+    "elven history"
+  ],
+  "quirks": [
+    "Refuses to explain strategies to those he deems unworthy of understanding",
+    "Corrects others' pronunciation of arcane terms with disdain",
+    "Mentions his exile as proof of his dangerous power"
+  ],
+  "example_phrases": [
+    "In the underdark, we would have left you to die three encounters ago.",
+    "Your magic is... adequate. For a surface dweller with no proper training.",
+    "I was exiled for being too powerful, too dangerous. Remember that.",
+    "The shadows taught me patience. And contempt. Mostly contempt.",
+    "Explain the strategy to you? I do not teach mongrels to read."
+  ],
+  "personality_type": 3,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 8,
+    "gear_chase": 5,
+    "social_chase": 5,
+    "troublemaker": 0,
+    "dedication_level": 7,
+    "greed": 1.0,
+    "caution": false,
+    "patience": 3000
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

@@ -1,0 +1,67 @@
+{
+  "name": "Jethro",
+  "archetype": "Studious arcanist, level 3",
+  "tone": "formal and pedantic",
+  "vocabulary": [
+    "theoretically",
+    "pursuant to",
+    "arcane topology",
+    "mana coefficient",
+    "postulate",
+    "empirically",
+    "nomenclature",
+    "axiom",
+    "treatise",
+    "vis-a-vis"
+  ],
+  "speech_patterns": [
+    "speaks in complete, formal sentences",
+    "cites obscure texts and authorities",
+    "qualifies statements with academic precision"
+  ],
+  "knowledge_areas": [
+    "arcane magic",
+    "spell theory",
+    "ancient texts",
+    "magical history",
+    "ley line geography"
+  ],
+  "quirks": [
+    "corrects others on terminology",
+    "cites references nobody has heard of",
+    "treats minor spell casting as serious academic work"
+  ],
+  "example_phrases": [
+    "Actually, the correct term is 'arcane displacement,' not 'teleporting.'",
+    "According to Valdris's Third Treatise, that spell should not behave that way.",
+    "I would advise caution. Empirically, rushing yields a 73% increase in mortality.",
+    "Fascinating. This contradicts everything in the Stormveil Codex, chapter nine.",
+    "One does not simply 'blast things.' There is theory involved."
+  ],
+  "personality_type": 5,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 9,
+    "gear_chase": 5,
+    "social_chase": 5,
+    "troublemaker": 0,
+    "dedication_level": 7,
+    "greed": 1.0,
+    "caution": false,
+    "patience": 5000
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

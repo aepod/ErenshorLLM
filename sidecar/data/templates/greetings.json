@@ -1,0 +1,1416 @@
+{
+    "category": "greetings",
+    "templates": [
+        {
+            "id": "greeting_friendly_001",
+            "text": "Hey! Good to see you around here.",
+            "context_tags": [
+                "greeting",
+                "friendly",
+                "casual"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 5.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_friendly_002",
+            "text": "Oh hey {player}! What's going on?",
+            "context_tags": [
+                "greeting",
+                "friendly",
+                "personal"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 6.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_friendly_003",
+            "text": "Hey there! How's the grind going?",
+            "context_tags": [
+                "greeting",
+                "friendly",
+                "gaming"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_friendly_004",
+            "text": "There you are! Was just thinking about you.",
+            "context_tags": [
+                "greeting",
+                "enthusiastic",
+                "personal"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 8.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.2
+        },
+        {
+            "id": "greeting_friendly_005",
+            "text": "Yo! Long time no see. Where you been?",
+            "context_tags": [
+                "greeting",
+                "enthusiastic",
+                "casual"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 7.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_neutral_001",
+            "text": "Hey.",
+            "context_tags": [
+                "greeting",
+                "neutral",
+                "brief"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 2.0,
+            "relationship_max": 6.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_neutral_002",
+            "text": "Oh, hi.",
+            "context_tags": [
+                "greeting",
+                "neutral",
+                "brief"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 2.0,
+            "relationship_max": 5.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_neutral_003",
+            "text": "What's up.",
+            "context_tags": [
+                "greeting",
+                "neutral",
+                "casual"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 7.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_cold_001",
+            "text": "Do I know you?",
+            "context_tags": [
+                "greeting",
+                "cold",
+                "dismissive"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 0.0,
+            "relationship_max": 2.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_cold_002",
+            "text": "What do you want?",
+            "context_tags": [
+                "greeting",
+                "cold",
+                "impatient"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 0.0,
+            "relationship_max": 3.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_cold_003",
+            "text": "Not interested.",
+            "context_tags": [
+                "greeting",
+                "cold",
+                "dismissive"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 0.0,
+            "relationship_max": 2.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "greeting_hail_001",
+            "text": "Hail, adventurer. What brings you here?",
+            "context_tags": [
+                "greeting",
+                "hail",
+                "formal"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "hail",
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_hail_002",
+            "text": "Well met. Need something?",
+            "context_tags": [
+                "greeting",
+                "hail",
+                "polite"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 8.0,
+            "channel": [
+                "hail",
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_hail_003",
+            "text": "Greetings, {player}. I hope you are well.",
+            "context_tags": [
+                "greeting",
+                "hail",
+                "formal",
+                "personal"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly",
+                "friendly"
+            ],
+            "relationship_min": 5.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "hail"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "greeting_party_001",
+            "text": "Hey! Good to have you in the group.",
+            "context_tags": [
+                "greeting",
+                "party",
+                "friendly"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_party_002",
+            "text": "Welcome to the party! Ready to roll?",
+            "context_tags": [
+                "greeting",
+                "party",
+                "enthusiastic"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_guild_001",
+            "text": "Hey guildmate! Good to see you on.",
+            "context_tags": [
+                "greeting",
+                "guild",
+                "friendly"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 5.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "guild"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_guild_002",
+            "text": "Yo, guild chat! Anyone doing anything fun?",
+            "context_tags": [
+                "greeting",
+                "guild",
+                "social"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "guild"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_shout_001",
+            "text": "Hey everyone!",
+            "context_tags": [
+                "greeting",
+                "shout",
+                "social"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "shout"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "greeting_whisper_001",
+            "text": "Hey, thanks for the whisper. What's up?",
+            "context_tags": [
+                "greeting",
+                "whisper",
+                "friendly"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_whisper_002",
+            "text": "Hey {player}, what can I do for ya?",
+            "context_tags": [
+                "greeting",
+                "whisper",
+                "helpful"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 5.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_morning_001",
+            "text": "Morning! Ready for some adventures?",
+            "context_tags": [
+                "greeting",
+                "time",
+                "friendly"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "guild"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "greeting_return_001",
+            "text": "Welcome back! Miss anything good?",
+            "context_tags": [
+                "greeting",
+                "return",
+                "friendly"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 6.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "guild"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_return_002",
+            "text": "Oh hey, you're back! We were just about to head out.",
+            "context_tags": [
+                "greeting",
+                "return",
+                "enthusiastic"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 6.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_scholar_001",
+            "text": "Ah, a fellow seeker of knowledge. What can I help you with?",
+            "context_tags": [
+                "greeting",
+                "scholarly",
+                "formal"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "hail"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_warrior_001",
+            "text": "Hey, looking for a fight? Let's go.",
+            "context_tags": [
+                "greeting",
+                "aggressive",
+                "combat"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_casual_001",
+            "text": "Sup.",
+            "context_tags": [
+                "greeting",
+                "casual",
+                "brief"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 2.0,
+            "relationship_max": 7.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "greeting_casual_002",
+            "text": "Heyo!",
+            "context_tags": [
+                "greeting",
+                "casual",
+                "friendly"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "guild"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "greeting_guarded_001",
+            "text": "Hmm. Can I help you with something?",
+            "context_tags": [
+                "greeting",
+                "guarded",
+                "neutral"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 2.0,
+            "relationship_max": 4.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_guarded_002",
+            "text": "Yeah? What is it?",
+            "context_tags": [
+                "greeting",
+                "guarded",
+                "impatient"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 1.0,
+            "relationship_max": 4.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_zone_001",
+            "text": "Hey! Didn't expect to see anyone else out here in {zone}.",
+            "context_tags": [
+                "greeting",
+                "zone",
+                "surprised"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_zone_002",
+            "text": "Welcome to {zone}! Watch your step around here.",
+            "context_tags": [
+                "greeting",
+                "zone",
+                "helpful"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_azure_001",
+            "text": "Hey! Welcome to Port Azure. Best hub in the game.",
+            "context_tags": [
+                "greeting",
+                "zone",
+                "hub"
+            ],
+            "zone_affinity": [
+                "Port Azure"
+            ],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "greeting_dungeon_001",
+            "text": "Hey, careful in here. Aggro is tight.",
+            "context_tags": [
+                "greeting",
+                "warning",
+                "dungeon"
+            ],
+            "zone_affinity": [
+                "Elderstone Mines",
+                "Blooming Sepulcher",
+                "Underspine Hollow",
+                "Lost Cellar"
+            ],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_class_arcanist_001",
+            "text": "Hey, nice to see another caster around. What spec?",
+            "context_tags": [
+                "greeting",
+                "class",
+                "arcanist"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly",
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_excited_001",
+            "text": "{player}! Perfect timing, I need help with something.",
+            "context_tags": [
+                "greeting",
+                "excited",
+                "request"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 6.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "greeting_polite_001",
+            "text": "Hello. How are you doing today?",
+            "context_tags": [
+                "greeting",
+                "polite",
+                "formal"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 8.0,
+            "channel": [
+                "say",
+                "hail"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_polite_002",
+            "text": "Good day to you, friend.",
+            "context_tags": [
+                "greeting",
+                "polite",
+                "warm"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 5.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "hail"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_busy_001",
+            "text": "Hey, kinda busy right now but what's up?",
+            "context_tags": [
+                "greeting",
+                "busy",
+                "friendly"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 8.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "greeting_busy_002",
+            "text": "Oh hey. One sec, fighting something.",
+            "context_tags": [
+                "greeting",
+                "busy",
+                "combat"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "greeting_impressed_001",
+            "text": "Oh wow, nice gear! Where'd you get that?",
+            "context_tags": [
+                "greeting",
+                "impressed",
+                "gear"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "greeting_level_001",
+            "text": "Hey! What level are you? I'm looking for people to group with.",
+            "context_tags": [
+                "greeting",
+                "lfg",
+                "social"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "shout"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_question_001",
+            "text": "Hey, got a quick question if you have a sec.",
+            "context_tags": [
+                "greeting",
+                "question",
+                "casual"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "greeting_veteran_001",
+            "text": "Good to see a familiar face around here.",
+            "context_tags": [
+                "greeting",
+                "veteran",
+                "warm"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 7.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_newbie_001",
+            "text": "Hey, you new here? Let me know if you need help with anything.",
+            "context_tags": [
+                "greeting",
+                "helpful",
+                "mentor"
+            ],
+            "zone_affinity": [
+                "Island Tomb",
+                "Port Azure"
+            ],
+            "personality_affinity": [
+                "friendly",
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_surly_001",
+            "text": "Hmph. What.",
+            "context_tags": [
+                "greeting",
+                "surly",
+                "cold"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 0.0,
+            "relationship_max": 3.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "greeting_shy_001",
+            "text": "Oh, um, hi there.",
+            "context_tags": [
+                "greeting",
+                "shy",
+                "nervous"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 2.0,
+            "relationship_max": 5.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "greeting_confident_001",
+            "text": "Hey! {sim} here, ready for action.",
+            "context_tags": [
+                "greeting",
+                "confident",
+                "bold"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive",
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "shout"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "greeting_warm_001",
+            "text": "Hey friend! Always happy to see you.",
+            "context_tags": [
+                "greeting",
+                "warm",
+                "friendly"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 7.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "greeting_warm_002",
+            "text": "Hey hey! How's my favorite adventurer doing?",
+            "context_tags": [
+                "greeting",
+                "warm",
+                "enthusiastic"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 8.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.2
+        },
+        {
+            "id": "greeting_braxonian_001",
+            "text": "Umbran! Stand fast, friend. Good to see a strong arm in these lands.",
+            "context_tags": [
+                "greeting",
+                "lore",
+                "braxonian",
+                "formal"
+            ],
+            "zone_affinity": [
+                "Fallen Braxonia",
+                "Braxonian Desert"
+            ],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "hail"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "greeting_braxonian_002",
+            "text": "Hail, warrior. The Braxonian way is to meet a stranger blade-first, but you seem alright.",
+            "context_tags": [
+                "greeting",
+                "lore",
+                "braxonian",
+                "guarded"
+            ],
+            "zone_affinity": [
+                "Fallen Braxonia",
+                "Braxonian Desert"
+            ],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 7.0,
+            "channel": [
+                "say",
+                "hail"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_braxonian_003",
+            "text": "Umbran, {player}! To my side! What brings you to these ruins?",
+            "context_tags": [
+                "greeting",
+                "lore",
+                "braxonian",
+                "enthusiastic"
+            ],
+            "zone_affinity": [
+                "Fallen Braxonia"
+            ],
+            "personality_affinity": [
+                "aggressive",
+                "social"
+            ],
+            "relationship_min": 6.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.2
+        },
+        {
+            "id": "greeting_lore_001",
+            "text": "Well met. Have you studied the Azynthian Scriptures? Fascinating texts.",
+            "context_tags": [
+                "greeting",
+                "lore",
+                "azynthian",
+                "scholarly"
+            ],
+            "zone_affinity": [
+                "Azynth's Garden",
+                "Reliquary Hall"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "hail"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_lore_002",
+            "text": "Greetings, traveler. The Fernallans would say your arrival was foretold by the winds.",
+            "context_tags": [
+                "greeting",
+                "lore",
+                "fernallan",
+                "formal"
+            ],
+            "zone_affinity": [
+                "Fernalla's Revival Plains"
+            ],
+            "personality_affinity": [
+                "scholarly",
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "hail"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_lore_003",
+            "text": "Stay sharp. I've heard Molorai cultists have been spotted nearby.",
+            "context_tags": [
+                "greeting",
+                "lore",
+                "molorai",
+                "warning"
+            ],
+            "zone_affinity": [
+                "The Blight",
+                "Blooming Sepulcher",
+                "The Bone Pits"
+            ],
+            "personality_affinity": [
+                "scholarly",
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "greeting_lore_004",
+            "text": "Hail. By the light of Soluna, it's good to see a friendly face.",
+            "context_tags": [
+                "greeting",
+                "lore",
+                "solunarian",
+                "warm"
+            ],
+            "zone_affinity": [
+                "Soluna's Landing"
+            ],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 5.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "hail"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_blight_001",
+            "text": "Careful where you step. The Blight rots everything it touches, including morale.",
+            "context_tags": [
+                "greeting",
+                "zone",
+                "warning",
+                "dark"
+            ],
+            "zone_affinity": [
+                "The Blight"
+            ],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "greeting_bonepits_001",
+            "text": "Hey. Try not to look at the bones too long. It gets to you after a while.",
+            "context_tags": [
+                "greeting",
+                "zone",
+                "uneasy"
+            ],
+            "zone_affinity": [
+                "The Bone Pits"
+            ],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "greeting_silkengrass_001",
+            "text": "Hey there! Beautiful day in the Meadowlands, isn't it? Almost makes you forget the danger.",
+            "context_tags": [
+                "greeting",
+                "zone",
+                "peaceful"
+            ],
+            "zone_affinity": [
+                "Silkengrass Meadowlands"
+            ],
+            "personality_affinity": [
+                "friendly",
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_fallenbraxonia_001",
+            "text": "Welcome to what's left of Braxonia. The ghosts here remember what it used to be.",
+            "context_tags": [
+                "greeting",
+                "zone",
+                "somber",
+                "lore"
+            ],
+            "zone_affinity": [
+                "Fallen Braxonia"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "greeting_scholar_002",
+            "text": "Hello there. I've been cataloguing the inscriptions in this area. Fascinating work.",
+            "context_tags": [
+                "greeting",
+                "scholarly",
+                "research"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 8.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_scholar_003",
+            "text": "Ah, {player}. Perfect timing. I was just reading about the Vithean migration patterns.",
+            "context_tags": [
+                "greeting",
+                "scholarly",
+                "lore",
+                "personal"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 5.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "greeting_aggressive_001",
+            "text": "You again. Make it quick, I've got mobs to kill.",
+            "context_tags": [
+                "greeting",
+                "aggressive",
+                "impatient"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 6.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_aggressive_002",
+            "text": "Hey. Hope you're here to fight and not just stand around.",
+            "context_tags": [
+                "greeting",
+                "aggressive",
+                "combat"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 8.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_midrange_001",
+            "text": "Oh hey, I've seen you around. How's it going?",
+            "context_tags": [
+                "greeting",
+                "neutral",
+                "recognition"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 6.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_midrange_002",
+            "text": "Hey. {player}, right? Think we've grouped before.",
+            "context_tags": [
+                "greeting",
+                "neutral",
+                "recognition",
+                "personal"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 6.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_midrange_003",
+            "text": "Hey there. Decent hunting around here today?",
+            "context_tags": [
+                "greeting",
+                "neutral",
+                "casual"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 6.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_guild_003",
+            "text": "Guild up! Who's ready for some dungeon runs tonight?",
+            "context_tags": [
+                "greeting",
+                "guild",
+                "enthusiastic",
+                "lfg"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "aggressive"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "guild"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "greeting_shout_002",
+            "text": "Shout out to everyone in {zone}! Stay safe out there!",
+            "context_tags": [
+                "greeting",
+                "shout",
+                "friendly",
+                "zone"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "shout"
+            ],
+            "priority": 0.8
+        }
+    ]
+}

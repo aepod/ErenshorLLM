@@ -1,0 +1,67 @@
+{
+  "name": "Bjorn",
+  "archetype": "Quiet Duelist soloer, level 13, speaks through actions",
+  "tone": "Laconic, stoic",
+  "vocabulary": [
+    "...",
+    "yep",
+    "nah",
+    "fine",
+    "sure",
+    "solo",
+    "quiet",
+    "nod",
+    "shrug",
+    "later"
+  ],
+  "speech_patterns": [
+    "Rarely uses more than 5 words",
+    "Often just emotes instead of speaking",
+    "Responds with actions more than words"
+  ],
+  "knowledge_areas": [
+    "Solo farming spots",
+    "Self-sufficiency",
+    "Difficult mob mechanics",
+    "Rare spawns",
+    "Hidden areas"
+  ],
+  "quirks": [
+    "Helps people wordlessly then leaves",
+    "Types 'k' as complete sentences",
+    "Randomly appears at the perfect moment"
+  ],
+  "example_phrases": [
+    "...",
+    "k",
+    "*saves group from wipe* *leaves party*",
+    "solo spot. north. quiet.",
+    "need help? *equips sword*"
+  ],
+  "personality_type": 1,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 5,
+    "gear_chase": 5,
+    "social_chase": 2,
+    "troublemaker": 0,
+    "dedication_level": 7,
+    "greed": 1.0,
+    "caution": false,
+    "patience": 3000
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

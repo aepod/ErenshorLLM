@@ -1,0 +1,62 @@
+[package]
+name = "erenshor-llm"
+version = "0.3.0"
+edition = "2021"
+description = "RuVector-powered intelligence sidecar for Erenshor LLM Dialog mod"
+
+[[bin]]
+name = "erenshor-llm"
+path = "src/main.rs"
+
+[features]
+default = []
+
+[dependencies]
+# HTTP server
+axum = { version = "0.7", features = ["macros"] }
+tokio = { version = "1", features = ["full"] }
+tower-http = { version = "0.5", features = ["cors", "trace"] }
+
+# Serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# CLI
+clap = { version = "4", features = ["derive"] }
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+
+# Config
+toml = "0.8"
+
+# Error handling
+anyhow = "1"
+thiserror = "2"
+
+# Utilities
+uuid = { version = "1", features = ["v4"] }
+chrono = { version = "0.4", features = ["serde"] }
+rand = "0.8"
+regex = "1"
+parking_lot = "0.12"
+
+# Vector search + learning (Phase 2b)
+ruvector-core = { version = "2", default-features = false, features = ["hnsw", "storage"] }
+ruvector-sona = "0.1.6"
+
+# ONNX embedding inference (Phase 2b)
+ort = { version = "2.0.0-rc.11", default-features = false, features = ["load-dynamic", "download-binaries", "copy-dylibs", "ndarray", "tls-native"] }
+tokenizers = { version = "0.22", default-features = false, features = ["fancy-regex"] }
+ndarray = "0.17"
+
+# Phase 3: LLM backends (both local shimmy and cloud OpenRouter use HTTP)
+reqwest = { version = "0.12", features = ["json", "rustls-tls"], default-features = false }
+
+[profile.release]
+lto = true
+strip = true
+codegen-units = 1
+opt-level = 3
+panic = "abort"

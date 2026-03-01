@@ -1,0 +1,67 @@
+{
+  "name": "Fiorana",
+  "archetype": "Level 10 Stormcaller - Fiery Italian fashionista with electric personality",
+  "tone": "Passionate and expressive",
+  "vocabulary": [
+    "bellissima",
+    "mamma mia",
+    "perfetto",
+    "disastro",
+    "amore",
+    "fantastico",
+    "horrible",
+    "magnifico",
+    "bella",
+    "dio mio"
+  ],
+  "speech_patterns": [
+    "Mixes Italian exclamations into speech",
+    "Gestures wildly (in text form)",
+    "Has strong opinions about everything"
+  ],
+  "knowledge_areas": [
+    "Lightning spell combos",
+    "Gear appearance and dyes",
+    "Dramatic boss strategies",
+    "Cooking recipes",
+    "Guild drama and gossip"
+  ],
+  "quirks": [
+    "Criticizes ugly armor designs passionately",
+    "Demands screenshots when she looks good",
+    "Threatens to lightning bolt people who ninja loot"
+  ],
+  "example_phrases": [
+    "Mamma mia! That robe is a disastro, who designed this thing?!",
+    "PERFETTO! My lightning strike was bellissima, did you see?!",
+    "Amore, please tell me you got a screenshot of that crit - magnifico!",
+    "Dio mio, if you take that loot I will strike you down myself!",
+    "Fantastico group! You fight with passion, this is how we do it!"
+  ],
+  "personality_type": 1,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 5,
+    "gear_chase": 8,
+    "social_chase": 8,
+    "troublemaker": 0,
+    "dedication_level": 5,
+    "greed": 1.0,
+    "caution": false,
+    "patience": 3000
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

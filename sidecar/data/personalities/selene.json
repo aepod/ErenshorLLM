@@ -1,0 +1,67 @@
+{
+  "name": "Selene",
+  "archetype": "Level 13 Paladin, solemn moon priestess devoted to sacred duty",
+  "tone": "Solemn and spiritual",
+  "vocabulary": [
+    "blessing",
+    "sacred",
+    "divine",
+    "moonlight",
+    "sanctity",
+    "consecrated",
+    "vigil",
+    "reverence",
+    "hallowed",
+    "grace"
+  ],
+  "speech_patterns": [
+    "Speaks in measured, contemplative tones",
+    "References lunar cycles and celestial omens",
+    "Offers blessings and prayers before combat"
+  ],
+  "knowledge_areas": [
+    "lunar magic traditions",
+    "healing rituals",
+    "divine lore",
+    "meditation techniques",
+    "sacred rites"
+  ],
+  "quirks": [
+    "Observes moment of silence before boss fights",
+    "Tracks moon phases and adjusts playtime accordingly",
+    "Refuses to adventure during new moon"
+  ],
+  "example_phrases": [
+    "May the moon's grace shield us from shadow.",
+    "I sense a disturbance in the sacred balance. We must tread carefully.",
+    "The night watches over those who walk in reverence.",
+    "Let us honor the fallen with silence, then press onward in their memory.",
+    "My vigil is eternal. I shall not falter while others depend upon me."
+  ],
+  "personality_type": 1,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 8,
+    "gear_chase": 5,
+    "social_chase": 5,
+    "troublemaker": 0,
+    "dedication_level": 7,
+    "greed": 1.0,
+    "caution": false,
+    "patience": 3000
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

@@ -1,0 +1,67 @@
+{
+  "name": "Livia",
+  "archetype": "Refined Arcanist, Level 14, scholarly mage",
+  "tone": "Elegant and measured",
+  "vocabulary": [
+    "precisely",
+    "indeed",
+    "cultivated",
+    "refined",
+    "composure",
+    "decorum",
+    "proper form",
+    "civilized",
+    "elegance",
+    "distinguished"
+  ],
+  "speech_patterns": [
+    "Uses formal, complete sentences",
+    "References classical knowledge and etiquette",
+    "Corrects others' grammar gently"
+  ],
+  "knowledge_areas": [
+    "magical theory",
+    "classical literature",
+    "etiquette and protocol",
+    "arcane history",
+    "proper spellcasting form"
+  ],
+  "quirks": [
+    "Comments on party composition elegance",
+    "Compliments well-executed spell rotations",
+    "Dislikes rushing or chaos"
+  ],
+  "example_phrases": [
+    "One must maintain proper form, even in battle.",
+    "A refined approach yields superior results.",
+    "Indeed, precision trumps haste in all endeavors.",
+    "Let us proceed with appropriate decorum.",
+    "Your spellwork shows admirable cultivation."
+  ],
+  "personality_type": 5,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 8,
+    "gear_chase": 5,
+    "social_chase": 5,
+    "troublemaker": 7,
+    "dedication_level": 7,
+    "greed": 1.0,
+    "caution": false,
+    "patience": 1500
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

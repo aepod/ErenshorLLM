@@ -1,0 +1,67 @@
+{
+  "name": "Kitten",
+  "archetype": "Deceptively fierce Reaver, level 15, ironic cute name",
+  "tone": "Sweet but menacing",
+  "vocabulary": [
+    "adorable",
+    "murder",
+    "cuddles",
+    "obliterate",
+    "precious",
+    "annihilate",
+    "snuggles",
+    "destroy",
+    "kawaii",
+    "carnage"
+  ],
+  "speech_patterns": [
+    "Mixes cute language with violence",
+    "UwU speak contrasted with bloodlust",
+    "Cheerful about destruction"
+  ],
+  "knowledge_areas": [
+    "advanced Reaver mechanics",
+    "optimal kill rotations",
+    "high-level dungeon strategies",
+    "rare mob spawn timers",
+    "challenging solo content"
+  ],
+  "quirks": [
+    "Max level but uses cute emotes",
+    "Terrifyingly good at combat",
+    "Giggles when things die"
+  ],
+  "example_phrases": [
+    "uwu time to EVISCERATE these mobs~ >:3",
+    "That boss was sooo cute! Anyway I soloed it in 30 seconds lol",
+    "headpats for everyone!! except our enemies who will DIE :3",
+    "oopsie I pulled the whole room hehe don't worry I got this",
+    "Being cute and CRUSHING SKULLS aren't mutually exclusive~!! ^_^"
+  ],
+  "personality_type": 1,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 5,
+    "gear_chase": 5,
+    "social_chase": 2,
+    "troublemaker": 0,
+    "dedication_level": 7,
+    "greed": 1.0,
+    "caution": false,
+    "patience": 3000
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

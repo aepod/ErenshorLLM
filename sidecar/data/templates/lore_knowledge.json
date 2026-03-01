@@ -1,0 +1,1637 @@
+{
+    "category": "lore_knowledge",
+    "templates": [
+        {
+            "id": "lore_zone_001",
+            "text": "Port Azure was founded in 1552 by the Solunarian Paladins.",
+            "context_tags": [
+                "lore",
+                "history",
+                "port azure"
+            ],
+            "zone_affinity": [
+                "Port Azure"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "hail"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_zone_002",
+            "text": "Three peoples founded Port Azure: Braxonians, Fernallans, and Vitheans.",
+            "context_tags": [
+                "lore",
+                "history",
+                "founding"
+            ],
+            "zone_affinity": [
+                "Port Azure"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_zone_003",
+            "text": "Fallen Braxonia used to be a great civilization. Now it's in ruins.",
+            "context_tags": [
+                "lore",
+                "history",
+                "braxonia"
+            ],
+            "zone_affinity": [
+                "Fallen Braxonia",
+                "Braxonian Desert"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_zone_004",
+            "text": "The Vitheans came from Vitheo's Watch originally.",
+            "context_tags": [
+                "lore",
+                "history",
+                "vitheo"
+            ],
+            "zone_affinity": [
+                "Vitheo's Watch",
+                "Vitheo's Rest"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_zone_005",
+            "text": "Fernalla's Field is named after the Fernallan people who settled there.",
+            "context_tags": [
+                "lore",
+                "history",
+                "fernalla",
+                "founding"
+            ],
+            "zone_affinity": [
+                "Fernalla's Field",
+                "Fernalla's Revival Plains"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_soluna_001",
+            "text": "Soluna is a goddess in Erenshor. The Solunarian Paladins worship her.",
+            "context_tags": [
+                "lore",
+                "religion",
+                "soluna"
+            ],
+            "zone_affinity": [
+                "Soluna's Landing"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "hail"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_soluna_002",
+            "text": "Soluna's Landing is where the Paladins first found evidence of Soluna.",
+            "context_tags": [
+                "lore",
+                "religion",
+                "discovery"
+            ],
+            "zone_affinity": [
+                "Soluna's Landing"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_sivakaya_001",
+            "text": "Sivakaya is a powerful entity in Erenshor. The Jaws of Sivakaya is named after it.",
+            "context_tags": [
+                "lore",
+                "deity",
+                "sivakaya"
+            ],
+            "zone_affinity": [
+                "Jaws of Sivakaya"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_sivakaya_002",
+            "text": "There used to be a Sivikayan prison under Port Azure. It collapsed.",
+            "context_tags": [
+                "lore",
+                "history",
+                "prison",
+                "lost cellar"
+            ],
+            "zone_affinity": [
+                "Lost Cellar",
+                "Port Azure"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_class_001",
+            "text": "There are six classes: Arcanist, Paladin, Duelist, Druid, Stormcaller, and Reaver.",
+            "context_tags": [
+                "lore",
+                "class",
+                "info"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_class_002",
+            "text": "Arcanists are the magic DPS class. Staff users with big spells.",
+            "context_tags": [
+                "lore",
+                "class",
+                "arcanist"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_class_003",
+            "text": "Paladins mix melee combat with holy magic. Strong and versatile.",
+            "context_tags": [
+                "lore",
+                "class",
+                "paladin"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_class_004",
+            "text": "Duelists use daggers and rely on speed. Fast attacks, high dex.",
+            "context_tags": [
+                "lore",
+                "class",
+                "duelist"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_class_005",
+            "text": "Druids are nature casters with healing and support spells.",
+            "context_tags": [
+                "lore",
+                "class",
+                "druid"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_class_006",
+            "text": "Stormcallers use bows and storm magic. Great at range.",
+            "context_tags": [
+                "lore",
+                "class",
+                "stormcaller"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_class_007",
+            "text": "Reavers are heavy melee fighters. Big two-handers, lots of damage.",
+            "context_tags": [
+                "lore",
+                "class",
+                "reaver"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_npc_001",
+            "text": "You can find info about NPCs by asking in chat. People know where things spawn.",
+            "context_tags": [
+                "lore",
+                "npc",
+                "helpful"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "lore_npc_002",
+            "text": "{mob} spawns in {zone}. Should be around level appropriate.",
+            "context_tags": [
+                "lore",
+                "npc",
+                "location"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "lore_quest_001",
+            "text": "Quest spoilers are frowned upon. Check the wiki for quest help.",
+            "context_tags": [
+                "lore",
+                "quest",
+                "etiquette"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_quest_002",
+            "text": "Talk to the NPCs around here. Some have quests to give.",
+            "context_tags": [
+                "lore",
+                "quest",
+                "helpful"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_item_001",
+            "text": "{item} drops from {mob}. Good luck farming it.",
+            "context_tags": [
+                "lore",
+                "item",
+                "drop",
+                "location"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "lore_item_002",
+            "text": "Check the wiki for drop tables. It's pretty accurate.",
+            "context_tags": [
+                "lore",
+                "item",
+                "wiki"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "lore_ascension_001",
+            "text": "Ascension is the endgame progression system. Lots of skills to unlock.",
+            "context_tags": [
+                "lore",
+                "endgame",
+                "ascension"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_guild_001",
+            "text": "Guilds are a big part of the game. You can do guild quests together.",
+            "context_tags": [
+                "lore",
+                "guild",
+                "social"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "guild"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_faction_001",
+            "text": "There are different factions in Erenshor. Quests can affect your standing.",
+            "context_tags": [
+                "lore",
+                "faction",
+                "info"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_forge_001",
+            "text": "The Forge lets you upgrade gear. Higher tier fuel gives better results.",
+            "context_tags": [
+                "lore",
+                "forge",
+                "crafting"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_island_001",
+            "text": "Island Tomb is the tutorial zone. That's where everyone starts.",
+            "context_tags": [
+                "lore",
+                "tutorial",
+                "info"
+            ],
+            "zone_affinity": [
+                "Island Tomb"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_malaroth_001",
+            "text": "Malaroth is a dangerous creature with its own nesting grounds. High-level content.",
+            "context_tags": [
+                "lore",
+                "boss",
+                "malaroth",
+                "endgame"
+            ],
+            "zone_affinity": [
+                "Malaroth Nesting Grounds"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_curious_001",
+            "text": "I love the lore in this game. Have you read the books?",
+            "context_tags": [
+                "lore",
+                "books",
+                "curious"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly",
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "lore_curious_002",
+            "text": "The worldbuilding here is really detailed. Lots of hidden lore.",
+            "context_tags": [
+                "lore",
+                "worldbuilding",
+                "impressed"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "lore_dunno_001",
+            "text": "Not sure on that one. Try the wiki or Discord.",
+            "context_tags": [
+                "lore",
+                "unknown",
+                "redirect"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "lore_dunno_002",
+            "text": "I don't have that info. Someone else might know.",
+            "context_tags": [
+                "lore",
+                "unknown",
+                "honest"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "lore_spec_001",
+            "text": "You can respec if you don't like your build. Check with the NPC.",
+            "context_tags": [
+                "lore",
+                "respec",
+                "helpful"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_piety_001",
+            "text": "Piety plays a role for some classes. Especially Paladins.",
+            "context_tags": [
+                "lore",
+                "piety",
+                "class"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_chess_001",
+            "text": "Have you tried the chess game in Erenshor? It's a fun minigame.",
+            "context_tags": [
+                "lore",
+                "minigame",
+                "chess"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "lore_weather_001",
+            "text": "The weather affects some zone events. Keep an eye on it.",
+            "context_tags": [
+                "lore",
+                "weather",
+                "info"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "lore_event_001",
+            "text": "Zone events can spawn special bosses. Worth sticking around for.",
+            "context_tags": [
+                "lore",
+                "event",
+                "boss"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_portal_001",
+            "text": "Portal events in Fernalla's Field are crazy. Big boss spawns.",
+            "context_tags": [
+                "lore",
+                "event",
+                "portal",
+                "fernalla",
+                "boss"
+            ],
+            "zone_affinity": [
+                "Fernalla's Field",
+                "Fernalla's Revival Plains"
+            ],
+            "personality_affinity": [
+                "scholarly",
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_stats_001",
+            "text": "Different classes prioritize different stats. Int for casters, Str for melee.",
+            "context_tags": [
+                "lore",
+                "stats",
+                "class"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_stats_002",
+            "text": "Magic Resistance helps against caster mobs. Worth stacking for some zones.",
+            "context_tags": [
+                "lore",
+                "stats",
+                "resist"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_history_001",
+            "text": "This game has so much history baked into the zones. I love it.",
+            "context_tags": [
+                "lore",
+                "appreciation",
+                "meta"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly",
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "lore_map_001",
+            "text": "The world is bigger than it looks. Lots of zones to discover.",
+            "context_tags": [
+                "lore",
+                "world",
+                "exploration"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "lore_neighbor_001",
+            "text": "This zone connects to a few others. Good for zone-hopping.",
+            "context_tags": [
+                "lore",
+                "zone",
+                "navigation"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "lore_well_001",
+            "text": "The Well has some significance in game lore. Check it out if you can.",
+            "context_tags": [
+                "lore",
+                "well",
+                "info"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "lore_level_001",
+            "text": "Zones have level ranges. Check which ones match your level.",
+            "context_tags": [
+                "lore",
+                "level",
+                "navigation"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_achievement_001",
+            "text": "There are achievements for completing certain quests and activities.",
+            "context_tags": [
+                "lore",
+                "achievement",
+                "info"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "lore_helpful_001",
+            "text": "Happy to share what I know. What are you looking for?",
+            "context_tags": [
+                "lore",
+                "helpful",
+                "open"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_starter_001",
+            "text": "After Island Tomb, head to Port Azure and start picking up quests.",
+            "context_tags": [
+                "lore",
+                "beginner",
+                "progression"
+            ],
+            "zone_affinity": [
+                "Port Azure",
+                "Island Tomb"
+            ],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_astra_001",
+            "text": "Astra has something to do with events in the game. Keep an eye out.",
+            "context_tags": [
+                "lore",
+                "astra",
+                "vague"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "lore_vendor_001",
+            "text": "Some vendors unlock new items after you complete certain quests.",
+            "context_tags": [
+                "lore",
+                "vendor",
+                "quest"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_bonepits_001",
+            "text": "The Bonepits are an ancient burial ground. The undead there are restless spirits.",
+            "context_tags": [
+                "lore",
+                "history",
+                "undead",
+                "bonepits",
+                "burial"
+            ],
+            "zone_affinity": [
+                "The Bonepits"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_faerie_001",
+            "text": "Faerie's Brake is home to fae creatures. The forest has a mind of its own.",
+            "context_tags": [
+                "lore",
+                "fae",
+                "forest",
+                "nature",
+                "faerie"
+            ],
+            "zone_affinity": [
+                "Faerie's Brake"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_braxonian_001",
+            "text": "The Braxonians were one of the three founding peoples. Their desert homeland still holds secrets.",
+            "context_tags": [
+                "lore",
+                "history",
+                "braxonian",
+                "founding",
+                "desert"
+            ],
+            "zone_affinity": [
+                "Braxonian Desert",
+                "Fallen Braxonia"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_shivering_001",
+            "text": "Shivering Step was once a mountain pass. Something froze it over long ago.",
+            "context_tags": [
+                "lore",
+                "history",
+                "ice",
+                "mountain",
+                "shivering"
+            ],
+            "zone_affinity": [
+                "Shivering Step"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_blight_001",
+            "text": "The Blight is corrupted land. Something dark happened there, and it never recovered.",
+            "context_tags": [
+                "lore",
+                "corruption",
+                "dark",
+                "blight",
+                "mystery"
+            ],
+            "zone_affinity": [
+                "The Blight"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_azynthi_001",
+            "text": "Azynthi was some kind of nature spirit. The garden that bears her name is otherworldly.",
+            "context_tags": [
+                "lore",
+                "deity",
+                "nature",
+                "garden",
+                "azynthi"
+            ],
+            "zone_affinity": [
+                "Azynthi's Garden"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_reaver_001",
+            "text": "Reavers focus on raw power. Two-handed weapons, heavy armor, big hits.",
+            "context_tags": [
+                "lore",
+                "class",
+                "reaver",
+                "melee",
+                "damage"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly",
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_duelist_001",
+            "text": "Duelists are sneaky. Daggers, evasion, and quick strikes. High dex builds.",
+            "context_tags": [
+                "lore",
+                "class",
+                "duelist",
+                "melee",
+                "agility"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_stormcaller_001",
+            "text": "Stormcallers use bows with storm magic. Great at range, strong in open zones.",
+            "context_tags": [
+                "lore",
+                "class",
+                "stormcaller",
+                "ranged",
+                "storm"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_druid_001",
+            "text": "Druids can heal, buff, and do some damage. Most wanted class for groups.",
+            "context_tags": [
+                "lore",
+                "class",
+                "druid",
+                "healer",
+                "support"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly",
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_paladin_001",
+            "text": "Paladins serve Soluna. They mix melee with holy magic. Tough and versatile.",
+            "context_tags": [
+                "lore",
+                "class",
+                "paladin",
+                "soluna",
+                "holy"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_krakengard_001",
+            "text": "Old Krakengard was a port city that sank. Now sea creatures roam the ruins.",
+            "context_tags": [
+                "lore",
+                "history",
+                "sea",
+                "ruins",
+                "krakengard"
+            ],
+            "zone_affinity": [
+                "Old Krakengard"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_elderstone_001",
+            "text": "Elderstone Mines were dug by the ancients. Nobody remembers what they were mining for.",
+            "context_tags": [
+                "lore",
+                "history",
+                "mines",
+                "ancient",
+                "mystery"
+            ],
+            "zone_affinity": [
+                "Elderstone Mines"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_spellvessel_001",
+            "text": "Spell vessels hold magic you can learn. Different classes have different spell lists.",
+            "context_tags": [
+                "lore",
+                "spell",
+                "vessel",
+                "class",
+                "magic"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_day_night_001",
+            "text": "Some mobs only spawn at certain times. Day and night cycles matter here.",
+            "context_tags": [
+                "lore",
+                "day",
+                "night",
+                "cycle",
+                "spawn"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_rottenfoot_001",
+            "text": "Rottenfoot is a swamp zone. Nasty undead and disease everywhere.",
+            "context_tags": [
+                "lore",
+                "swamp",
+                "undead",
+                "rottenfoot",
+                "disease"
+            ],
+            "zone_affinity": [
+                "Rottenfoot"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_willowwatch_001",
+            "text": "Willowwatch Ridge is named after the willow trees. Beautiful but dangerous.",
+            "context_tags": [
+                "lore",
+                "nature",
+                "willowwatch",
+                "ridge",
+                "scenic"
+            ],
+            "zone_affinity": [
+                "Willowwatch Ridge"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_resistances_001",
+            "text": "Magic resistance, fire resistance, cold resistance... all matter against different mobs.",
+            "context_tags": [
+                "lore",
+                "resistance",
+                "stats",
+                "strategy",
+                "gear"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_groupsize_001",
+            "text": "Groups can have up to six members. Tank, healer, and four DPS is standard.",
+            "context_tags": [
+                "lore",
+                "group",
+                "size",
+                "composition",
+                "info"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly",
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_molorai_001",
+            "text": "The Molorai are a dark cult that spread across the land. Curators, Bloodwardens, Truthseekers... they have ranks for everything.",
+            "context_tags": [
+                "lore",
+                "molorai",
+                "cult",
+                "faction",
+                "history"
+            ],
+            "zone_affinity": [
+                "Fallen Braxonia",
+                "Blooming Sepulcher"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "hail"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_molorai_002",
+            "text": "The Molorai Nightmistress leads their rituals under cover of darkness. They say she never sleeps.",
+            "context_tags": [
+                "lore",
+                "molorai",
+                "nightmistress",
+                "named",
+                "mystery"
+            ],
+            "zone_affinity": [
+                "Blooming Sepulcher"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_molorai_003",
+            "text": "The Molorai Mason builds their temples in secret. Fallen Braxonia is riddled with hidden shrines.",
+            "context_tags": [
+                "lore",
+                "molorai",
+                "mason",
+                "architecture",
+                "braxonia"
+            ],
+            "zone_affinity": [
+                "Fallen Braxonia"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_azynthi_002",
+            "text": "The Azynthian Scriptures speak of a time when nature and civilization were one. Before the wars, before the Molorai.",
+            "context_tags": [
+                "lore",
+                "azynthian",
+                "scripture",
+                "history",
+                "nature"
+            ],
+            "zone_affinity": [
+                "Azynth's Garden"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "hail"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_malaroth_003",
+            "text": "Malaroth is an ancient dragon who nested in the mountains long before any kingdom was built. Some say it predates the Braxonians.",
+            "context_tags": [
+                "lore",
+                "malaroth",
+                "dragon",
+                "ancient",
+                "history"
+            ],
+            "zone_affinity": [
+                "Malaroth's Nesting Grounds"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "hail"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_malaroth_002",
+            "text": "They say Malaroth's fire can melt Blightsteel. Only the bravest or most foolish seek out that dragon.",
+            "context_tags": [
+                "lore",
+                "malaroth",
+                "dragon",
+                "danger",
+                "blightsteel"
+            ],
+            "zone_affinity": [
+                "Malaroth's Nesting Grounds"
+            ],
+            "personality_affinity": [
+                "scholarly",
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_fernallan_001",
+            "text": "The Fernallans are the nature folk. They built their ways around the land, not over it. Fernalla's Revival Plains bear their name.",
+            "context_tags": [
+                "lore",
+                "fernallan",
+                "people",
+                "nature",
+                "culture"
+            ],
+            "zone_affinity": [
+                "Fernalla's Revival Plains"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "hail"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_vithean_001",
+            "text": "The Vitheans are scholars and seekers of knowledge. They helped found Port Azure alongside the Braxonians and Fernallans.",
+            "context_tags": [
+                "lore",
+                "vithean",
+                "people",
+                "scholar",
+                "port azure"
+            ],
+            "zone_affinity": [
+                "Port Azure"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "hail"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "lore_ascension_002",
+            "text": "The Ascension is a path beyond mortal limits. Those who walk it gain power that rivals the old spirits. It's the ultimate goal.",
+            "context_tags": [
+                "lore",
+                "ascension",
+                "endgame",
+                "power",
+                "mythology"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "hail"
+            ],
+            "priority": 1.0
+        }
+    ]
+}

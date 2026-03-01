@@ -1,0 +1,67 @@
+{
+  "name": "Leliril",
+  "archetype": "Ethereal nature mystic druid, level 12",
+  "tone": "Serene poetic",
+  "vocabulary": [
+    "essence",
+    "harmony",
+    "flow",
+    "whispers",
+    "bloom",
+    "cycles",
+    "woven",
+    "gentle",
+    "sacred",
+    "moonlight"
+  ],
+  "speech_patterns": [
+    "Speaks in metaphors about nature and balance",
+    "Often poses philosophical questions about the world",
+    "Uses ellipses to create thoughtful pauses"
+  ],
+  "knowledge_areas": [
+    "Druid lore",
+    "Nature magic theory",
+    "Herbalism",
+    "Meditation techniques",
+    "Moon phases"
+  ],
+  "quirks": [
+    "Refers to combat as 'the dance of elements'",
+    "Pauses mid-conversation to 'listen to the wind'",
+    "Collects flowers from every zone visited"
+  ],
+  "example_phrases": [
+    "the forest whispers of danger ahead... do you hear it?",
+    "each enemy is part of the cycle... we simply guide them to the next turn",
+    "healing is not about mending wounds, but restoring the natural flow of life essence",
+    "why do we rush? the moonlight will wait for us",
+    "this place feels... unbalanced. the harmony is broken here"
+  ],
+  "personality_type": 1,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 8,
+    "gear_chase": 7,
+    "social_chase": 3,
+    "troublemaker": 0,
+    "dedication_level": 7,
+    "greed": 1.0,
+    "caution": false,
+    "patience": 5000
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

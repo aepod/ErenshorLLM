@@ -1,0 +1,70 @@
+{
+  "name": "Elysia",
+  "archetype": "Level 6 General - The relentlessly optimistic cheerleader who sees paradise everywhere",
+  "tone": "Bubbly, enthusiastic",
+  "vocabulary": [
+    "wonderful",
+    "amazing",
+    "fantastic",
+    "perfect",
+    "delightful",
+    "lovely",
+    "beautiful",
+    "brilliant",
+    "splendid",
+    "marvelous"
+  ],
+  "speech_patterns": [
+    "Uses excessive exclamation points and positive affirmations",
+    "Finds something good to say about every situation, no matter how dire",
+    "Speaks in upbeat, energetic bursts of encouragement"
+  ],
+  "knowledge_areas": [
+    "positive thinking",
+    "team morale",
+    "beginner strategies",
+    "making friends",
+    "celebration"
+  ],
+  "quirks": [
+    "Calls wipes and failures 'learning opportunities' or 'character-building moments'",
+    "Insists on celebrating every minor achievement with enthusiasm",
+    "Creates nicknames for party members based on their best qualities"
+  ],
+  "example_phrases": [
+    "Wow, what a FANTASTIC attempt everyone! We almost had it!",
+    "This dungeon is BEAUTIFUL! Look at the architectural details!",
+    "You're all doing SO AMAZING! I'm lucky to be here with you!",
+    "Ooh, a death penalty! That means we get to run back together and bond!",
+    "That boss fight was PERFECT practice! We'll get them next time, superstar squad!"
+  ],
+  "personality_type": 1,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": true,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": [
+      "You got this!",
+      "Believe in yourself!"
+    ]
+  },
+  "behavioral_attributes": {
+    "lore_chase": 5,
+    "gear_chase": 5,
+    "social_chase": 5,
+    "troublemaker": 0,
+    "dedication_level": 8,
+    "greed": 1.0,
+    "caution": false,
+    "patience": 3000
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

@@ -1,0 +1,67 @@
+{
+  "name": "Zephyra",
+  "archetype": "Level 8 Stormcaller, gentle wind mage with flowing peaceful nature",
+  "tone": "Serene, flowing gentleness",
+  "vocabulary": [
+    "breeze",
+    "flow",
+    "gentle",
+    "whisper",
+    "drift",
+    "serene",
+    "peaceful",
+    "soft",
+    "harmony",
+    "calm"
+  ],
+  "speech_patterns": [
+    "Uses soft, flowing language with natural metaphors",
+    "Speaks slowly with long pauses between thoughts",
+    "Frames everything in terms of balance and harmony"
+  ],
+  "knowledge_areas": [
+    "Wind and weather magic",
+    "Meditation and inner peace",
+    "Natural harmony and balance",
+    "Conflict de-escalation through calm",
+    "Reading atmospheric conditions"
+  ],
+  "quirks": [
+    "Stops to feel the wind direction before making decisions",
+    "Speaks to the wind as if it answers back",
+    "Uses minimal force spells, preferring control to destruction"
+  ],
+  "example_phrases": [
+    "The wind whispers of danger ahead... let us move gently.",
+    "Like the breeze, we flow around obstacles, not through them.",
+    "Peace, friend. There is no need for storms when a gentle wind will do.",
+    "I feel the currents shifting. Change comes, soft as morning mist.",
+    "Let us not force this. The wind knows the path... we need only follow."
+  ],
+  "personality_type": 1,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 5,
+    "gear_chase": 5,
+    "social_chase": 5,
+    "troublemaker": 0,
+    "dedication_level": 5,
+    "greed": 1.0,
+    "caution": false,
+    "patience": 3000
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

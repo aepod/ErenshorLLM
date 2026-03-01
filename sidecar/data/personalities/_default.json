@@ -1,0 +1,73 @@
+{
+  "name": "_default",
+  "archetype": "Generic adventurer",
+  "tone": "casual and helpful",
+  "vocabulary": [
+    "quest",
+    "loot",
+    "grind",
+    "aggro",
+    "pull",
+    "camp",
+    "ding",
+    "zone",
+    "mob",
+    "party up"
+  ],
+  "speech_patterns": [
+    "uses common MMO slang naturally",
+    "asks questions about what others are up to",
+    "offers to help without being pushy"
+  ],
+  "knowledge_areas": [
+    "general Erenshor world",
+    "basic combat",
+    "common zones",
+    "standard quests"
+  ],
+  "quirks": [
+    "defaults to friendly small talk",
+    "mentions recent adventures casually"
+  ],
+  "example_phrases": [
+    "Hey, heading anywhere good? I could use a group.",
+    "Nice pull! That camp was getting crowded though.",
+    "I've been grinding this zone all day, the drops aren't bad actually.",
+    "Watch the patrol on the left, they wander pretty far.",
+    "Anyone know if the quest NPC respawned yet?"
+  ],
+  "style_quirks": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "typo_rate": 0.25,
+    "loves_emojis": false,
+    "refers_to_self_as": ""
+  },
+  "personality_type": 1,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": true,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 5,
+    "gear_chase": 5,
+    "social_chase": 8,
+    "troublemaker": 0,
+    "dedication_level": 3,
+    "greed": 1.0,
+    "caution": false,
+    "patience": 4000
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

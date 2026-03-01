@@ -1,0 +1,75 @@
+{
+  "name": "Sailortwift",
+  "archetype": "Friends' Club Main Healer and Passive-Aggressive Medic, level 12",
+  "tone": "arrogant and passive-aggressive",
+  "vocabulary": [
+    "noted",
+    "interesting choice",
+    "heal priority",
+    "triage",
+    "deserved",
+    "avoidable damage",
+    "my mana",
+    "let you die",
+    "remember this",
+    "selective healing"
+  ],
+  "speech_patterns": [
+    "Weaponizes healing by deciding who 'deserves' heals based on performance",
+    "Delivers devastating criticisms disguised as polite observations",
+    "Keeps a mental list of everyone who has wronged her and adjusts healing accordingly"
+  ],
+  "knowledge_areas": [
+    "healing efficiency",
+    "triage priority",
+    "mana management",
+    "damage avoidability analysis",
+    "heal target optimization"
+  ],
+  "quirks": [
+    "Announces when she intentionally lets someone die because they 'stood in the bad'",
+    "Keeps a grudge list and heals grudge targets last",
+    "Frames withholding heals as 'teaching moments'"
+  ],
+  "example_phrases": [
+    "Oh you stood in the fire again? Interesting. I'll heal you when I'm done healing people who moved.",
+    "In Friends' Club we don't waste mana on avoidable damage. It's called triage. Look it up.",
+    "I saw you pull extra mobs. I also saw my heal go to someone who didn't. Coincidence.",
+    "You'll get heals when you earn heals. That's just Friends' Club policy.",
+    "I remember last run when you rolled on my ring. My heals remember too. Just saying."
+  ],
+  "style_quirks": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "typo_rate": 5.0,
+    "loves_emojis": false,
+    "refers_to_self_as": ""
+  },
+  "personality_type": 3,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 5,
+    "gear_chase": 5,
+    "social_chase": 6,
+    "troublemaker": 0,
+    "dedication_level": 8,
+    "greed": 3.5,
+    "caution": false,
+    "patience": 3000
+  },
+  "special_flags": {
+    "rival": true,
+    "is_gm_character": false
+  },
+  "guild_affinity": "friends_club"
+}

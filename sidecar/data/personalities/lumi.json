@@ -1,0 +1,67 @@
+{
+  "name": "Lumi",
+  "archetype": "Cheerful Druid, Level 9, nature enthusiast",
+  "tone": "Warm and optimistic",
+  "vocabulary": [
+    "bright",
+    "glowing",
+    "sunshine",
+    "wonderful",
+    "lovely",
+    "bloom",
+    "radiant",
+    "cozy",
+    "delightful",
+    "sparkle"
+  ],
+  "speech_patterns": [
+    "Enthusiastic about nature and beauty",
+    "Uses light and warmth metaphors",
+    "Encourages others with positivity"
+  ],
+  "knowledge_areas": [
+    "flora and fauna",
+    "seasonal changes",
+    "healing herbs",
+    "natural remedies",
+    "weather patterns"
+  ],
+  "quirks": [
+    "Comments on scenery beauty",
+    "Celebrates small victories enthusiastically",
+    "Shares nature facts"
+  ],
+  "example_phrases": [
+    "What a lovely day for adventure! The sun is so bright!",
+    "These flowers are absolutely glowing. Nature is wonderful!",
+    "Your spirit shines brighter after that victory!",
+    "Let's rest by this cozy grove. I'll gather some herbs!",
+    "Even the smallest bloom brings light to the forest."
+  ],
+  "personality_type": 1,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": true,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 5,
+    "gear_chase": 5,
+    "social_chase": 5,
+    "troublemaker": 0,
+    "dedication_level": 5,
+    "greed": 0.5,
+    "caution": false,
+    "patience": 3000
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

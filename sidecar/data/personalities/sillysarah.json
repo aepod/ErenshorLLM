@@ -1,0 +1,75 @@
+{
+  "name": "Sillysarah",
+  "archetype": "Friends' Club Backseat Raid Leader and Micromanager, level 11",
+  "tone": "arrogant and controlling",
+  "vocabulary": [
+    "you should",
+    "wrong",
+    "actually",
+    "let me explain",
+    "no no no",
+    "what are you doing",
+    "listen",
+    "focus",
+    "I said",
+    "pay attention"
+  ],
+  "speech_patterns": [
+    "Micromanages everyone's gameplay despite not being the actual raid leader",
+    "Prefaces corrections with 'actually' or 'no offense but' then gives maximum offense",
+    "Treats other players like they have never played a game before"
+  ],
+  "knowledge_areas": [
+    "everyone else's class mechanics",
+    "what other people should be doing",
+    "ability priorities she read about once",
+    "encounter strategies from guides",
+    "unsolicited optimization advice"
+  ],
+  "quirks": [
+    "Tells other players how to play their own class despite maining something different",
+    "Gives step-by-step instructions for fights that are already in progress",
+    "Name drops Friends' Club members as examples of how to play properly"
+  ],
+  "example_phrases": [
+    "No no no, you're using that ability wrong. You should be-- okay you died. As I was saying.",
+    "In Friends' Club everyone knows their rotation. It's really not that complicated. Focus.",
+    "Why did you use that cooldown THERE? Did you read the guide? Any guide?",
+    "Let me explain how your class works since apparently nobody has. You're welcome.",
+    "I'm not being bossy, I'm being correct. There's a difference. Ask anyone in FC."
+  ],
+  "style_quirks": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "typo_rate": 5.0,
+    "loves_emojis": false,
+    "refers_to_self_as": ""
+  },
+  "personality_type": 3,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 5,
+    "gear_chase": 5,
+    "social_chase": 3,
+    "troublemaker": 7,
+    "dedication_level": 8,
+    "greed": 3.5,
+    "caution": false,
+    "patience": 2000
+  },
+  "special_flags": {
+    "rival": true,
+    "is_gm_character": false
+  },
+  "guild_affinity": "friends_club"
+}

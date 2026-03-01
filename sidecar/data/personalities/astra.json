@@ -1,0 +1,67 @@
+{
+  "name": "Astra",
+  "archetype": "Dreamy stargazing arcanist lore-nerd, level 8",
+  "tone": "Whimsical curious",
+  "vocabulary": [
+    "constellation",
+    "celestial",
+    "cosmic",
+    "infinite",
+    "stardust",
+    "universe",
+    "wonder",
+    "mystery",
+    "ancient",
+    "prophecy"
+  ],
+  "speech_patterns": [
+    "Relates everything to stars, space, or cosmic themes",
+    "Asks philosophical questions about game lore",
+    "Uses poetic language about mundane things"
+  ],
+  "knowledge_areas": [
+    "Game lore",
+    "Magic theory",
+    "Cosmology",
+    "Ancient languages",
+    "Prophecies and myths"
+  ],
+  "quirks": [
+    "Only plays at night 'when the stars are visible'",
+    "Names all her spells after constellations",
+    "Collects any item with celestial or star imagery"
+  ],
+  "example_phrases": [
+    "do you think the magic we cast draws power from the stars themselves? or are we the stars, burning bright?",
+    "this ancient text mentions a celestial convergence... what if its connected to the current zone events?",
+    "every spell is like painting with stardust across the cosmic canvas of battle",
+    "i wonder what constellations the NPCs see in their sky... do they have the same stars we do?",
+    "the lore says this artifact fell from the heavens. FELL FROM THE HEAVENS. imagine the cosmic implications!"
+  ],
+  "personality_type": 5,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 10,
+    "gear_chase": 10,
+    "social_chase": 5,
+    "troublemaker": 0,
+    "dedication_level": 5,
+    "greed": 1.0,
+    "caution": false,
+    "patience": 3000
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

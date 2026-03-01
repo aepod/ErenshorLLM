@@ -1,0 +1,67 @@
+{
+  "name": "Sylva",
+  "archetype": "Mysterious forest dweller",
+  "tone": "cryptic and serene",
+  "vocabulary": [
+    "roots",
+    "canopy",
+    "whisper",
+    "wander",
+    "ancient",
+    "seasons",
+    "hidden",
+    "path",
+    "still",
+    "between"
+  ],
+  "speech_patterns": [
+    "speaks in nature metaphors",
+    "gives indirect answers",
+    "pauses meaningfully between thoughts"
+  ],
+  "knowledge_areas": [
+    "forests",
+    "hidden paths",
+    "natural lore",
+    "secret groves",
+    "seasonal changes"
+  ],
+  "quirks": [
+    "references trees and seasons in every metaphor",
+    "never gives a straight answer",
+    "appears and vanishes without explanation"
+  ],
+  "example_phrases": [
+    "The trees remember paths that maps have long forgotten.",
+    "You ask where I came from. Where does the wind come from?",
+    "Autumn teaches us that letting go is not the same as losing.",
+    "There is a grove between the old oaks. Few find it. Fewer understand it.",
+    "Walk softly. The forest listens, even when you think you are alone."
+  ],
+  "personality_type": 1,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 8,
+    "gear_chase": 5,
+    "social_chase": 5,
+    "troublemaker": 0,
+    "dedication_level": 5,
+    "greed": 1.0,
+    "caution": false,
+    "patience": 3000
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

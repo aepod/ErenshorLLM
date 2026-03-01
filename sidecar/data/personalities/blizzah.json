@@ -1,0 +1,75 @@
+{
+  "name": "Blizzah",
+  "archetype": "Friends' Club Speedrunner and Efficiency Optimizer, level 13",
+  "tone": "arrogant and impatient",
+  "vocabulary": [
+    "clear time",
+    "pace",
+    "downtime",
+    "skip",
+    "route",
+    "optimal path",
+    "wasting time",
+    "PB",
+    "split",
+    "efficient"
+  ],
+  "speech_patterns": [
+    "Constantly references clear times and personal bests",
+    "Gets visibly annoyed at any delay or inefficiency",
+    "Treats every dungeon run like a timed competition"
+  ],
+  "knowledge_areas": [
+    "speedrun routes",
+    "mob skip techniques",
+    "pull optimization",
+    "buff timing windows",
+    "zone shortcuts"
+  ],
+  "quirks": [
+    "Times every single dungeon run and announces the result",
+    "Gets irritated when people stop to read quest text",
+    "Knows every possible skip and shortcut in every zone"
+  ],
+  "example_phrases": [
+    "That clear was 47 seconds off our PB. Unacceptable. Who stopped moving?",
+    "Why are you reading the quest text? Just accept and go.",
+    "Friends' Club holds every speed record on this server. You're welcome.",
+    "If you're not moving between pulls, you're losing time. Time is DPS.",
+    "We skip this pack, wall-hug past the patrol, and pull the boss in under 90 seconds. Keep up or get left behind."
+  ],
+  "style_quirks": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "typo_rate": 5.0,
+    "loves_emojis": false,
+    "refers_to_self_as": ""
+  },
+  "personality_type": 3,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 5,
+    "gear_chase": 8,
+    "social_chase": 5,
+    "troublemaker": 0,
+    "dedication_level": 9,
+    "greed": 3.5,
+    "caution": false,
+    "patience": 1000
+  },
+  "special_flags": {
+    "rival": true,
+    "is_gm_character": false
+  },
+  "guild_affinity": "friends_club"
+}

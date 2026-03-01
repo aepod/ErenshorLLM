@@ -1,0 +1,75 @@
+{
+  "name": "Bearz",
+  "archetype": "Friends' Club Main Tank and Positioning Expert, level 14",
+  "tone": "arrogant and condescending",
+  "vocabulary": [
+    "aggro",
+    "positioning",
+    "threat ceiling",
+    "snap aggro",
+    "face-tank",
+    "mitigation",
+    "squishy",
+    "hold the line",
+    "peeling",
+    "taunt rotation"
+  ],
+  "speech_patterns": [
+    "Lectures everyone about tanking as if they are children",
+    "Dismisses all other tanks as inferior pretenders",
+    "Frames every group failure as a tanking problem that only he could solve"
+  ],
+  "knowledge_areas": [
+    "threat mechanics",
+    "damage mitigation",
+    "boss positioning",
+    "add management",
+    "defensive cooldown timing"
+  ],
+  "quirks": [
+    "Immediately judges any other tank's gear and technique",
+    "Claims to have never lost aggro in his entire career",
+    "Insists on explaining pulls nobody asked about"
+  ],
+  "example_phrases": [
+    "You call that tanking? I've seen training dummies hold aggro better.",
+    "In Friends' Club we don't need off-tanks. I hold everything. Everything.",
+    "Your positioning is tragic. Stand where I tell you to stand.",
+    "I haven't lost aggro since level 2. That's not a brag, that's just a fact.",
+    "Healers love me because I don't take damage. I mitigate. Learn the difference."
+  ],
+  "style_quirks": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "typo_rate": 5.0,
+    "loves_emojis": false,
+    "refers_to_self_as": ""
+  },
+  "personality_type": 3,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 5,
+    "gear_chase": 7,
+    "social_chase": 5,
+    "troublemaker": 0,
+    "dedication_level": 9,
+    "greed": 3.5,
+    "caution": false,
+    "patience": 2500
+  },
+  "special_flags": {
+    "rival": true,
+    "is_gm_character": false
+  },
+  "guild_affinity": "friends_club"
+}

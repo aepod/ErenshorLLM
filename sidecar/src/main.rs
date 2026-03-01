@@ -1,0 +1,649 @@
+//! erenshor-llm: RuVector-powered intelligence sidecar for Erenshor LLM Dialog mod
+//!
+//! This binary runs as a child process of the Unity game, providing semantic
+//! response generation via HTTP on localhost.
+
+mod builder;
+mod config;
+mod error;
+mod intelligence;
+mod llm;
+mod routes;
+mod server;
+mod state;
+
+use clap::{Parser, Subcommand};
+use std::path::PathBuf;
+use std::sync::Arc;
+use tracing::{debug, error, info, warn};
+
+#[derive(Parser)]
+#[command(name = "erenshor-llm", version = "0.3.0", about = "RuVector intelligence sidecar for Erenshor")]
+struct Cli {
+    /// Port to listen on
+    #[arg(long, default_value = "11435")]
+    port: u16,
+
+    /// Path to TOML config file
+    #[arg(long)]
+    config: Option<PathBuf>,
+
+    /// Data directory (indexes, models, templates)
+    #[arg(long, default_value = ".")]
+    data_dir: PathBuf,
+
+    /// Number of CPU threads for the ONNX embedding model
+    #[arg(long)]
+    threads: Option<usize>,
+
+    /// Log format: "pretty" or "json"
+    #[arg(long, default_value = "pretty")]
+    log_format: String,
+
+    #[command(subcommand)]
+    command: Option<Commands>,
+}
+
+#[derive(Subcommand)]
+enum Commands {
+    /// Build a lore vector database from markdown files.
+    /// Output: a .ruvector (redb) database file, or .json for legacy format.
+    /// Paths are resolved relative to --data-dir.
+    ///
+    /// Reads curated lore from the input directory (which should already
+    /// contain wiki content imported via `import-wiki`).
+    BuildIndex {
+        /// Input directory containing markdown files (curated lore + imported wiki)
+        #[arg(long, default_value = "lore")]
+        input: PathBuf,
+        /// Output file path (.ruvector for HNSW database, .json for legacy)
+        #[arg(long, default_value = "dist/lore.ruvector")]
+        output: PathBuf,
+    },
+    /// Build a response template vector database from JSON files.
+    /// Output: a .ruvector (redb) database file, or .json for legacy format.
+    /// Paths are resolved relative to --data-dir.
+    BuildResponses {
+        /// Input directory containing JSON template files
+        #[arg(long, default_value = "templates")]
+        input: PathBuf,
+        /// Output file path (.ruvector for HNSW database, .json for legacy)
+        #[arg(long, default_value = "dist/responses.ruvector")]
+        output: PathBuf,
+    },
+    /// Build a personality vector database from JSON personality files.
+    /// Output: a .ruvector (redb) database file.
+    /// Paths are resolved relative to --data-dir.
+    BuildPersonalities {
+        /// Input directory containing personality JSON files
+        #[arg(long, default_value = "personalities")]
+        input: PathBuf,
+        /// Output file path (.ruvector for HNSW database)
+        #[arg(long, default_value = "dist/personality.ruvector")]
+        output: PathBuf,
+    },
+    /// Reset all vector databases and rebuild from source.
+    /// Deletes .ruvector files and memory, then runs build-index + build-responses + build-personalities.
+    InitData {
+        /// Lore input directory (markdown files)
+        #[arg(long, default_value = "lore")]
+        lore_input: PathBuf,
+        /// Lore output path
+        #[arg(long, default_value = "dist/lore.ruvector")]
+        lore_output: PathBuf,
+        /// Template input directory (JSON files)
+        #[arg(long, default_value = "templates")]
+        templates_input: PathBuf,
+        /// Template output path
+        #[arg(long, default_value = "dist/responses.ruvector")]
+        templates_output: PathBuf,
+        /// Personality input directory (JSON files)
+        #[arg(long, default_value = "personalities")]
+        personalities_input: PathBuf,
+        /// Personality output path
+        #[arg(long, default_value = "dist/personality.ruvector")]
+        personalities_output: PathBuf,
+    },
+    /// Import wiki dump files into the curated lore directory structure.
+    /// Reads .md files with YAML frontmatter, cleans wiki syntax,
+    /// and organizes them by category. Does NOT embed anything.
+    ImportWiki {
+        /// Wiki dump directory containing .md files with YAML frontmatter
+        #[arg(long)]
+        wiki_dir: PathBuf,
+        /// Output lore directory to write categorized files
+        #[arg(long, default_value = "lore")]
+        output_dir: PathBuf,
+    },
+}
+
+fn init_tracing(format: &str) {
+    use tracing_subscriber::{fmt, prelude::*, EnvFilter};
+
+    let filter = EnvFilter::try_from_default_env()
+        .unwrap_or_else(|_| EnvFilter::new("info"));
+
+    match format {
+        "json" => {
+            tracing_subscriber::registry()
+                .with(filter)
+                .with(fmt::layer().json().with_writer(std::io::stderr))
+                .init();
+        }
+        _ => {
+            tracing_subscriber::registry()
+                .with(filter)
+                .with(fmt::layer().with_writer(std::io::stderr))
+                .init();
+        }
+    }
+}
+
+/// Try to load the embedding engine. Returns None if model files are missing.
+fn load_embedder(config: &config::AppConfig) -> Option<std::sync::Arc<intelligence::embedder::EmbeddingEngine>> {
+    let model_path = config.resolve_path(&config.embedding.model_path);
+    let tokenizer_path = config.resolve_path(&config.embedding.tokenizer_path);
+
+    if !model_path.exists() {
+        warn!(
+            "ONNX model not found at {:?}. Embedding engine will not be available.",
+            model_path
+        );
+        return None;
+    }
+
+    if !tokenizer_path.exists() {
+        warn!(
+            "Tokenizer not found at {:?}. Embedding engine will not be available.",
+            tokenizer_path
+        );
+        return None;
+    }
+
+    match intelligence::embedder::EmbeddingEngine::new(
+        &model_path,
+        &tokenizer_path,
+        config.embedding.threads,
+    ) {
+        Ok(engine) => {
+            info!("Embedding engine loaded successfully ({}d)", engine.dimensions());
+            Some(engine)
+        }
+        Err(e) => {
+            error!("Failed to load embedding engine: {}", e);
+            None
+        }
+    }
+}
+
+/// Load the lore index. Tries .ruvector first, falls back to .json.
+fn load_lore(config: &config::AppConfig) -> intelligence::lore::LoreStore {
+    let json_path = config.resolve_path(&config.indexes.lore_path);
+    let ruvector_path = config.resolve_path(
+        &config::IndexConfig::ruvector_path(&config.indexes.lore_path),
+    );
+    let adapter_config = config.vectordb.to_adapter_config();
+
+    let store = intelligence::lore::LoreStore::open(&ruvector_path, &json_path, &adapter_config);
+    if store.is_loaded() {
+        info!("Lore index loaded: {} entries", store.entry_count());
+    } else {
+        warn!("Lore index is empty or not found. Starting with empty lore.");
+    }
+    store
+}
+
+/// Load the memory store. Creates a new .ruvector if neither exists.
+fn load_memory(config: &config::AppConfig) -> intelligence::memory::MemoryStore {
+    let json_path = config.resolve_path(&config.indexes.memory_path);
+    let ruvector_path = config.resolve_path(
+        &config::IndexConfig::ruvector_path(&config.indexes.memory_path),
+    );
+    let adapter_config = config.vectordb.to_adapter_config();
+
+    let store = intelligence::memory::MemoryStore::open(&ruvector_path, &json_path, &adapter_config);
+    if store.is_loaded() {
+        info!("Memory loaded: {} entries", store.entry_count());
+    } else {
+        info!("Memory empty, starting fresh.");
+    }
+    store
+}
+
+/// Load the response template store. Tries .ruvector first, falls back to .json.
+fn load_responses(config: &config::AppConfig) -> intelligence::templates::ResponseStore {
+    let json_path = config.resolve_path(&config.indexes.responses_path);
+    let ruvector_path = config.resolve_path(
+        &config::IndexConfig::ruvector_path(&config.indexes.responses_path),
+    );
+    let adapter_config = config.vectordb.to_adapter_config();
+
+    let store = intelligence::templates::ResponseStore::open(&ruvector_path, &json_path, &adapter_config);
+    if store.is_loaded() {
+        info!("Response templates loaded: {} entries", store.entry_count());
+    } else {
+        warn!("Response templates not found. Starting without templates.");
+    }
+    store
+}
+
+/// Load personality store from data/personalities/ directory.
+fn load_personalities(config: &config::AppConfig) -> Arc<llm::personality::PersonalityStore> {
+    let dir = config.resolve_path("personalities");
+    Arc::new(llm::personality::PersonalityStore::load(&dir))
+}
+
+/// Build and load vector-backed personality store at startup.
+///
+/// Always rebuilds from personality JSON files to pick up any changes.
+/// Requires the embedding engine to be available.
+fn load_vector_personalities(
+    config: &config::AppConfig,
+    embedder: &Option<std::sync::Arc<intelligence::embedder::EmbeddingEngine>>,
+) -> intelligence::personality_store::VectorPersonalityStore {
+    let ruvector_path = config.resolve_path(&config.indexes.personality_path);
+    let personalities_dir = config.resolve_path("personalities");
+    let adapter_config = config.vectordb.to_adapter_config();
+
+    // Always rebuild from JSON source files at startup
+    if let Some(ref emb) = embedder {
+        debug!("Building personality vectors from {:?}...", personalities_dir);
+        // Remove stale .ruvector if present
+        if ruvector_path.exists() {
+            if let Err(e) = std::fs::remove_file(&ruvector_path) {
+                warn!("Failed to remove stale personality DB: {}", e);
+            }
+        }
+        match builder::personality_builder::build_personality_index(&personalities_dir, &ruvector_path, emb) {
+            Ok(()) => {
+                debug!("Personality vectors rebuilt successfully");
+            }
+            Err(e) => {
+                warn!("Failed to build personality vectors: {}. Personality vector search will be unavailable.", e);
+            }
+        }
+    } else {
+        warn!("Embedding engine unavailable; cannot build personality vectors at startup.");
+    }
+
+    let store = intelligence::personality_store::VectorPersonalityStore::open(&ruvector_path, &adapter_config);
+    if store.is_loaded() {
+        info!("Vector personality store loaded: {} entries", store.entry_count());
+    } else {
+        info!("Vector personality store empty. Personality vector search will be unavailable.");
+    }
+    store
+}
+
+/// Initialize the LLM router based on configuration.
+/// Both local (shimmy) and cloud (OpenRouter) backends are HTTP clients.
+fn load_llm_router(config: &config::AppConfig) -> Option<Arc<llm::router::LlmRouter>> {
+    if !config.llm.enabled {
+        info!("LLM text generation disabled");
+        return None;
+    }
+
+    let mode = config.llm.mode;
+
+    // Create local backend HTTP client (shimmy) if needed
+    let local = if matches!(mode, config::LlmMode::Local | config::LlmMode::Hybrid) {
+        match llm::local::LocalBackend::new(&config.llm.local) {
+            Ok(backend) => {
+                info!(
+                    "Local LLM backend configured (shimmy at {})",
+                    config.llm.local.endpoint
+                );
+                Some(Arc::new(backend))
+            }
+            Err(e) => {
+                warn!("Failed to configure local LLM backend: {}. Continuing without.", e);
+                None
+            }
+        }
+    } else {
+        None
+    };
+
+    // Create cloud backend HTTP client (OpenRouter) if needed
+    let cloud = if matches!(mode, config::LlmMode::Cloud | config::LlmMode::Hybrid) {
+        match llm::cloud::CloudBackend::new(&config.llm.cloud) {
+            Ok(backend) => {
+                info!("Cloud LLM backend configured (provider: {})", config.llm.cloud.provider);
+                Some(Arc::new(backend))
+            }
+            Err(e) => {
+                warn!("Failed to configure cloud LLM backend: {}. Continuing without.", e);
+                None
+            }
+        }
+    } else {
+        None
+    };
+
+    Some(Arc::new(llm::router::LlmRouter::new(local, cloud, mode)))
+}
+
+#[tokio::main]
+async fn main() {
+    let cli = Cli::parse();
+
+    init_tracing(&cli.log_format);
+
+    // Handle subcommands (builder modes)
+    if let Some(command) = &cli.command {
+        // Builders need the embedding engine
+        let config = match config::load_config(cli.config.as_deref(), &cli.data_dir, cli.port, cli.threads) {
+            Ok(c) => c,
+            Err(e) => {
+                error!("Failed to load config: {}", e);
+                std::process::exit(1);
+            }
+        };
+
+        match command {
+            Commands::BuildIndex { input, output } => {
+                let input = config.resolve_path(&input.to_string_lossy());
+                let output = config.resolve_path(&output.to_string_lossy());
+
+                let embedder = match load_embedder(&config) {
+                    Some(e) => e,
+                    None => {
+                        error!("Embedding engine is required for index building. Ensure model files exist.");
+                        std::process::exit(1);
+                    }
+                };
+
+                info!("Building lore index from {:?} -> {:?}", input, output);
+
+                if let Err(e) = builder::index_builder::build_lore_index(&input, &output, &embedder) {
+                    error!("Index build failed: {}", e);
+                    std::process::exit(1);
+                }
+
+                info!("Lore index built successfully.");
+                return;
+            }
+            Commands::BuildResponses { input, output } => {
+                // Resolve paths relative to data_dir if not absolute
+                let input = config.resolve_path(&input.to_string_lossy());
+                let output = config.resolve_path(&output.to_string_lossy());
+                info!("Building response templates from {:?} -> {:?}", input, output);
+
+                let embedder = match load_embedder(&config) {
+                    Some(e) => e,
+                    None => {
+                        error!("Embedding engine is required for template building. Ensure model files exist.");
+                        std::process::exit(1);
+                    }
+                };
+
+                if let Err(e) = builder::template_builder::build_response_index(&input, &output, &embedder) {
+                    error!("Template build failed: {}", e);
+                    std::process::exit(1);
+                }
+
+                info!("Response template index built successfully.");
+                return;
+            }
+            Commands::BuildPersonalities { input, output } => {
+                let input = config.resolve_path(&input.to_string_lossy());
+                let output = config.resolve_path(&output.to_string_lossy());
+                info!("Building personality index from {:?} -> {:?}", input, output);
+
+                let embedder = match load_embedder(&config) {
+                    Some(e) => e,
+                    None => {
+                        error!("Embedding engine is required for personality building. Ensure model files exist.");
+                        std::process::exit(1);
+                    }
+                };
+
+                if let Err(e) = builder::personality_builder::build_personality_index(&input, &output, &embedder) {
+                    error!("Personality build failed: {}", e);
+                    std::process::exit(1);
+                }
+
+                info!("Personality index built successfully.");
+                return;
+            }
+            Commands::InitData { lore_input, lore_output, templates_input, templates_output, personalities_input, personalities_output } => {
+                let lore_input = config.resolve_path(&lore_input.to_string_lossy());
+                let lore_output = config.resolve_path(&lore_output.to_string_lossy());
+                let templates_input = config.resolve_path(&templates_input.to_string_lossy());
+                let templates_output = config.resolve_path(&templates_output.to_string_lossy());
+                let personalities_input = config.resolve_path(&personalities_input.to_string_lossy());
+                let personalities_output = config.resolve_path(&personalities_output.to_string_lossy());
+
+                info!("=== init-data: resetting vector databases ===");
+
+                // 1. Delete .ruvector files
+                let ruvector_files = [
+                    config.resolve_path("dist/lore.ruvector"),
+                    config.resolve_path("dist/responses.ruvector"),
+                    config.resolve_path("dist/memory.ruvector"),
+                    config.resolve_path("dist/personality.ruvector"),
+                ];
+                for path in &ruvector_files {
+                    if path.exists() {
+                        info!("Removing {:?}", path);
+                        if let Err(e) = std::fs::remove_file(path) {
+                            warn!("Failed to remove {:?}: {}", path, e);
+                        }
+                    }
+                }
+
+                // 2. Delete memory.json (reset memories)
+                let memory_json = config.resolve_path("dist/memory.json");
+                if memory_json.exists() {
+                    info!("Removing {:?}", memory_json);
+                    if let Err(e) = std::fs::remove_file(&memory_json) {
+                        warn!("Failed to remove {:?}: {}", memory_json, e);
+                    }
+                }
+
+                // 3. Load embedding engine (required for all builds)
+                let embedder = match load_embedder(&config) {
+                    Some(e) => e,
+                    None => {
+                        error!("Embedding engine is required for init-data.");
+                        std::process::exit(1);
+                    }
+                };
+
+                // 4. Build lore index (curated lore only, wiki content should be pre-imported)
+                info!("=== Building lore index: {:?} -> {:?} ===", lore_input, lore_output);
+                if let Err(e) = builder::index_builder::build_lore_index(&lore_input, &lore_output, &embedder) {
+                    error!("Lore index build failed: {}", e);
+                    std::process::exit(1);
+                }
+                info!("Lore index built.");
+
+                // 5. Build response templates
+                info!("=== Building response templates: {:?} -> {:?} ===", templates_input, templates_output);
+                if let Err(e) = builder::template_builder::build_response_index(&templates_input, &templates_output, &embedder) {
+                    error!("Template build failed: {}", e);
+                    std::process::exit(1);
+                }
+                info!("Response templates built.");
+
+                // 6. Build personality index
+                info!("=== Building personality index: {:?} -> {:?} ===", personalities_input, personalities_output);
+                if let Err(e) = builder::personality_builder::build_personality_index(&personalities_input, &personalities_output, &embedder) {
+                    error!("Personality build failed: {}", e);
+                    std::process::exit(1);
+                }
+                info!("Personality index built.");
+
+                info!("=== init-data complete ===");
+                return;
+            }
+            Commands::ImportWiki { wiki_dir, output_dir } => {
+                let wiki_dir = config.resolve_path(&wiki_dir.to_string_lossy());
+                let output_dir = config.resolve_path(&output_dir.to_string_lossy());
+                info!("Importing wiki dump from {:?} -> {:?}", wiki_dir, output_dir);
+
+                if let Err(e) = builder::wiki_importer::import_wiki(&wiki_dir, &output_dir) {
+                    error!("Wiki import failed: {}", e);
+                    std::process::exit(1);
+                }
+
+                info!("Wiki import complete.");
+                return;
+            }
+        }
+    }
+
+    // Server mode: load config and start HTTP server
+    let config = match config::load_config(cli.config.as_deref(), &cli.data_dir, cli.port, cli.threads) {
+        Ok(c) => c,
+        Err(e) => {
+            error!("Failed to load config: {}", e);
+            std::process::exit(1);
+        }
+    };
+
+    info!(
+        "erenshor-llm v{} starting on {}:{}",
+        env!("CARGO_PKG_VERSION"),
+        config.server.host,
+        config.server.port
+    );
+
+    // Load intelligence components (graceful degradation if files missing)
+    let embedder = load_embedder(&config);
+
+    // Warm-up embedding to pre-initialize ONNX thread pools
+    if let Some(ref emb) = embedder {
+        match emb.embed("warm-up test") {
+            Ok(_) => {}
+            Err(e) => error!("Embedding warm-up FAILED: {}", e),
+        }
+    }
+
+    let lore = load_lore(&config);
+    let responses = load_responses(&config);
+    let memory = load_memory(&config);
+
+    // Start with empty personality vectors -- built in background after server starts
+    let vector_personalities = intelligence::personality_store::VectorPersonalityStore::empty();
+
+    // Initialize SONA adaptive learning
+    let sona = if config.sona.enabled {
+        match intelligence::sona_integration::SonaManager::new(config.sona.to_manager_config()) {
+            Ok(s) => {
+                info!("SONA adaptive learning enabled");
+                Some(s)
+            }
+            Err(e) => {
+                warn!("Failed to initialize SONA: {}. Continuing without.", e);
+                None
+            }
+        }
+    } else {
+        info!("SONA adaptive learning disabled");
+        None
+    };
+
+    // Load Phase 3 components
+    let personality_store = load_personalities(&config);
+
+    // Start shimmy if local LLM mode is enabled
+    let _shimmy = if config.llm.enabled
+        && matches!(config.llm.mode, config::LlmMode::Local | config::LlmMode::Hybrid)
+        && config.llm.local.auto_start
+    {
+        // Extract bind address from endpoint URL (e.g. "http://127.0.0.1:8012" -> "127.0.0.1:8012")
+        let bind_addr = config.llm.local.endpoint
+            .trim_start_matches("http://")
+            .trim_start_matches("https://")
+            .to_string();
+
+        let shimmy = llm::shimmy::ShimmyProcess::start(
+            &config.data_dir,
+            &bind_addr,
+            &config.llm.local.gpu_backend,
+            &config.llm.local.model_dir,
+        );
+
+        if shimmy.is_some() {
+            // Wait for shimmy to become ready before accepting requests
+            let ready = llm::shimmy::ShimmyProcess::wait_ready(
+                &config.llm.local.endpoint,
+                std::time::Duration::from_secs(60),
+            ).await;
+
+            if !ready {
+                warn!("Shimmy not ready; local LLM may fail on first requests");
+            }
+        }
+
+        shimmy
+    } else {
+        None
+    };
+
+    let llm_router = load_llm_router(&config);
+
+    let app_state = state::AppState::new(
+        config, embedder, lore, responses, memory, sona,
+        personality_store, vector_personalities, llm_router,
+    );
+
+    // Start SONA background tick task
+    if app_state.sona.is_some() {
+        let interval_ms = app_state.sona.as_ref().unwrap().background_interval_ms();
+        let state_ref: Arc<state::AppState> = Arc::clone(&app_state);
+        let shutdown: Arc<tokio::sync::Notify> = Arc::clone(&app_state.shutdown);
+        tokio::spawn(async move {
+            let mut tick_interval = tokio::time::interval(
+                std::time::Duration::from_millis(interval_ms),
+            );
+            loop {
+                tokio::select! {
+                    _ = tick_interval.tick() => {
+                        if let Some(ref sona_mgr) = state_ref.sona {
+                            sona_mgr.tick();
+                        }
+                    }
+                    _ = shutdown.notified() => {
+                        info!("SONA background tick shutting down");
+                        break;
+                    }
+                }
+            }
+        });
+    }
+
+    // Spawn background task to build personality vectors without blocking startup.
+    // The server is already listening; personality search will return empty results
+    // until the build completes, at which point the RwLock is swapped.
+    {
+        let state_for_build = Arc::clone(&app_state);
+        tokio::spawn(async move {
+            // Clone what the blocking closure needs so state_for_build stays available
+            let config_clone = state_for_build.config.clone();
+            let embedder_clone = state_for_build.embedder.clone();
+
+            let result = tokio::task::spawn_blocking(move || {
+                load_vector_personalities(&config_clone, &embedder_clone)
+            })
+            .await;
+
+            match result {
+                Ok(store) => {
+                    let mut guard = state_for_build.vector_personalities.write().await;
+                    *guard = store;
+                    info!("Background personality vector build complete");
+                }
+                Err(e) => {
+                    warn!("Background personality build task failed: {}", e);
+                }
+            }
+        });
+    }
+
+    if let Err(e) = server::serve(app_state).await {
+        error!("Server error: {}", e);
+        std::process::exit(1);
+    }
+}

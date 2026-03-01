@@ -1,0 +1,964 @@
+{
+    "category": "group_party",
+    "templates": [
+        {
+            "id": "group_lfg_001",
+            "text": "LFG! Anyone wanna group up for {zone}?",
+            "context_tags": [
+                "group",
+                "lfg",
+                "social"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "shout"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_lfg_002",
+            "text": "Looking for more for our group. What class are you?",
+            "context_tags": [
+                "group",
+                "lfg",
+                "class"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "shout"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_lfg_003",
+            "text": "Need a healer for our group. Any Druids around?",
+            "context_tags": [
+                "group",
+                "lfg",
+                "healer"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "shout"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_lfg_004",
+            "text": "LFG, level range doesn't matter too much. Just want company.",
+            "context_tags": [
+                "group",
+                "lfg",
+                "casual"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "shout"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "group_invite_001",
+            "text": "Wanna join up? We could use another person.",
+            "context_tags": [
+                "group",
+                "invite",
+                "friendly"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_invite_002",
+            "text": "Join up with us! More people means better XP.",
+            "context_tags": [
+                "group",
+                "invite",
+                "xp"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_invite_003",
+            "text": "Got room for one more. Want in?",
+            "context_tags": [
+                "group",
+                "invite",
+                "casual"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_join_001",
+            "text": "Thanks for the invite! Where are you guys?",
+            "context_tags": [
+                "group",
+                "join",
+                "grateful"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_join_002",
+            "text": "Sweet, group invite! On my way.",
+            "context_tags": [
+                "group",
+                "join",
+                "excited"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_role_001",
+            "text": "I can tank if we need one.",
+            "context_tags": [
+                "group",
+                "role",
+                "tank"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive",
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_role_002",
+            "text": "I'll DPS. Just let the tank get aggro first.",
+            "context_tags": [
+                "group",
+                "role",
+                "dps"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_role_003",
+            "text": "I can heal but my mana pool is kinda small still.",
+            "context_tags": [
+                "group",
+                "role",
+                "healer"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_good_001",
+            "text": "Great group. We're burning through these mobs.",
+            "context_tags": [
+                "group",
+                "positive",
+                "efficient"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_good_002",
+            "text": "This group is solid. Good synergy.",
+            "context_tags": [
+                "group",
+                "positive",
+                "teamwork"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_good_003",
+            "text": "Love this group comp. Heals, tank, and DPS all covered.",
+            "context_tags": [
+                "group",
+                "positive",
+                "composition"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_split_001",
+            "text": "Anyone want to split loot or just free for all?",
+            "context_tags": [
+                "group",
+                "loot",
+                "question"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_wait_001",
+            "text": "Wait up, I'm coming! Don't pull yet.",
+            "context_tags": [
+                "group",
+                "wait",
+                "running"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_wait_002",
+            "text": "Hold on, need to sell and restock real quick.",
+            "context_tags": [
+                "group",
+                "wait",
+                "vendor"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "group_direction_001",
+            "text": "Let's head north, more spawns over there.",
+            "context_tags": [
+                "group",
+                "direction",
+                "strategy"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_camp_001",
+            "text": "Let's set up camp here. Good pull spot.",
+            "context_tags": [
+                "group",
+                "camp",
+                "strategy"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_break_001",
+            "text": "Let's take a quick break. Bio.",
+            "context_tags": [
+                "group",
+                "break",
+                "afk"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "group_thanks_001",
+            "text": "Thanks for grouping! That was fun.",
+            "context_tags": [
+                "group",
+                "thanks",
+                "positive"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party",
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_thanks_002",
+            "text": "Good group tonight. We should do this again.",
+            "context_tags": [
+                "group",
+                "thanks",
+                "future"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "social"
+            ],
+            "relationship_min": 5.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_decline_001",
+            "text": "Sorry, I'm soloing right now. Maybe later?",
+            "context_tags": [
+                "group",
+                "decline",
+                "polite"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_decline_002",
+            "text": "Not looking for a group right now, thanks though.",
+            "context_tags": [
+                "group",
+                "decline",
+                "polite"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 2.0,
+            "relationship_max": 8.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_full_001",
+            "text": "Sorry, group is full. Good luck out there!",
+            "context_tags": [
+                "group",
+                "full",
+                "polite"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_dungeon_001",
+            "text": "Anyone up for a dungeon run? Need a full group.",
+            "context_tags": [
+                "group",
+                "dungeon",
+                "lfg"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "shout",
+                "guild"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_dungeon_002",
+            "text": "Forming a dungeon group for {zone}. Need tank and healer.",
+            "context_tags": [
+                "group",
+                "dungeon",
+                "lfg",
+                "specific"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "shout"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "group_xp_001",
+            "text": "XP is flowing in this group. Keep it up!",
+            "context_tags": [
+                "group",
+                "xp",
+                "positive"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "group_level_001",
+            "text": "What's everyone's level? Want to make sure we match.",
+            "context_tags": [
+                "group",
+                "level",
+                "logistics"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party",
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_lead_001",
+            "text": "I'll lead. Follow me and watch for pats.",
+            "context_tags": [
+                "group",
+                "lead",
+                "strategy"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_guild_001",
+            "text": "Any guildies want to group up tonight?",
+            "context_tags": [
+                "group",
+                "guild",
+                "social"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "guild"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_class_001",
+            "text": "What class comp do we have? Tank, healer, DPS?",
+            "context_tags": [
+                "group",
+                "class",
+                "logistics"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_medic_001",
+            "text": "We really need a healer. This is rough without one.",
+            "context_tags": [
+                "group",
+                "healer",
+                "need"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_noob_001",
+            "text": "First time grouping here. Any tips?",
+            "context_tags": [
+                "group",
+                "newbie",
+                "question"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "group_teaching_001",
+            "text": "Don't worry, we'll show you the ropes. Stick with us.",
+            "context_tags": [
+                "group",
+                "mentor",
+                "friendly"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_reform_001",
+            "text": "Let's reform the group. Same time tomorrow?",
+            "context_tags": [
+                "group",
+                "reform",
+                "future"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 5.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_strat_001",
+            "text": "Let's clear left side first, then circle around.",
+            "context_tags": [
+                "group",
+                "strategy",
+                "plan"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive",
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_move_001",
+            "text": "Let's move to a better spot. More spawns over there.",
+            "context_tags": [
+                "group",
+                "move",
+                "strategy"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_cold_001",
+            "text": "I work alone.",
+            "context_tags": [
+                "group",
+                "decline",
+                "cold"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 0.0,
+            "relationship_max": 3.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "group_lore_001",
+            "text": "Umbran! Form up, warriors! We push through together.",
+            "context_tags": [
+                "group",
+                "lore",
+                "battlecry",
+                "braxonian"
+            ],
+            "zone_affinity": [
+                "Fallen Braxonia",
+                "Braxonian Desert"
+            ],
+            "personality_affinity": [
+                "aggressive",
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party",
+                "shout"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "group_lore_002",
+            "text": "By Soluna's light, we stand together. Who's with me?",
+            "context_tags": [
+                "group",
+                "lore",
+                "soluna",
+                "rally"
+            ],
+            "zone_affinity": [
+                "Soluna's Landing"
+            ],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "shout",
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_elderstone_001",
+            "text": "Need a full party for Elderstone Mines. Those tunnels are no joke.",
+            "context_tags": [
+                "group",
+                "dungeon",
+                "lfg",
+                "elderstone"
+            ],
+            "zone_affinity": [
+                "Elderstone Mines"
+            ],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "shout",
+                "guild"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "group_bonepits_001",
+            "text": "Putting together a Bone Pits group. Gonna need a Druid for heals.",
+            "context_tags": [
+                "group",
+                "dungeon",
+                "lfg",
+                "bone pits",
+                "healer"
+            ],
+            "zone_affinity": [
+                "The Bone Pits"
+            ],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "shout"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "group_malaroth_001",
+            "text": "Forming a group for Malaroth's Nesting Grounds. Need a solid Reaver to tank.",
+            "context_tags": [
+                "group",
+                "boss",
+                "lfg",
+                "malaroth",
+                "tank"
+            ],
+            "zone_affinity": [
+                "Malaroth's Nesting Grounds"
+            ],
+            "personality_affinity": [
+                "social",
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "shout",
+                "guild"
+            ],
+            "priority": 1.2
+        },
+        {
+            "id": "group_comp_001",
+            "text": "We've got a Reaver tanking, Druid on heals. Need a Stormcaller or Arcanist for DPS.",
+            "context_tags": [
+                "group",
+                "composition",
+                "class",
+                "lfg"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "shout",
+                "party"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "group_comp_002",
+            "text": "Any Rangers out there? We could use some ranged damage in this group.",
+            "context_tags": [
+                "group",
+                "class",
+                "ranger",
+                "lfg"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "shout"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "group_sepulcher_001",
+            "text": "Heading into the Blooming Sepulcher. Full group or we'll get wiped by cultists.",
+            "context_tags": [
+                "group",
+                "dungeon",
+                "lfg",
+                "sepulcher",
+                "molorai"
+            ],
+            "zone_affinity": [
+                "Blooming Sepulcher"
+            ],
+            "personality_affinity": [
+                "social",
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "shout",
+                "guild"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "group_duelist_001",
+            "text": "Got a Duelist in group. Let them backstab, don't spin the mob around.",
+            "context_tags": [
+                "group",
+                "class",
+                "duelist",
+                "strategy"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly",
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        }
+    ]
+}

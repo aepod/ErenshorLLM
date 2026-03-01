@@ -1,0 +1,55 @@
+# erenshor-llm sidecar configuration
+# All paths are relative to --data-dir unless absolute.
+
+[server]
+port = 11435
+host = "127.0.0.1"
+
+[embedding]
+model_path = "models/all-minilm-l6-v2.onnx"
+tokenizer_path = "models/tokenizer.json"
+threads = 2
+
+[indexes]
+lore_path = "dist/lore.json"
+responses_path = "dist/responses.json"
+memory_path = "dist/memory.json"
+personality_path = "dist/personality.ruvector"
+
+[sona]
+enabled = true
+learning_rate = 0.01
+
+[respond]
+template_candidates = 10
+lore_candidates = 3
+memory_candidates = 3
+min_confidence = 0.3
+zone_weight = 0.2
+personality_weight = 0.3
+relationship_weight = 0.15
+channel_weight = 0.15
+
+# Phase 3: LLM text generation
+[llm]
+enabled = false          # Set to true to enable LLM enhancement
+mode = "off"             # off, local, cloud, hybrid
+enhance_threshold = 0.85 # Template confidence below which LLM fires
+max_tokens = 150
+temperature = 0.7
+queue_depth = 5
+
+[llm.local]
+endpoint = "http://127.0.0.1:8012"    # shimmy inference server endpoint
+model = "gemma3npc-1b-q4_k_m"          # model name (shimmy auto-discovers GGUFs)
+timeout_ms = 30000                      # 30s timeout for local inference
+auto_start = true                       # sidecar auto-starts shimmy
+gpu_backend = "cuda"                    # cuda, vulkan, auto, cpu
+model_dir = "models"                    # GGUF model directory (relative to data-dir)
+
+[llm.cloud]
+provider = "openrouter"
+api_key = ""
+api_endpoint = "https://openrouter.ai/api/v1"
+model = "anthropic/claude-3.5-haiku"
+timeout_ms = 10000

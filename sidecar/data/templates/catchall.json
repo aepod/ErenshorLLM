@@ -1,0 +1,736 @@
+{
+    "category": "catchall",
+    "templates": [
+        {
+            "id": "catchall_generic_001",
+            "text": "Hmm, interesting.",
+            "context_tags": [
+                "catchall",
+                "neutral",
+                "vague"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 0.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.5
+        },
+        {
+            "id": "catchall_generic_002",
+            "text": "Yeah, I hear ya.",
+            "context_tags": [
+                "catchall",
+                "agreement",
+                "casual"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 2.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.5
+        },
+        {
+            "id": "catchall_generic_003",
+            "text": "Sure thing.",
+            "context_tags": [
+                "catchall",
+                "agreement",
+                "brief"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 2.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.5
+        },
+        {
+            "id": "catchall_generic_004",
+            "text": "Gotcha.",
+            "context_tags": [
+                "catchall",
+                "acknowledgment",
+                "brief"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 2.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.5
+        },
+        {
+            "id": "catchall_generic_005",
+            "text": "Hmm.",
+            "context_tags": [
+                "catchall",
+                "thinking",
+                "minimal"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 0.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.4
+        },
+        {
+            "id": "catchall_generic_006",
+            "text": "Not sure what to say to that.",
+            "context_tags": [
+                "catchall",
+                "confused",
+                "honest"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 2.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.5
+        },
+        {
+            "id": "catchall_generic_007",
+            "text": "Ha, yeah.",
+            "context_tags": [
+                "catchall",
+                "agreement",
+                "light"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.5
+        },
+        {
+            "id": "catchall_generic_008",
+            "text": "Right on.",
+            "context_tags": [
+                "catchall",
+                "agreement",
+                "casual"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.5
+        },
+        {
+            "id": "catchall_generic_009",
+            "text": "Fair enough.",
+            "context_tags": [
+                "catchall",
+                "agreement",
+                "neutral"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 2.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.5
+        },
+        {
+            "id": "catchall_generic_010",
+            "text": "I see what you mean.",
+            "context_tags": [
+                "catchall",
+                "understanding",
+                "polite"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.5
+        },
+        {
+            "id": "catchall_confused_001",
+            "text": "Huh? Not sure I follow.",
+            "context_tags": [
+                "catchall",
+                "confused",
+                "question"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 2.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.5
+        },
+        {
+            "id": "catchall_confused_002",
+            "text": "What do you mean by that?",
+            "context_tags": [
+                "catchall",
+                "confused",
+                "question"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 2.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.5
+        },
+        {
+            "id": "catchall_confused_003",
+            "text": "Sorry, didn't catch that. What?",
+            "context_tags": [
+                "catchall",
+                "confused",
+                "repeat"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.5
+        },
+        {
+            "id": "catchall_busy_001",
+            "text": "Kinda busy right now, sorry.",
+            "context_tags": [
+                "catchall",
+                "busy",
+                "dismissive"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 1.0,
+            "relationship_max": 8.0,
+            "channel": [],
+            "priority": 0.5
+        },
+        {
+            "id": "catchall_busy_002",
+            "text": "Can't talk right now. In the middle of something.",
+            "context_tags": [
+                "catchall",
+                "busy",
+                "combat"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 1.0,
+            "relationship_max": 8.0,
+            "channel": [],
+            "priority": 0.5
+        },
+        {
+            "id": "catchall_cold_001",
+            "text": "Okay.",
+            "context_tags": [
+                "catchall",
+                "cold",
+                "minimal"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 0.0,
+            "relationship_max": 4.0,
+            "channel": [],
+            "priority": 0.5
+        },
+        {
+            "id": "catchall_cold_002",
+            "text": "Whatever you say.",
+            "context_tags": [
+                "catchall",
+                "cold",
+                "dismissive"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 0.0,
+            "relationship_max": 3.0,
+            "channel": [],
+            "priority": 0.5
+        },
+        {
+            "id": "catchall_cold_003",
+            "text": "Meh.",
+            "context_tags": [
+                "catchall",
+                "cold",
+                "uninterested"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 0.0,
+            "relationship_max": 3.0,
+            "channel": [],
+            "priority": 0.4
+        },
+        {
+            "id": "catchall_friendly_001",
+            "text": "Haha, totally. Anyway, what are you up to?",
+            "context_tags": [
+                "catchall",
+                "friendly",
+                "redirect"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.6
+        },
+        {
+            "id": "catchall_friendly_002",
+            "text": "Nice! Hey, you need any help with anything?",
+            "context_tags": [
+                "catchall",
+                "friendly",
+                "helpful"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 5.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.6
+        },
+        {
+            "id": "catchall_friendly_003",
+            "text": "Yeah, for sure! So what's the plan?",
+            "context_tags": [
+                "catchall",
+                "friendly",
+                "planning"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.6
+        },
+        {
+            "id": "catchall_question_001",
+            "text": "Good question. I'm not really sure, honestly.",
+            "context_tags": [
+                "catchall",
+                "question",
+                "unsure"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.5
+        },
+        {
+            "id": "catchall_question_002",
+            "text": "You might want to check the wiki for that.",
+            "context_tags": [
+                "catchall",
+                "question",
+                "redirect"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.5
+        },
+        {
+            "id": "catchall_question_003",
+            "text": "Ask in shout chat, someone probably knows.",
+            "context_tags": [
+                "catchall",
+                "question",
+                "redirect"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.5
+        },
+        {
+            "id": "catchall_positive_001",
+            "text": "Yeah! Sounds good.",
+            "context_tags": [
+                "catchall",
+                "positive",
+                "agreement"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.5
+        },
+        {
+            "id": "catchall_positive_002",
+            "text": "Totally agree with you there.",
+            "context_tags": [
+                "catchall",
+                "positive",
+                "agreement"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.5
+        },
+        {
+            "id": "catchall_thoughtful_001",
+            "text": "That's a good point actually. Never thought about it that way.",
+            "context_tags": [
+                "catchall",
+                "thoughtful",
+                "agreeing"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.6
+        },
+        {
+            "id": "catchall_thoughtful_002",
+            "text": "Hmm, let me think about that for a sec.",
+            "context_tags": [
+                "catchall",
+                "thoughtful",
+                "considering"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.5
+        },
+        {
+            "id": "catchall_deflect_001",
+            "text": "Ha, let's not go there. So how's the grinding going?",
+            "context_tags": [
+                "catchall",
+                "deflect",
+                "redirect"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.5
+        },
+        {
+            "id": "catchall_deflect_002",
+            "text": "Anyway... seen any good drops today?",
+            "context_tags": [
+                "catchall",
+                "deflect",
+                "redirect"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.5
+        },
+        {
+            "id": "catchall_scholar_001",
+            "text": "Hmm, that reminds me of a passage in the Azynthian Scriptures. Can't quite place it.",
+            "context_tags": [
+                "catchall",
+                "scholarly",
+                "lore",
+                "thoughtful"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.6
+        },
+        {
+            "id": "catchall_scholar_002",
+            "text": "Interesting perspective. I'd want to research that more before forming an opinion.",
+            "context_tags": [
+                "catchall",
+                "scholarly",
+                "cautious"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.6
+        },
+        {
+            "id": "catchall_scholar_003",
+            "text": "Now that's a question worth pondering. The Vithean scholars would have had thoughts on that.",
+            "context_tags": [
+                "catchall",
+                "scholarly",
+                "lore",
+                "pondering"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.6
+        },
+        {
+            "id": "catchall_aggressive_001",
+            "text": "Yeah yeah. Can we talk about this after I finish this pull?",
+            "context_tags": [
+                "catchall",
+                "aggressive",
+                "dismissive",
+                "combat"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 2.0,
+            "relationship_max": 8.0,
+            "channel": [],
+            "priority": 0.5
+        },
+        {
+            "id": "catchall_aggressive_002",
+            "text": "Don't really care about that. Let's focus on killing things.",
+            "context_tags": [
+                "catchall",
+                "aggressive",
+                "dismissive",
+                "blunt"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 1.0,
+            "relationship_max": 6.0,
+            "channel": [],
+            "priority": 0.5
+        },
+        {
+            "id": "catchall_aggressive_003",
+            "text": "Words are cheap. Show me with your sword, not your mouth.",
+            "context_tags": [
+                "catchall",
+                "aggressive",
+                "challenging"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 2.0,
+            "relationship_max": 7.0,
+            "channel": [],
+            "priority": 0.5
+        },
+        {
+            "id": "catchall_friendly_004",
+            "text": "Ha! That's great. Reminds me of my first time in Port Azure, totally lost.",
+            "context_tags": [
+                "catchall",
+                "friendly",
+                "nostalgic",
+                "lore"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.6
+        },
+        {
+            "id": "catchall_friendly_005",
+            "text": "You know what, you're right. Hey, want to go do something about it?",
+            "context_tags": [
+                "catchall",
+                "friendly",
+                "proactive"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "social"
+            ],
+            "relationship_min": 5.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.6
+        },
+        {
+            "id": "catchall_lore_001",
+            "text": "I was just thinking about that quest. Something about it doesn't add up.",
+            "context_tags": [
+                "catchall",
+                "lore",
+                "quest",
+                "thoughtful"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.6
+        },
+        {
+            "id": "catchall_lore_002",
+            "text": "You know, Port Azure was founded in 1552. Weird what sticks with you sometimes.",
+            "context_tags": [
+                "catchall",
+                "lore",
+                "trivia",
+                "tangent"
+            ],
+            "zone_affinity": [
+                "Port Azure"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.5
+        },
+        {
+            "id": "catchall_lore_003",
+            "text": "Huh. The Solunarian Paladins probably have a saying for that. They have a saying for everything.",
+            "context_tags": [
+                "catchall",
+                "lore",
+                "humor",
+                "solunarian"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly",
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.5
+        },
+        {
+            "id": "catchall_social_001",
+            "text": "You know what, let's talk about this over a dungeon run. More fun that way.",
+            "context_tags": [
+                "catchall",
+                "social",
+                "redirect",
+                "playful"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.6
+        },
+        {
+            "id": "catchall_social_002",
+            "text": "I've been hearing a lot of people say that lately. Must be something going around.",
+            "context_tags": [
+                "catchall",
+                "social",
+                "observant"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [],
+            "priority": 0.5
+        },
+        {
+            "id": "catchall_noncommit_001",
+            "text": "Could be. I try not to overthink these things.",
+            "context_tags": [
+                "catchall",
+                "neutral",
+                "noncommittal"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 2.0,
+            "relationship_max": 8.0,
+            "channel": [],
+            "priority": 0.5
+        }
+    ]
+}

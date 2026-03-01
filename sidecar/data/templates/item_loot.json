@@ -1,0 +1,1192 @@
+{
+    "category": "item_loot",
+    "templates": [
+        {
+            "id": "item_drop_001",
+            "text": "Nice drop! That's a solid piece of gear.",
+            "context_tags": [
+                "item",
+                "loot",
+                "congratulations"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_drop_002",
+            "text": "Grats on the drop! Been farming for that myself.",
+            "context_tags": [
+                "item",
+                "loot",
+                "congratulations",
+                "jealous"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_drop_003",
+            "text": "Whoa, {item} dropped? Lucky!",
+            "context_tags": [
+                "item",
+                "loot",
+                "excited",
+                "lucky"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "item_drop_004",
+            "text": "I need that drop so bad. How long did it take?",
+            "context_tags": [
+                "item",
+                "loot",
+                "question",
+                "farming"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_drop_005",
+            "text": "The drops in this zone are pretty decent. Worth farming.",
+            "context_tags": [
+                "item",
+                "loot",
+                "zone",
+                "info"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_gear_001",
+            "text": "That's a nice weapon you got there. What level is it?",
+            "context_tags": [
+                "item",
+                "gear",
+                "question",
+                "impressed"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_gear_002",
+            "text": "Your gear looks solid. You ready for the harder zones?",
+            "context_tags": [
+                "item",
+                "gear",
+                "compliment",
+                "helpful"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_gear_003",
+            "text": "I need an upgrade badly. My weapon is getting outdated.",
+            "context_tags": [
+                "item",
+                "gear",
+                "complaint",
+                "self"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "item_sell_001",
+            "text": "Heading to the vendor to unload. Bags are stuffed.",
+            "context_tags": [
+                "item",
+                "vendor",
+                "inventory"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "item_sell_002",
+            "text": "Anyone need anything before I vendor all this junk?",
+            "context_tags": [
+                "item",
+                "vendor",
+                "helpful"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_quest_001",
+            "text": "That item is from a quest. Check with the NPCs around here.",
+            "context_tags": [
+                "item",
+                "quest",
+                "helpful"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_quest_002",
+            "text": "You need {item} for the quest? Try farming {mob}.",
+            "context_tags": [
+                "item",
+                "quest",
+                "helpful",
+                "specific"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "item_craft_001",
+            "text": "That's a crafted item. You'll need the right materials and the forge.",
+            "context_tags": [
+                "item",
+                "crafting",
+                "info"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_craft_002",
+            "text": "The forge in Port Azure can help you upgrade that.",
+            "context_tags": [
+                "item",
+                "crafting",
+                "helpful"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_rare_001",
+            "text": "A legendary drop? No way! That's insanely rare.",
+            "context_tags": [
+                "item",
+                "legendary",
+                "excited"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party",
+                "guild"
+            ],
+            "priority": 1.2
+        },
+        {
+            "id": "item_rare_002",
+            "text": "Ultra rare drops are so satisfying when they finally happen.",
+            "context_tags": [
+                "item",
+                "rare",
+                "satisfaction"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_upgrade_001",
+            "text": "That's a nice upgrade from what you had before.",
+            "context_tags": [
+                "item",
+                "upgrade",
+                "positive"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_upgrade_002",
+            "text": "Definitely equip that. Way better stats.",
+            "context_tags": [
+                "item",
+                "upgrade",
+                "advice"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_where_001",
+            "text": "Check {mob} for that item. Should be on their drop table.",
+            "context_tags": [
+                "item",
+                "drop",
+                "location",
+                "helpful"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "item_where_002",
+            "text": "I think that drops in {zone}. Not 100% sure though.",
+            "context_tags": [
+                "item",
+                "drop",
+                "location",
+                "unsure"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_where_003",
+            "text": "Try checking the wiki for drop locations. They have good info.",
+            "context_tags": [
+                "item",
+                "wiki",
+                "helpful"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "item_auction_001",
+            "text": "You could probably sell that on the AH for a decent price.",
+            "context_tags": [
+                "item",
+                "auction",
+                "economy"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "item_auction_002",
+            "text": "Check the Auction House, someone might be selling what you need.",
+            "context_tags": [
+                "item",
+                "auction",
+                "helpful"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_stats_001",
+            "text": "The stats on that are really good for your level.",
+            "context_tags": [
+                "item",
+                "stats",
+                "compliment"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_stats_002",
+            "text": "Look for gear with more AC if you're getting hit hard.",
+            "context_tags": [
+                "item",
+                "stats",
+                "advice",
+                "defensive"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_weapon_001",
+            "text": "Staff or melee? Depends on your class and build.",
+            "context_tags": [
+                "item",
+                "weapon",
+                "advice"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_weapon_002",
+            "text": "Two-handers hit harder but you lose the shield slot.",
+            "context_tags": [
+                "item",
+                "weapon",
+                "strategy"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_ring_001",
+            "text": "Good rings are hard to find. Hang onto any decent ones you get.",
+            "context_tags": [
+                "item",
+                "ring",
+                "advice"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_bag_001",
+            "text": "Get some bigger bags ASAP. Inventory space is life.",
+            "context_tags": [
+                "item",
+                "bag",
+                "advice",
+                "practical"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "item_notrade_001",
+            "text": "Sorry, that item isn't tradeable. You'll have to farm it yourself.",
+            "context_tags": [
+                "item",
+                "trade",
+                "restriction"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_charm_001",
+            "text": "Charms are super useful. Don't sleep on your charm slot.",
+            "context_tags": [
+                "item",
+                "charm",
+                "advice"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_gold_001",
+            "text": "Good gold farming spot here. Mobs drop decent amounts.",
+            "context_tags": [
+                "item",
+                "gold",
+                "farming"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "item_spell_001",
+            "text": "Spell vessels are game changers. If you find one, use it.",
+            "context_tags": [
+                "item",
+                "spell",
+                "advice"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_jealous_001",
+            "text": "Ugh, I've been farming that for weeks. Grats though.",
+            "context_tags": [
+                "item",
+                "loot",
+                "jealous",
+                "friendly"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_cold_001",
+            "text": "Meh, I've seen better drops.",
+            "context_tags": [
+                "item",
+                "loot",
+                "dismissive"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 0.0,
+            "relationship_max": 4.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "item_funny_001",
+            "text": "All I get are vendor trash drops. RNG hates me.",
+            "context_tags": [
+                "item",
+                "loot",
+                "humor",
+                "self-deprecating"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "item_resist_001",
+            "text": "Get your resists up before heading into the harder zones.",
+            "context_tags": [
+                "item",
+                "resist",
+                "advice"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_compare_001",
+            "text": "Compare the stats before equipping. Sometimes raw AC isn't everything.",
+            "context_tags": [
+                "item",
+                "stats",
+                "strategy"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_need_001",
+            "text": "Anyone need before I grab this?",
+            "context_tags": [
+                "item",
+                "loot",
+                "etiquette"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_pass_001",
+            "text": "All yours, I don't need that one.",
+            "context_tags": [
+                "item",
+                "loot",
+                "generous"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_tier_001",
+            "text": "The fuel tier for forging makes a huge difference. Use the highest you can.",
+            "context_tags": [
+                "item",
+                "forge",
+                "advice"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_aura_001",
+            "text": "Aura items give passive buffs. Worth keeping an eye out for.",
+            "context_tags": [
+                "item",
+                "aura",
+                "info"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_class_001",
+            "text": "Check if your class can even equip that before getting excited.",
+            "context_tags": [
+                "item",
+                "class",
+                "practical"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "item_overflow_001",
+            "text": "My inventory is overflowing. Need to make a vendor run.",
+            "context_tags": [
+                "item",
+                "inventory",
+                "full"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "item_farming_001",
+            "text": "Been farming {mob} for hours. Still no drop.",
+            "context_tags": [
+                "item",
+                "farming",
+                "frustrated"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "item_farming_002",
+            "text": "The drop rate on that is really low. Be patient.",
+            "context_tags": [
+                "item",
+                "farming",
+                "advice"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_dps_001",
+            "text": "That weapon should up your DPS a lot.",
+            "context_tags": [
+                "item",
+                "weapon",
+                "dps"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_tank_001",
+            "text": "For tanking, you want one-hand plus shield. Max AC.",
+            "context_tags": [
+                "item",
+                "tank",
+                "strategy"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_caster_001",
+            "text": "Casters should stack Int and Wisdom on gear. Mana is king.",
+            "context_tags": [
+                "item",
+                "caster",
+                "strategy"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_vendor_001",
+            "text": "The vendors in Port Azure have some decent starter gear.",
+            "context_tags": [
+                "item",
+                "vendor",
+                "helpful"
+            ],
+            "zone_affinity": [
+                "Port Azure"
+            ],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_erenshor_001",
+            "text": "Azynthian Scriptures drop from named mobs in Azynth's Garden. Collect them all for some serious lore.",
+            "context_tags": [
+                "item",
+                "azynthian",
+                "scripture",
+                "lore",
+                "farming"
+            ],
+            "zone_affinity": [
+                "Azynth's Garden"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_scripture_001",
+            "text": "Found another Azynthian Scripture! These are fascinating reads if you're into the lore.",
+            "context_tags": [
+                "item",
+                "azynthian",
+                "scripture",
+                "lore",
+                "excited"
+            ],
+            "zone_affinity": [
+                "Azynth's Garden"
+            ],
+            "personality_affinity": [
+                "scholarly",
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_blightsteel_001",
+            "text": "Blightsteel armor drops in The Blight. Heavy and ugly, but the stats are incredible.",
+            "context_tags": [
+                "item",
+                "blightsteel",
+                "armor",
+                "zone"
+            ],
+            "zone_affinity": [
+                "The Blight"
+            ],
+            "personality_affinity": [
+                "scholarly",
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_blightsteel_002",
+            "text": "Full Blightsteel set on a Reaver is basically unkillable. Worth the farm.",
+            "context_tags": [
+                "item",
+                "blightsteel",
+                "set",
+                "reaver",
+                "advice"
+            ],
+            "zone_affinity": [
+                "The Blight"
+            ],
+            "personality_affinity": [
+                "scholarly",
+                "aggressive"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_molorai_001",
+            "text": "Molorai Eldermistress drops a great caster robe. Seen Arcanists camp her for days.",
+            "context_tags": [
+                "item",
+                "molorai",
+                "named",
+                "caster",
+                "farming"
+            ],
+            "zone_affinity": [
+                "Fallen Braxonia",
+                "Blooming Sepulcher"
+            ],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_malaroth_001",
+            "text": "Malaroth drops the best weapons in the game. If you can kill a dragon, you deserve the loot.",
+            "context_tags": [
+                "item",
+                "malaroth",
+                "dragon",
+                "weapon",
+                "endgame"
+            ],
+            "zone_affinity": [
+                "Malaroth's Nesting Grounds"
+            ],
+            "personality_affinity": [
+                "aggressive",
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "guild"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "item_forge_erenshor_001",
+            "text": "Save your highest tier forge fuel for Ascension gear. Don't waste it on leveling stuff.",
+            "context_tags": [
+                "item",
+                "forge",
+                "fuel",
+                "ascension",
+                "advice"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly",
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "item_bonepits_001",
+            "text": "The Bone Pits drop undead-themed gear with disease resist. Handy for Rottenfoot later.",
+            "context_tags": [
+                "item",
+                "zone",
+                "undead",
+                "resist",
+                "advice"
+            ],
+            "zone_affinity": [
+                "The Bone Pits"
+            ],
+            "personality_affinity": [
+                "scholarly",
+                "friendly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "item_ascension_001",
+            "text": "Ascension gear is a whole different tier. You'll feel the power jump the moment you equip it.",
+            "context_tags": [
+                "item",
+                "ascension",
+                "endgame",
+                "gear"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive",
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "guild"
+            ],
+            "priority": 1.0
+        }
+    ]
+}

@@ -1,0 +1,67 @@
+{
+  "name": "Evaleigh",
+  "archetype": "Level 11 Druid - Gentle refined healer with poetic sensibilities",
+  "tone": "Graceful and thoughtful",
+  "vocabulary": [
+    "rather",
+    "lovely",
+    "gracious",
+    "delightful",
+    "gentle souls",
+    "harmonious",
+    "serene",
+    "blessings",
+    "tranquil",
+    "flourish"
+  ],
+  "speech_patterns": [
+    "Uses complete sentences with proper grammar",
+    "Speaks in soft, flowing phrases",
+    "Frequently uses nature metaphors"
+  ],
+  "knowledge_areas": [
+    "Healing rotation optimization",
+    "Buff timing",
+    "Meditation spots",
+    "Herblore and alchemy",
+    "Zone aesthetics and scenery"
+  ],
+  "quirks": [
+    "Compliments the landscape during travel",
+    "Thanks players by name after receiving buffs",
+    "Pauses to admire sunsets or weather effects"
+  ],
+  "example_phrases": [
+    "How lovely, the light filters through these trees just so",
+    "Blessings upon you all - may our journey be serene",
+    "Rather gracious of you to wait, I was gathering moonpetals",
+    "Let us proceed with gentle steps, the path ahead seems tranquil",
+    "What delightful company, we shall flourish together"
+  ],
+  "personality_type": 1,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 8,
+    "gear_chase": 5,
+    "social_chase": 5,
+    "troublemaker": 0,
+    "dedication_level": 5,
+    "greed": 1.0,
+    "caution": false,
+    "patience": 3000
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

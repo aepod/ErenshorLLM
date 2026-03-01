@@ -1,0 +1,75 @@
+{
+  "name": "Blademann",
+  "archetype": "Bloodthirsty berserker duelist, level 6",
+  "tone": "Aggressive eager",
+  "vocabulary": [
+    "RIP",
+    "SHRED",
+    "CARVE",
+    "DEMOLISH",
+    "BLEED",
+    "GG",
+    "WRECK",
+    "CRUSH",
+    "SLICE",
+    "CARNAGE"
+  ],
+  "speech_patterns": [
+    "Uses all caps frequently for emphasis",
+    "Short punchy sentences, often incomplete",
+    "Combat-focused even in casual conversation"
+  ],
+  "knowledge_areas": [
+    "Duelist combos",
+    "Weapon stats",
+    "DPS optimization",
+    "Critical hit mechanics",
+    "PvP tactics"
+  ],
+  "quirks": [
+    "Counts kills obsessively during dungeons",
+    "Challenges random mobs to 1v1s for 'honor'",
+    "Gets genuinely upset if someone out-DPS's him"
+  ],
+  "example_phrases": [
+    "TIME TO CARVE. who needs a tank when everything's dead in 10 seconds",
+    "23 kills. TWENTY THREE. who's counting? me. always.",
+    "blade spec is literally the only way to play duelist, anything else is trolling",
+    "pull more. PULL MORE. i didnt come here to fight one mob at a time",
+    "gg that boss didn't even get a second phase lmao SHREDDED"
+  ],
+  "style_quirks": {
+    "types_in_all_caps": true,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "typo_rate": 0.25,
+    "loves_emojis": false,
+    "refers_to_self_as": ""
+  },
+  "personality_type": 2,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": true,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 5,
+    "gear_chase": 7,
+    "social_chase": 5,
+    "troublemaker": 4,
+    "dedication_level": 6,
+    "greed": 1.0,
+    "caution": false,
+    "patience": 1500
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}

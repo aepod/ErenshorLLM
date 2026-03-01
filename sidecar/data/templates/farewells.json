@@ -1,0 +1,892 @@
+{
+    "category": "farewells",
+    "templates": [
+        {
+            "id": "farewell_friendly_001",
+            "text": "See ya later! Have fun out there.",
+            "context_tags": [
+                "farewell",
+                "friendly",
+                "casual"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "farewell_friendly_002",
+            "text": "Later {player}! Good luck!",
+            "context_tags": [
+                "farewell",
+                "friendly",
+                "personal"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 5.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "farewell_friendly_003",
+            "text": "Take care! Hit me up if you need anything.",
+            "context_tags": [
+                "farewell",
+                "helpful",
+                "warm"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 6.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "farewell_friendly_004",
+            "text": "Peace! Catch you later.",
+            "context_tags": [
+                "farewell",
+                "casual",
+                "cool"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "farewell_neutral_001",
+            "text": "Later.",
+            "context_tags": [
+                "farewell",
+                "neutral",
+                "brief"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 2.0,
+            "relationship_max": 6.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "farewell_neutral_002",
+            "text": "See ya.",
+            "context_tags": [
+                "farewell",
+                "neutral",
+                "brief"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 2.0,
+            "relationship_max": 7.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "farewell_cold_001",
+            "text": "Whatever. Bye.",
+            "context_tags": [
+                "farewell",
+                "cold",
+                "dismissive"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 0.0,
+            "relationship_max": 3.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "farewell_cold_002",
+            "text": "Finally.",
+            "context_tags": [
+                "farewell",
+                "cold",
+                "rude"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 0.0,
+            "relationship_max": 2.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "farewell_party_001",
+            "text": "Thanks for the group, everyone! Good runs.",
+            "context_tags": [
+                "farewell",
+                "party",
+                "grateful"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "farewell_party_002",
+            "text": "GG all! Good session.",
+            "context_tags": [
+                "farewell",
+                "party",
+                "gaming"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "farewell_guild_001",
+            "text": "Heading out for now, guild. Catch you all later!",
+            "context_tags": [
+                "farewell",
+                "guild",
+                "friendly"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "guild"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "farewell_guild_002",
+            "text": "Night guild! See everyone tomorrow.",
+            "context_tags": [
+                "farewell",
+                "guild",
+                "night"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "guild"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "farewell_safe_001",
+            "text": "Stay safe out there! These mobs are no joke.",
+            "context_tags": [
+                "farewell",
+                "warning",
+                "friendly"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "farewell_scholar_001",
+            "text": "Fare well, adventurer. May your journey be fruitful.",
+            "context_tags": [
+                "farewell",
+                "formal",
+                "scholarly"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "hail"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "farewell_enthusiastic_001",
+            "text": "Alright, I gotta run! Was great seeing you!",
+            "context_tags": [
+                "farewell",
+                "enthusiastic",
+                "friendly"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 6.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "farewell_logging_001",
+            "text": "Gotta log. Catch you next time!",
+            "context_tags": [
+                "farewell",
+                "logging",
+                "gaming"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "guild",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "farewell_logging_002",
+            "text": "AFK for a bit, brb maybe.",
+            "context_tags": [
+                "farewell",
+                "afk",
+                "casual"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 8.0,
+            "channel": [
+                "say",
+                "party",
+                "guild"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "farewell_warm_001",
+            "text": "Been great chatting with you. Take it easy, {player}.",
+            "context_tags": [
+                "farewell",
+                "warm",
+                "personal"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly",
+                "social"
+            ],
+            "relationship_min": 7.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "farewell_group_leave_001",
+            "text": "Thanks for having me in the group. Good luck out there!",
+            "context_tags": [
+                "farewell",
+                "group",
+                "polite"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party",
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "farewell_quick_001",
+            "text": "Gotta bounce, cya!",
+            "context_tags": [
+                "farewell",
+                "quick",
+                "casual"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "farewell_zone_001",
+            "text": "Heading to another zone. Good luck in {zone}!",
+            "context_tags": [
+                "farewell",
+                "zone",
+                "helpful"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "farewell_tired_001",
+            "text": "I'm beat. Time to log for the night. Later!",
+            "context_tags": [
+                "farewell",
+                "tired",
+                "casual"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "guild",
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "farewell_grateful_001",
+            "text": "Thanks for the help earlier. Really appreciate it!",
+            "context_tags": [
+                "farewell",
+                "grateful",
+                "warm"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 5.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "farewell_promise_001",
+            "text": "Gotta go but let's group up again soon!",
+            "context_tags": [
+                "farewell",
+                "promise",
+                "friendly"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 6.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "farewell_abrupt_001",
+            "text": "K bye.",
+            "context_tags": [
+                "farewell",
+                "abrupt",
+                "cold"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 1.0,
+            "relationship_max": 4.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "farewell_epic_001",
+            "text": "Until we meet again, brave adventurer!",
+            "context_tags": [
+                "farewell",
+                "epic",
+                "formal"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 5.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "hail"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "farewell_casual_001",
+            "text": "Alright, I'm out. Peace.",
+            "context_tags": [
+                "farewell",
+                "casual",
+                "cool"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 8.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "farewell_combat_001",
+            "text": "Good fights today. Let's do it again sometime.",
+            "context_tags": [
+                "farewell",
+                "combat",
+                "satisfied"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive",
+                "social"
+            ],
+            "relationship_min": 5.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "farewell_vendor_001",
+            "text": "Heading to sell this loot. Bags are full. Later!",
+            "context_tags": [
+                "farewell",
+                "loot",
+                "practical"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 0.9
+        },
+        {
+            "id": "farewell_shout_001",
+            "text": "Alright everyone, I'm heading out. Stay safe!",
+            "context_tags": [
+                "farewell",
+                "shout",
+                "friendly"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "shout"
+            ],
+            "priority": 0.8
+        },
+        {
+            "id": "farewell_braxonian_001",
+            "text": "Umbran, friend. May your blade stay sharp and your shield hold true.",
+            "context_tags": [
+                "farewell",
+                "lore",
+                "braxonian",
+                "formal"
+            ],
+            "zone_affinity": [
+                "Fallen Braxonia",
+                "Braxonian Desert"
+            ],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "hail"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "farewell_braxonian_002",
+            "text": "Fight well, and die standing. The Braxonian way. See you around.",
+            "context_tags": [
+                "farewell",
+                "lore",
+                "braxonian",
+                "bold"
+            ],
+            "zone_affinity": [
+                "Fallen Braxonia",
+                "Braxonian Desert"
+            ],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 5.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "farewell_lore_001",
+            "text": "May the light of Soluna guide your path. Farewell.",
+            "context_tags": [
+                "farewell",
+                "lore",
+                "solunarian",
+                "formal"
+            ],
+            "zone_affinity": [
+                "Soluna's Landing"
+            ],
+            "personality_affinity": [
+                "scholarly",
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "hail"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "farewell_lore_002",
+            "text": "Safe travels. And stay away from anything that smells like Molorai.",
+            "context_tags": [
+                "farewell",
+                "lore",
+                "molorai",
+                "warning"
+            ],
+            "zone_affinity": [
+                "The Blight",
+                "The Bone Pits",
+                "Blooming Sepulcher"
+            ],
+            "personality_affinity": [
+                "friendly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "farewell_scholar_002",
+            "text": "I must return to my studies. The Azynthian Scriptures won't translate themselves. Be well.",
+            "context_tags": [
+                "farewell",
+                "scholarly",
+                "lore",
+                "formal"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "hail"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "farewell_scholar_003",
+            "text": "An interesting conversation, as always. Until next time, {player}.",
+            "context_tags": [
+                "farewell",
+                "scholarly",
+                "personal",
+                "warm"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "scholarly"
+            ],
+            "relationship_min": 6.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "whisper"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "farewell_aggressive_001",
+            "text": "I'm out. Got things to kill, places to be.",
+            "context_tags": [
+                "farewell",
+                "aggressive",
+                "blunt"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 8.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "farewell_aggressive_002",
+            "text": "Don't die while I'm gone. I won't be there to save you.",
+            "context_tags": [
+                "farewell",
+                "aggressive",
+                "teasing"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive"
+            ],
+            "relationship_min": 5.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "farewell_blight_001",
+            "text": "Getting out of The Blight before it gets dark. Trust me, you should too.",
+            "context_tags": [
+                "farewell",
+                "zone",
+                "warning"
+            ],
+            "zone_affinity": [
+                "The Blight"
+            ],
+            "personality_affinity": [],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.1
+        },
+        {
+            "id": "farewell_azure_001",
+            "text": "Heading out from Port Azure. Bound to be back soon enough. Always am.",
+            "context_tags": [
+                "farewell",
+                "zone",
+                "casual"
+            ],
+            "zone_affinity": [
+                "Port Azure"
+            ],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 3.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "farewell_guild_003",
+            "text": "Logging for tonight, guildmates. Keep the banner flying.",
+            "context_tags": [
+                "farewell",
+                "guild",
+                "loyal"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social",
+                "friendly"
+            ],
+            "relationship_min": 5.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "guild"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "farewell_guild_004",
+            "text": "Good session, guild. Same time tomorrow?",
+            "context_tags": [
+                "farewell",
+                "guild",
+                "planning"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "guild"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "farewell_party_003",
+            "text": "Good runs, party. You all held it down. Respect.",
+            "context_tags": [
+                "farewell",
+                "party",
+                "grateful",
+                "combat"
+            ],
+            "zone_affinity": [],
+            "personality_affinity": [
+                "aggressive",
+                "social"
+            ],
+            "relationship_min": 4.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "party"
+            ],
+            "priority": 1.0
+        },
+        {
+            "id": "farewell_fernallan_001",
+            "text": "May the winds of Fernalla carry you swiftly home. Farewell, friend.",
+            "context_tags": [
+                "farewell",
+                "lore",
+                "fernallan",
+                "formal"
+            ],
+            "zone_affinity": [
+                "Fernalla's Revival Plains"
+            ],
+            "personality_affinity": [
+                "scholarly",
+                "friendly"
+            ],
+            "relationship_min": 5.0,
+            "relationship_max": 10.0,
+            "channel": [
+                "say",
+                "hail"
+            ],
+            "priority": 1.0
+        }
+    ]
+}

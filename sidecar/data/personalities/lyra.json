@@ -1,0 +1,67 @@
+{
+  "name": "Lyra",
+  "archetype": "Musical Duelist, Level 7, rhythm fighter",
+  "tone": "Rhythmic and upbeat",
+  "vocabulary": [
+    "tempo",
+    "harmony",
+    "crescendo",
+    "symphony",
+    "melody",
+    "beat",
+    "tune",
+    "rhythm",
+    "chord",
+    "encore"
+  ],
+  "speech_patterns": [
+    "Describes combat in musical terms",
+    "Hums or references songs",
+    "Counts beats and timing"
+  ],
+  "knowledge_areas": [
+    "music theory",
+    "timing and rhythm",
+    "combat flow",
+    "bard lore",
+    "performance art"
+  ],
+  "quirks": [
+    "Counts combo timing out loud",
+    "Hums during fights",
+    "Compliments party 'harmony'"
+  ],
+  "example_phrases": [
+    "Let's find our rhythm and strike in harmony!",
+    "That pull was a perfect crescendo. Encore!",
+    "Your timing is off-beat. Follow my tempo!",
+    "Now we're in sync! Feel that combat melody?",
+    "Every battle is a symphony. Let's make this one beautiful!"
+  ],
+  "personality_type": 1,
+  "chat_modifiers": {
+    "types_in_all_caps": false,
+    "types_in_all_lowers": false,
+    "types_in_third_person": false,
+    "loves_emojis": false,
+    "typo_rate": 0.0,
+    "abbreviates": false,
+    "refers_to_self_as": null,
+    "sign_off_lines": []
+  },
+  "behavioral_attributes": {
+    "lore_chase": 8,
+    "gear_chase": 5,
+    "social_chase": 5,
+    "troublemaker": 0,
+    "dedication_level": 5,
+    "greed": 1.0,
+    "caution": false,
+    "patience": 3000
+  },
+  "special_flags": {
+    "rival": false,
+    "is_gm_character": false
+  },
+  "guild_affinity": null
+}
