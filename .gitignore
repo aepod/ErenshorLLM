@@ -21,6 +21,10 @@ sidecar/data/models/
 # Vector databases (built at compile/runtime)
 *.ruvector
 sidecar/data/dist/
+# But ship default ruvectors so first launch works without rebuild
+!sidecar/data/dist/personality.ruvector
+!sidecar/data/dist/responses.ruvector
+!sidecar/data/dist/lore.ruvector
 
 # ONNX Runtime shared libs
 sidecar/data/lib/
