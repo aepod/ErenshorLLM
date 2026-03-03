@@ -46,6 +46,15 @@ Erenshor/
 3. **Download a GGUF model** (see [Model Setup](#model-setup) below).
 4. Launch Erenshor. The mod auto-starts the sidecar and shimmy processes.
 
+### Included Binaries
+
+| File | What It Is | Source |
+|------|-----------|--------|
+| **ErenshorLLMDialog.dll** | The BepInEx plugin that hooks into Erenshor's chat system using Harmony patches. It intercepts SimPlayer dialog, sends context to the sidecar over HTTP, and injects AI-generated responses back into the game's chat window. This is the only file BepInEx loads directly. | Built from C# source in this project. |
+| **erenshor-llm.exe** | The intelligence sidecar. A Rust HTTP server that runs the full AI pipeline: text embedding, vector database search, template re-ranking, lore retrieval, LLM routing, and GEPA entity validation. Listens on port 11435. The plugin auto-launches it on game start and shuts it down on exit. | Cross-compiled from Rust source in this project. |
+| **shimmy.exe** | A standalone local LLM inference server by [Michael A. Kuykendall](https://github.com/Michael-A-Kuykendall/shimmy). It loads GGUF model files and serves text generation over HTTP on port 8012. Auto-detects your GPU and uses CUDA (NVIDIA), Vulkan (AMD/Intel), or falls back to CPU. The sidecar auto-launches shimmy when LLM mode is set to Local or Hybrid. Not needed for Cloud-only or template-only mode. | Pre-built binary downloaded from [shimmy GitHub releases](https://github.com/Michael-A-Kuykendall/shimmy/releases). |
+| **onnxruntime.dll** | Microsoft's [ONNX Runtime](https://onnxruntime.ai/) shared library. Used by the sidecar to run the all-MiniLM-L6-v2 embedding model, which converts text into numerical vectors for semantic search. This is what powers the "understanding meaning" part of the pipeline -- it turns your chat messages and template text into 384-dimensional vectors that can be compared for similarity. | Pre-built binary downloaded from [ONNX Runtime releases](https://github.com/microsoft/onnxruntime/releases). Windows x64 CPU build. |
+
 ## Model Setup
 
 The mod needs a GGUF language model for text generation. Place it in the `data/models/` directory.
