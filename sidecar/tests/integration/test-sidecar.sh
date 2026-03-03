@@ -515,8 +515,8 @@ test_respond_llm_fires() {
     source=$(echo "$LAST_BODY" | jq -r '.source // ""' 2>/dev/null)
     fallback_reason=$(echo "$LAST_BODY" | jq -r '.llm_fallback_reason // ""' 2>/dev/null)
     case "$source" in
-        llm_*)
-            ;; # LLM generated successfully
+        llm_*|*paraphrase*)
+            ;; # LLM was used (direct generation or template paraphrase)
         template*|fallback*)
             # LLM was attempted but fell back -- verify fallback_reason exists
             if [[ -z "$fallback_reason" ]]; then

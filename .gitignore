@@ -1,6 +1,7 @@
 # Rust
 target/
 target-native/
+target-cross/
 **/*.rs.bk
 Cargo.lock
 
@@ -48,5 +49,11 @@ memory.rvf
 .DS_Store
 Thumbs.db
 
+# Release packages
+dist/
+
 # BepInEx logs
 LogOutput.log
+
+# Misc dumps
+_full_personality_dump.json

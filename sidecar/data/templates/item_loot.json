@@ -976,7 +976,7 @@
         },
         {
             "id": "item_erenshor_001",
-            "text": "Azynthian Scriptures drop from named mobs in Azynth's Garden. Collect them all for some serious lore.",
+            "text": "Azynthian Scriptures drop from named mobs in Azynthi's Garden. Collect them all for some serious lore.",
             "context_tags": [
                 "item",
                 "azynthian",
@@ -985,7 +985,7 @@
                 "farming"
             ],
             "zone_affinity": [
-                "Azynth's Garden"
+                "Azynthi's Garden"
             ],
             "personality_affinity": [
                 "scholarly"
@@ -1008,7 +1008,7 @@
                 "excited"
             ],
             "zone_affinity": [
-                "Azynth's Garden"
+                "Azynthi's Garden"
             ],
             "personality_affinity": [
                 "scholarly",

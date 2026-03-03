@@ -120,10 +120,12 @@ namespace ErenshorLLMDialog.Sidecar
             {
                 string dataDir = ResolveDataDir(binaryPath);
 
-                // Build CLI arguments, including embedding threads from config
+                // Build CLI arguments, including embedding threads from config.
+                // --log-format plain disables ANSI codes and timestamps for clean BepInEx forwarding.
                 string args = "--port " + _config.Port.Value +
                     " --data-dir \"" + dataDir + "\"" +
-                    " --threads " + _config.EmbeddingThreads.Value;
+                    " --threads " + _config.EmbeddingThreads.Value +
+                    " --log-format plain";
 
                 var psi = new ProcessStartInfo
                 {
@@ -143,6 +145,9 @@ namespace ErenshorLLMDialog.Sidecar
                     Status = SidecarStatus.Disabled;
                     return;
                 }
+
+                // Ensure sidecar is killed if the game crashes or is force-closed
+                ChildProcessJob.AssignProcess(_process);
 
                 // Begin reading stderr in background and forwarding to BepInEx log
                 _process.ErrorDataReceived += OnStderrData;
@@ -317,7 +322,7 @@ namespace ErenshorLLMDialog.Sidecar
                     var psi = new ProcessStartInfo
                     {
                         FileName = binaryPath,
-                        Arguments = "--data-dir \"" + dataDir + "\" " + subcommand,
+                        Arguments = "--data-dir \"" + dataDir + "\" --log-format plain " + subcommand,
                         UseShellExecute = false,
                         CreateNoWindow = true,
                         RedirectStandardError = true,
@@ -430,13 +435,151 @@ namespace ErenshorLLMDialog.Sidecar
 
         /// <summary>
         /// Handles stderr output from the sidecar process, forwarding to BepInEx log.
+        ///
+        /// The sidecar is launched with --log-format plain, which outputs:
+        ///   "LEVEL module: message"   (e.g. " INFO erenshor_llm: Server started")
+        /// No ANSI codes, no timestamps.
+        ///
+        /// In debug mode: forwards everything verbatim.
+        /// In info mode: parses level and module, maps to BepInEx log levels.
         /// </summary>
         private void OnStderrData(object sender, DataReceivedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(e.Data))
+            if (string.IsNullOrEmpty(e.Data))
+                return;
+
+            bool debug = ErenshorLLMDialogPlugin.DebugLogging != null &&
+                ErenshorLLMDialogPlugin.DebugLogging.Value == Toggle.On;
+
+            if (debug)
             {
                 _log.LogInfo("[Sidecar] " + e.Data);
+                return;
             }
+
+            // Plain format from sidecar: " INFO erenshor_llm: message"
+            // The level is right-padded with spaces (e.g. " INFO", " WARN", "ERROR").
+            // StripAnsi is kept as a safety net in case pretty format leaks through.
+            string line = StripAnsi(e.Data).TrimStart();
+
+            // Parse "LEVEL module: message" or "LEVEL module::sub: message"
+            string level = null;
+            string module = null;
+            string message = line;
+
+            // Try to extract the level (first whitespace-delimited token)
+            int spaceIdx = line.IndexOf(' ');
+            if (spaceIdx > 0)
+            {
+                string candidate = line.Substring(0, spaceIdx).Trim();
+                if (candidate == "INFO" || candidate == "WARN" || candidate == "ERROR" ||
+                    candidate == "DEBUG" || candidate == "TRACE")
+                {
+                    level = candidate;
+                    string rest = line.Substring(spaceIdx + 1).TrimStart();
+
+                    // Extract module name (before ": ")
+                    int colonIdx = rest.IndexOf(": ");
+                    if (colonIdx > 0)
+                    {
+                        module = rest.Substring(0, colonIdx).Trim();
+                        message = rest.Substring(colonIdx + 2);
+                    }
+                    else
+                    {
+                        message = rest;
+                    }
+                }
+                else
+                {
+                    // Might be a timestamp-prefixed line from pretty format (fallback).
+                    // Try to find level after a "Z " marker.
+                    int zIdx = line.IndexOf("Z ");
+                    if (zIdx > 0)
+                    {
+                        string afterTs = line.Substring(zIdx + 2).TrimStart();
+                        int sp2 = afterTs.IndexOf(' ');
+                        if (sp2 > 0)
+                        {
+                            string lvl2 = afterTs.Substring(0, sp2).Trim();
+                            if (lvl2 == "INFO" || lvl2 == "WARN" || lvl2 == "ERROR" ||
+                                lvl2 == "DEBUG" || lvl2 == "TRACE")
+                            {
+                                level = lvl2;
+                                string rest2 = afterTs.Substring(sp2 + 1).TrimStart();
+                                int col2 = rest2.IndexOf(": ");
+                                if (col2 > 0)
+                                {
+                                    module = rest2.Substring(0, col2).Trim();
+                                    message = rest2.Substring(col2 + 2);
+                                }
+                                else
+                                {
+                                    message = rest2;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Route to appropriate BepInEx log level
+            string prefix = "[Sidecar]" + (module != null ? "[" + module + "] " : " ");
+
+            if (level == "ERROR")
+            {
+                _log.LogError(prefix + message);
+            }
+            else if (level == "WARN")
+            {
+                _log.LogWarning(prefix + message);
+            }
+            else if (level == "DEBUG" || level == "TRACE")
+            {
+                _log.LogDebug(prefix + message);
+            }
+            else
+            {
+                _log.LogInfo(prefix + message);
+            }
+        }
+
+        /// <summary>
+        /// Strips ANSI escape sequences from a string.
+        /// Safety net for any ANSI codes that might leak through (e.g. if pretty format
+        /// is used instead of plain). With --log-format plain this is a no-op pass-through.
+        /// </summary>
+        private static string StripAnsi(string input)
+        {
+            // Fast path: if no ESC character, return as-is (common with plain format)
+            if (input.IndexOf('\x1b') < 0)
+                return input;
+
+            int len = input.Length;
+            var sb = new System.Text.StringBuilder(len);
+
+            for (int i = 0; i < len; i++)
+            {
+                if (input[i] == '\x1b' && i + 1 < len && input[i + 1] == '[')
+                {
+                    // Skip ESC[ and everything up to the terminating letter
+                    i += 2; // skip ESC and [
+                    while (i < len && !IsAnsiTerminator(input[i]))
+                        i++;
+                    // i now points at the terminator letter, loop increment skips it
+                    continue;
+                }
+
+                sb.Append(input[i]);
+            }
+
+            return sb.ToString();
+        }
+
+        private static bool IsAnsiTerminator(char c)
+        {
+            // CSI sequences end with a letter in the range 0x40-0x7E
+            return c >= '@' && c <= '~';
         }
     }
 }

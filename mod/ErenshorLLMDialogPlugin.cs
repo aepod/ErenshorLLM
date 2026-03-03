@@ -39,6 +39,8 @@ namespace ErenshorLLMDialog
     public class ErenshorLLMDialogPlugin : BaseUnityPlugin
     {
         internal static DialogPipeline Pipeline;
+        internal static EventParaphraser Paraphraser;
+        internal static ParaphraseQueue ParaphraseQueue;
         internal static ManualLogSource Log;
         internal static ConfigEntry<Toggle> EnableLLMDialog;
         internal static ConfigEntry<Toggle> DebugLogging;
@@ -69,6 +71,14 @@ namespace ErenshorLLMDialog
                 _sidecarConfig, _sidecarClient, Log, this,
                 _sidecarConfig.MaxRestarts.Value,
                 _sidecarConfig.StartupTimeout.Value);
+
+            // --- Event paraphraser (for enriching canned game text) ---
+            Paraphraser = new EventParaphraser(_sidecarClient, _sidecarManager, this);
+
+            // --- Paraphrase throttle queue (prevents DOS on shimmy) ---
+            ParaphraseQueue = new ParaphraseQueue(Paraphraser,
+                maxQueueSize: 6, maxConcurrent: 2,
+                staleTtl: _sidecarConfig.ParaphraseStaleTimeout.Value);
 
             // --- Multi-sim dispatcher (rate-limited additional responders) ---
             var rateLimiter = new RateLimiter(
@@ -190,6 +200,14 @@ namespace ErenshorLLMDialog
             // --- Apply Harmony patches ---
             new Harmony("aepod.ErenshorLLMDialog").PatchAll();
             Log.LogInfo("ErenshorLLMDialog v0.2.0 loaded!");
+        }
+
+        /// <summary>
+        /// Unity Update -- drives the paraphrase throttle queue each frame.
+        /// </summary>
+        void Update()
+        {
+            ParaphraseQueue?.Update();
         }
 
         /// <summary>

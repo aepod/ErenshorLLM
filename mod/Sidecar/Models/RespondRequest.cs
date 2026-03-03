@@ -24,6 +24,7 @@ namespace ErenshorLLMDialog.Sidecar.Models
         public string player_guild;
         public string sim_guild;
         public bool sim_is_rival;
+        public bool sim_to_sim;
         public List<string> group_members;
 
         // ── Optional overrides (sent to sidecar to override its config defaults) ──
@@ -118,6 +119,7 @@ namespace ErenshorLLMDialog.Sidecar.Models
             sb.Append("\"player_guild\":\"").Append(EscapeJson(player_guild ?? "")).Append("\",");
             sb.Append("\"sim_guild\":\"").Append(EscapeJson(sim_guild ?? "")).Append("\",");
             sb.Append("\"sim_is_rival\":").Append(sim_is_rival ? "true" : "false").Append(',');
+            sb.Append("\"sim_to_sim\":").Append(sim_to_sim ? "true" : "false").Append(',');
 
             // group_members array
             sb.Append("\"group_members\":[");

@@ -41,7 +41,7 @@ queue_depth = 5
 
 [llm.local]
 endpoint = "http://127.0.0.1:8012"    # shimmy inference server endpoint
-model = "gemma3npc-1b-q4_k_m"          # model name (shimmy auto-discovers GGUFs)
+model = "qwen2.5-0.5b-instruct-q4_k_m"          # model name (shimmy auto-discovers GGUFs)
 timeout_ms = 30000                      # 30s timeout for local inference
 auto_start = true                       # sidecar auto-starts shimmy
 gpu_backend = "cuda"                    # cuda, vulkan, auto, cpu

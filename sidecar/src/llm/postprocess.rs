@@ -14,6 +14,21 @@ static INSTRUCTION_LEAK: LazyLock<Regex> = LazyLock::new(|| {
 });
 static MULTI_SPACE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"  +").unwrap());
 static MULTI_NEWLINE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\n{2,}").unwrap());
+/// LLM filler: any clause containing "world of Erenshor" is low-value noise.
+/// Nobody says "in the world of Erenshor" in-world -- it's like saying "on planet Earth."
+/// Handles trailing, mid-sentence, and stacked filler (e.g. "a place where the world of...").
+static WORLD_FILLER: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(
+        r"(?i),?\s*((a place|which is|that is)\s+)?(where\s+)?(in\s+|of\s+)?(the\s+)?world of Erenshor[,.]?\s*"
+    ).unwrap()
+});
+/// Orphaned whitespace before punctuation left after filler strip (e.g. "I'm  ." -> "I'm.")
+static SPACE_BEFORE_PUNCT: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\s+([.!?,])").unwrap());
+/// Degenerate "not a X, not a Y, not a Z, ..." lists. Keep first, strip the rest.
+/// Matches 2+ additional ", not a(n) Word" after an initial "not a(n) Word".
+static NOT_A_LIST: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(r"(?i)(not an? \w+)(,\s*not an? \w+){2,}").unwrap()
+});
 /// Minimum consecutive repetitions before collapsing.
 const MIN_REPETITIONS: usize = 3;
 
@@ -38,8 +53,28 @@ pub fn clean(raw: &str) -> String {
     text = MULTI_NEWLINE.replace_all(&text, " ").to_string();
     text = MULTI_SPACE.replace_all(&text, " ").to_string();
 
+    // Strip "world of Erenshor" filler -- nobody says this in-world.
+    // Globally replace all occurrences, then clean up orphaned punctuation.
+    let had_filler = WORLD_FILLER.is_match(&text);
+    text = WORLD_FILLER.replace_all(&text, " ").to_string();
+    text = SPACE_BEFORE_PUNCT.replace_all(&text, "$1").to_string();
+    text = text.trim().to_string();
+    // If filler was stripped and text no longer ends with punctuation, add period
+    if had_filler && !text.is_empty() {
+        let last = text.chars().last().unwrap();
+        if last != '.' && last != '!' && last != '?' {
+            text.push('.');
+        }
+    }
+
+    // Collapse degenerate "not a X, not a Y, not a Z" lists to just the first
+    text = NOT_A_LIST.replace_all(&text, "$1").to_string();
+
     // Collapse LLM repetition (e.g. "2H 2H 2H 2H" -> "2H")
     text = collapse_repetition(&text);
+
+    // Collapse sentence-level repetition (long repeated clauses that escape word-level detection)
+    text = collapse_sentence_repetition(&text);
 
     // Trim
     text = text.trim().to_string();
@@ -72,10 +107,13 @@ fn collapse_repetition(text: &str) -> String {
     let mut result_words = words.clone();
     let mut changed = false;
 
-    // Try phrase lengths shortest first (1 word up to 4 words).
+    // Try phrase lengths shortest first (1 word up to 20 words).
     // Shortest first ensures "2H 2H 2H 2H" is caught as single-token repeat
     // before a multi-word pattern like "2H 2H" could claim it.
-    for phrase_len in 1..=4 {
+    // Extended to 20 words to catch longer parroting loops from small LLMs like
+    // "and you are in the world of the world of Erenshor," (12 words repeating).
+    // Dialog text is short (max ~300 words) so the O(N*P) cost is negligible.
+    for phrase_len in 1..=20 {
         let mut i = 0;
         let mut new_words: Vec<&str> = Vec::with_capacity(result_words.len());
         while i < result_words.len() {
@@ -114,6 +152,89 @@ fn collapse_repetition(text: &str) -> String {
     } else {
         text.to_string()
     }
+}
+
+/// Collapse sentence-level repetition that escapes word-level detection.
+///
+/// Small LLMs (0.5B-1B) often loop entire clauses or sentences, producing output like:
+///   "Do X for Y. Do X for Y. Do X for Y. Do X for Y."
+/// The word-level `collapse_repetition` (max 8 words) can't catch 20+ word repeated
+/// sentences. This function splits on sentence boundaries and deduplicates.
+fn collapse_sentence_repetition(text: &str) -> String {
+    // First pass: split on sentence boundaries (. ! ?) and dedup full sentences.
+    // Second pass: split remaining long clauses on commas and dedup those.
+    let text = dedup_by_delimiter(text, &['.', '!', '?']);
+    let text = dedup_by_delimiter(&text, &[',']);
+    return text;
+}
+
+/// Split text at the given delimiters and remove consecutive duplicate clauses.
+/// For comma delimiters, only splits if the clause has 6+ words to avoid
+/// breaking short lists like "swords, shields, and axes".
+fn dedup_by_delimiter(text: &str, delimiters: &[char]) -> String {
+    let is_comma = delimiters.contains(&',');
+    let mut sentences: Vec<String> = Vec::new();
+    let mut current = String::new();
+
+    for ch in text.chars() {
+        current.push(ch);
+        if delimiters.contains(&ch) {
+            // For commas, only split if clause is substantial
+            if is_comma && current.split_whitespace().count() < 6 {
+                continue;
+            }
+            let trimmed = current.trim().to_string();
+            if !trimmed.is_empty() {
+                sentences.push(trimmed);
+            }
+            current.clear();
+        }
+    }
+    // Remaining fragment
+    let trailing = current.trim().to_string();
+    if !trailing.is_empty() {
+        sentences.push(trailing);
+    }
+
+    if sentences.len() < 2 {
+        return text.to_string();
+    }
+
+    // Deduplicate consecutive identical sentences
+    let mut deduped: Vec<&String> = Vec::with_capacity(sentences.len());
+    let mut prev: Option<&String> = None;
+    let mut collapsed = false;
+
+    for s in &sentences {
+        let dominated = match prev {
+            Some(p) => {
+                // Exact match or one contains the other (catches minor trailing variations)
+                p == s || s.contains(p.as_str()) || p.contains(s.as_str())
+            }
+            None => false,
+        };
+
+        if dominated {
+            collapsed = true;
+        } else {
+            deduped.push(s);
+        }
+        prev = Some(s);
+    }
+
+    if !collapsed {
+        return text.to_string();
+    }
+
+    let count = sentences.len() - deduped.len();
+    debug!(
+        "Collapsed {} repeated sentences in LLM output ({} -> {})",
+        count,
+        sentences.len(),
+        deduped.len()
+    );
+
+    deduped.iter().map(|s| s.as_str()).collect::<Vec<_>>().join(" ")
 }
 
 /// Minimum length before we attempt sentence-completion trimming.
@@ -419,6 +540,18 @@ mod tests {
     }
 
     #[test]
+    fn test_collapse_long_phrase_parrot() {
+        // Real case: qwen 0.5b parroting a 5+ word phrase in a loop
+        let input = "What a fascinating piece of gear! It is a great addition to a Arcanist, \
+            or a Reaver, Stormcaller, or a Reaver, Stormcaller, or a Reaver, Stormcaller, \
+            or a Reaver, Stormcaller, or a Reaver, Stormcaller, or a Reaver, Stormcaller.";
+        let result = clean(input);
+        // Should collapse the repeating phrase and not contain 5+ instances
+        let count = result.matches("Reaver, Stormcaller,").count();
+        assert!(count <= 2, "Expected at most 2 occurrences, got {}: {}", count, result);
+    }
+
+    #[test]
     fn test_levenshtein() {
         assert_eq!(levenshtein("Port Azure", "Port Azure"), 0);
         assert_eq!(levenshtein("Port Azur", "Port Azure"), 1);
@@ -470,5 +603,81 @@ mod tests {
         // Completely unknown entity should be left alone (distance > 3)
         let text = "Crystal Depths is beautiful.";
         assert_eq!(validate_entities(text, &ctx), text);
+    }
+
+    #[test]
+    fn test_collapse_sentence_repetition() {
+        // Real case: qwen 0.5b repeating entire sentences
+        let input = "Terpz, your swords are not just fine, they are your pride. \
+            Do not use them for your own gain, for they are not just for your own use, they are for your own glory. \
+            Do not use them for your own gain, for they are not just for your own use, they are for your own glory. \
+            Do not use them for your own gain, for they are not just for your own use, they are for your own glory. \
+            Do not use them for your own gain, for they are not just for your own use, they are for your own glory.";
+        let result = clean(input);
+        let count = result.matches("Do not use them").count();
+        assert!(count <= 1, "Expected at most 1 occurrence, got {}: {}", count, result);
+    }
+
+    #[test]
+    fn test_collapse_comma_separated_loop() {
+        // Real case: qwen 0.5b comma-separated run-on repetition
+        let input = "how are you, you are in the world of Erenshor, \
+            and you are in the world of the world of Erenshor, \
+            and you are in the world of the world of Erenshor, \
+            and you are in the world of the world of Erenshor.";
+        let result = clean(input);
+        let count = result.matches("world of Erenshor").count();
+        assert!(count <= 2, "Expected at most 2 occurrences, got {}: {}", count, result);
+    }
+
+    #[test]
+    fn test_sentence_dedup_preserves_unique() {
+        // Unique sentences should not be collapsed
+        let input = "Hello adventurer. Welcome to the guild. How can I help you today?";
+        assert_eq!(clean(input), input);
+    }
+
+    #[test]
+    fn test_strip_world_of_erenshor_filler() {
+        // "a place in the world of Erenshor" trailing filler
+        assert_eq!(
+            clean("Violet Smithfield can be found in Port Azure, a place in the world of Erenshor."),
+            "Violet Smithfield can be found in Port Azure."
+        );
+        // "in the world of Erenshor" without prefix
+        assert_eq!(
+            clean("Check the guild hall in the world of Erenshor."),
+            "Check the guild hall."
+        );
+        // "a place where the world of Erenshor" -- stacked filler variant
+        // After stripping both filler phrases, orphan "I'm" gets period appended
+        let stacked = clean("aww, I died. I'm in the world of Erenshor, a place where the world of Erenshor,.");
+        assert!(stacked.starts_with("aww, I died."), "Got: {}", stacked);
+        // Should not contain any "world of Erenshor" remnant
+        assert!(!stacked.contains("world of Erenshor"), "Got: {}", stacked);
+        // Mid-sentence filler
+        assert_eq!(
+            clean("I found the sword, a place in the world of Erenshor, pretty cool."),
+            "I found the sword pretty cool."
+        );
+    }
+
+    #[test]
+    fn test_collapse_not_a_list() {
+        // Long "not a X" lists collapse to just the first
+        assert_eq!(
+            clean("I, Elowen, am not an AI, not an Arcanist, not a Paladin, not a Windblade, not a Druid, not a Stormcaller, not a Reaver."),
+            "I, Elowen, am not an AI."
+        );
+        // Two "not a" is fine (comedic pattern: "I'm a druid not a doctor")
+        assert_eq!(
+            clean("I'm a druid, not a doctor."),
+            "I'm a druid, not a doctor."
+        );
+        // Three triggers the collapse
+        assert_eq!(
+            clean("I'm not a warrior, not a mage, not a thief."),
+            "I'm not a warrior."
+        );
     }
 }

@@ -5,6 +5,7 @@ use crate::intelligence::embedder::EmbeddingEngine;
 use crate::intelligence::lore::LoreStore;
 use crate::intelligence::memory::MemoryStore;
 use crate::intelligence::personality_store::VectorPersonalityStore;
+use crate::intelligence::ranker::RecencyTracker;
 use crate::intelligence::sona_integration::SonaManager;
 use crate::intelligence::templates::ResponseStore;
 use crate::llm::grounding::StaticGrounding;
@@ -43,6 +44,9 @@ pub struct AppState {
     pub llm_router: Option<Arc<LlmRouter>>,
     /// Static grounding data for GEPA prompt anchoring.
     pub static_grounding: Option<StaticGrounding>,
+    /// Tracks recently-used template IDs per sim to prevent repetition.
+    /// Window of 10 means a template won't repeat until 10 others have been used.
+    pub recency_tracker: RecencyTracker,
 }
 
 impl AppState {
@@ -72,6 +76,7 @@ impl AppState {
             vector_personalities: RwLock::new(vector_personalities),
             llm_router,
             static_grounding,
+            recency_tracker: RecencyTracker::new(10),
         })
     }
 

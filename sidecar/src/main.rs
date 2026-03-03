@@ -38,7 +38,7 @@ struct Cli {
     #[arg(long)]
     threads: Option<usize>,
 
-    /// Log format: "pretty" or "json"
+    /// Log format: "pretty", "plain" (no ANSI/timestamps), or "json"
     #[arg(long, default_value = "pretty")]
     log_format: String,
 
@@ -160,6 +160,31 @@ enum Commands {
         #[arg(long)]
         zones: Option<String>,
     },
+    /// Validate template JSON files for quality, correctness, and entity grounding.
+    /// Checks format, forbidden phrases, duplicate IDs, category balance,
+    /// and zone_affinity against grounding.json.
+    ValidateTemplates {
+        /// Validate a specific file instead of all templates
+        #[arg(long)]
+        input: Option<PathBuf>,
+        /// Check entity grounding in template text (slower)
+        #[arg(long)]
+        check_grounding: bool,
+    },
+    /// Export SillyTavern character cards (TavernAI Card V2 JSON).
+    /// Generates one JSON file per SimPlayer personality for import
+    /// into SillyTavern or any TavernAI-compatible frontend.
+    ExportTavern {
+        /// Output directory for character card JSON files
+        #[arg(long, default_value = "dist/tavern")]
+        output_dir: PathBuf,
+        /// Filter personality types (comma-separated): 1=Nice, 2=Tryhard, 3=Mean, 5=Neutral
+        #[arg(long)]
+        personality_types: Option<String>,
+        /// Include character_book (lorebook) from knowledge_areas
+        #[arg(long)]
+        include_lorebook: bool,
+    },
     /// Fine-tune a local model using exported training data.
     /// Generates training scripts and optionally runs them.
     FineTune {
@@ -198,6 +223,19 @@ fn init_tracing(format: &str) {
             tracing_subscriber::registry()
                 .with(filter)
                 .with(fmt::layer().json().with_writer(std::io::stderr))
+                .init();
+        }
+        "plain" => {
+            // No ANSI codes, no timestamps -- clean output for BepInEx log forwarding.
+            // Format: "LEVEL module: message"
+            tracing_subscriber::registry()
+                .with(filter)
+                .with(
+                    fmt::layer()
+                        .with_writer(std::io::stderr)
+                        .with_ansi(false)
+                        .without_time(),
+                )
                 .init();
         }
         _ => {
@@ -633,6 +671,67 @@ async fn main() {
                         std::process::exit(1);
                     }
                 }
+                return;
+            }
+            Commands::ValidateTemplates { input, check_grounding } => {
+                let data_dir = config.data_dir.clone();
+                let input_path = input.as_ref().map(|p| {
+                    if p.is_absolute() {
+                        p.clone()
+                    } else {
+                        config.resolve_path(&p.to_string_lossy())
+                    }
+                });
+
+                info!("Validating templates in {:?}", data_dir);
+
+                match builder::template_validator::validate_templates(
+                    &data_dir,
+                    input_path.as_deref(),
+                    *check_grounding,
+                ) {
+                    Ok(report) => {
+                        report.print_summary();
+                        if !report.is_valid() {
+                            std::process::exit(1);
+                        }
+                    }
+                    Err(e) => {
+                        error!("Validation failed: {}", e);
+                        std::process::exit(1);
+                    }
+                }
+                return;
+            }
+            Commands::ExportTavern {
+                output_dir,
+                personality_types,
+                include_lorebook,
+            } => {
+                use builder::tavern_exporter::TavernExportConfig;
+
+                let output_dir = config.resolve_path(&output_dir.to_string_lossy());
+
+                let type_filter = personality_types.as_ref().map(|s| {
+                    s.split(',')
+                        .filter_map(|t| t.trim().parse::<u8>().ok())
+                        .collect::<Vec<_>>()
+                });
+
+                let tavern_config = TavernExportConfig {
+                    data_dir: config.data_dir.clone(),
+                    output_dir,
+                    personality_types: type_filter,
+                    include_lorebook: *include_lorebook,
+                };
+
+                info!("Exporting SillyTavern character cards...");
+                if let Err(e) = builder::tavern_exporter::export_tavern_cards(&tavern_config) {
+                    error!("Tavern export failed: {}", e);
+                    std::process::exit(1);
+                }
+
+                info!("SillyTavern character card export complete.");
                 return;
             }
             Commands::ExportTraining {

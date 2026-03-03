@@ -195,8 +195,13 @@ namespace ErenshorLLMDialog.Pipeline.Transform
                 yield break;
             }
 
-            // Handle low confidence
-            if (sidecarResponse.confidence < _minConfidence)
+            // Handle low confidence -- but skip this check when the sidecar used
+            // LLM generation or paraphrase (confidence=0.0 is expected for those
+            // sources since there's no template match score).
+            bool isLlmSource = sidecarResponse.source != null &&
+                (sidecarResponse.source.StartsWith("llm") ||
+                 sidecarResponse.source.Contains("paraphrase"));
+            if (!isLlmSource && sidecarResponse.confidence < _minConfidence)
             {
                 ctx.PipelineLog.Add("[RuVectorTransform] Below confidence threshold: " +
                     sidecarResponse.confidence.ToString("F3") + " < " +

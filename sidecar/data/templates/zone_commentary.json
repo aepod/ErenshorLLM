@@ -279,7 +279,7 @@
         },
         {
             "id": "zone_fernalla_001",
-            "text": "Fernalla's Field is good for mid-level grinding.",
+            "text": "Fernalla's Revival Plains is good for mid-level grinding.",
             "context_tags": [
                 "zone",
                 "grinding",
@@ -287,7 +287,7 @@
                 "fernalla"
             ],
             "zone_affinity": [
-                "Fernalla's Field",
+                "Fernalla's Revival Plains",
                 "Fernalla's Revival Plains"
             ],
             "personality_affinity": [],
@@ -300,7 +300,7 @@
         },
         {
             "id": "zone_fernalla_002",
-            "text": "The portal events in Fernalla's Field are insane. So much chaos.",
+            "text": "The portal events in Fernalla's Revival Plains are insane. So much chaos.",
             "context_tags": [
                 "zone",
                 "event",
@@ -309,7 +309,7 @@
                 "fernalla"
             ],
             "zone_affinity": [
-                "Fernalla's Field",
+                "Fernalla's Revival Plains",
                 "Fernalla's Revival Plains"
             ],
             "personality_affinity": [
@@ -417,7 +417,7 @@
         },
         {
             "id": "zone_bonepits_001",
-            "text": "The Bonepits are full of undead. Bring your anti-undead gear.",
+            "text": "The Bone Pits are full of undead. Bring your anti-undead gear.",
             "context_tags": [
                 "zone",
                 "warning",
@@ -426,7 +426,7 @@
                 "bonepits"
             ],
             "zone_affinity": [
-                "The Bonepits"
+                "The Bone Pits"
             ],
             "personality_affinity": [
                 "friendly"
@@ -618,7 +618,7 @@
         },
         {
             "id": "zone_malaroth_001",
-            "text": "Malaroth Nesting Grounds is end-game territory. Do not go unprepared.",
+            "text": "Malaroth's Nesting Grounds is end-game territory. Do not go unprepared.",
             "context_tags": [
                 "zone",
                 "warning",
@@ -626,7 +626,7 @@
                 "malaroth"
             ],
             "zone_affinity": [
-                "Malaroth Nesting Grounds"
+                "Malaroth's Nesting Grounds"
             ],
             "personality_affinity": [
                 "friendly"
@@ -2170,7 +2170,7 @@
         },
         {
             "id": "zone_malaroth_002",
-            "text": "If you're heading to Malaroth Nesting Grounds, bring your best gear and a full group.",
+            "text": "If you're heading to Malaroth's Nesting Grounds, bring your best gear and a full group.",
             "context_tags": [
                 "zone",
                 "warning",
@@ -2179,7 +2179,7 @@
                 "malaroth"
             ],
             "zone_affinity": [
-                "Malaroth Nesting Grounds"
+                "Malaroth's Nesting Grounds"
             ],
             "personality_affinity": [
                 "friendly",
@@ -2195,7 +2195,7 @@
         },
         {
             "id": "zone_bonepits_002",
-            "text": "The Bonepits are great for Paladin leveling. All the undead mobs.",
+            "text": "The Bone Pits are great for Paladin leveling. All the undead mobs.",
             "context_tags": [
                 "zone",
                 "leveling",
@@ -2205,7 +2205,7 @@
                 "bonepits"
             ],
             "zone_affinity": [
-                "The Bonepits"
+                "The Bone Pits"
             ],
             "personality_affinity": [
                 "scholarly"
@@ -2335,7 +2335,7 @@
         },
         {
             "id": "zone_fernalla_003",
-            "text": "Fernalla's Field is crawling with adventurers. Popular zone for good reason.",
+            "text": "Fernalla's Revival Plains is crawling with adventurers. Popular zone for good reason.",
             "context_tags": [
                 "zone",
                 "popular",
@@ -2343,7 +2343,7 @@
                 "fernalla"
             ],
             "zone_affinity": [
-                "Fernalla's Field",
+                "Fernalla's Revival Plains",
                 "Fernalla's Revival Plains"
             ],
             "personality_affinity": [

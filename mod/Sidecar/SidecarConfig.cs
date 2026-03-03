@@ -63,6 +63,7 @@ namespace ErenshorLLMDialog.Sidecar
         public ConfigEntry<float> Temperature { get; }
         public ConfigEntry<float> LlmTimeout { get; }
         public ConfigEntry<float> EnhanceThreshold { get; }
+        public ConfigEntry<float> ParaphraseStaleTimeout { get; }
 
         public SidecarConfig(ConfigFile config)
         {
@@ -262,6 +263,14 @@ namespace ErenshorLLMDialog.Sidecar
                     "Lower values = fewer LLM calls, higher values = more LLM personalization.",
                     new AcceptableValueRange<float>(0f, 1f)));
 
+            ParaphraseStaleTimeout = config.Bind(
+                "5 - LLM (Phase 3)", "Paraphrase Stale Timeout", 4.0f,
+                new ConfigDescription(
+                    "Seconds a queued paraphrase request can wait before being delivered " +
+                    "as original text. Lower values reduce dialog delays at the cost of " +
+                    "fewer paraphrased lines during bursts.",
+                    new AcceptableValueRange<float>(1f, 30f)));
+
             // ── Section 6: Multi-Sim ─────────────────────────────────────
 
             MaxRequestsPerMinute = config.Bind(
@@ -376,6 +385,14 @@ namespace ErenshorLLMDialog.Sidecar
                     ChannelWeight.Value.ToString("F2",
                         System.Globalization.CultureInfo.InvariantCulture));
 
+                // Validate no garbage was introduced -- every non-empty,
+                // non-comment line must look like a TOML key=value or [section]
+                if (!ValidateTomlStructure(content))
+                {
+                    log.LogError("[SidecarConfig] TOML sync produced invalid content, aborting write.");
+                    return false;
+                }
+
                 File.WriteAllText(tomlPath, content);
                 log.LogInfo("[SidecarConfig] Synced BepInEx settings to " + tomlPath);
                 log.LogInfo("[SidecarConfig] LLM mode=" + modeStr +
@@ -392,13 +409,44 @@ namespace ErenshorLLMDialog.Sidecar
 
         /// <summary>
         /// Replace a TOML key = value on its line, preserving inline comments.
-        /// Matches "key = ..." at line start (with optional whitespace).
+        /// Only matches lines where the key is a bare TOML identifier (letters,
+        /// digits, underscores, hyphens) -- rejects lines starting with [, ESC, etc.
         /// </summary>
         private static string SetTomlValue(string content, string key, string value)
         {
-            // Match: optional whitespace, key, optional whitespace, =, value, optional comment
-            string pattern = @"(?m)^(\s*" + Regex.Escape(key) + @"\s*=\s*)([^\n#]*)(.*)$";
+            // Anchor: start of line, optional whitespace, the key as a TOML bare key,
+            // then whitespace-equals-whitespace, then the old value (non-newline, non-#),
+            // then optional inline comment.
+            // The negative lookbehind-like approach: key must be preceded by line start
+            // or whitespace only (no [ or other chars).
+            string pattern = @"(?m)^([ \t]*" + Regex.Escape(key) + @"[ \t]*=[ \t]*)([^\n#]*)(.*)$";
             return Regex.Replace(content, pattern, "${1}" + value + " ${3}");
+        }
+
+        /// <summary>
+        /// Quick structural validation of TOML content.
+        /// Returns false if any non-blank, non-comment line isn't a valid
+        /// TOML key=value or [section.header].
+        /// </summary>
+        private static bool ValidateTomlStructure(string content)
+        {
+            var linePattern = new Regex(
+                @"^[ \t]*$" +                           // blank line
+                @"|^[ \t]*#" +                           // comment
+                @"|^[ \t]*\[[\w.\-"" ]+\]" +             // section header [foo.bar]
+                @"|^[ \t]*[\w\-]+[ \t]*=",              // key = value
+                RegexOptions.Multiline);
+
+            string[] lines = content.Split('\n');
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i].TrimEnd('\r');
+                if (string.IsNullOrEmpty(line))
+                    continue;
+                if (!linePattern.IsMatch(line))
+                    return false;
+            }
+            return true;
         }
     }
 }

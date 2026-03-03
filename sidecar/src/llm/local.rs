@@ -14,6 +14,10 @@ struct ChatCompletionRequest {
     max_tokens: usize,
     temperature: f32,
     stream: bool,
+    /// Penalize repeated tokens to prevent looping (1.0 = no penalty).
+    repetition_penalty: f32,
+    /// Penalize tokens based on frequency in the response so far.
+    frequency_penalty: f32,
 }
 
 /// Response from OpenAI-compatible chat completions API.
@@ -95,6 +99,8 @@ impl LocalBackend {
             max_tokens,
             temperature,
             stream: false,
+            repetition_penalty: 1.5,
+            frequency_penalty: 0.7,
         };
 
         let endpoint = format!("{}/v1/chat/completions", self.config.endpoint);

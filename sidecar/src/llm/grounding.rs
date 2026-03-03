@@ -205,6 +205,77 @@ impl GroundingContext {
         }
     }
 
+    /// Build grounding context from event context (for /v1/paraphrase).
+    ///
+    /// Simpler than from_search_results: uses the zone and event context
+    /// values directly, without parsing lore text.
+    pub fn from_event_context(
+        zone: &str,
+        event_context: &std::collections::HashMap<String, String>,
+        static_data: &StaticGrounding,
+    ) -> Self {
+        let mut zones: Vec<String> = Vec::new();
+        let mut items: Vec<String> = Vec::new();
+        let mut npcs: Vec<String> = Vec::new();
+        let mut enemies: Vec<String> = Vec::new();
+
+        // Include the current zone
+        if !zone.is_empty() {
+            zones.push(zone.to_string());
+        }
+
+        // Extract entity names from event context values
+        for (key, value) in event_context {
+            match key.as_str() {
+                "item_name" => {
+                    if static_data.items.iter().any(|i| i == value) {
+                        items.push(value.clone());
+                    }
+                }
+                "enemy" | "cause" => {
+                    if static_data.enemies.iter().any(|e| e == value) {
+                        enemies.push(value.clone());
+                    }
+                }
+                "dead_member" | "target" | "player" => {
+                    npcs.push(value.clone());
+                }
+                "zone_name" => {
+                    if static_data.zones.iter().any(|z| z == value) && !zones.contains(value) {
+                        zones.push(value.clone());
+                    }
+                }
+                _ => {}
+            }
+        }
+
+        // Add nearby zones for context
+        if zones.len() < 3 {
+            for z in &static_data.zones {
+                if !zones.contains(z) {
+                    zones.push(z.clone());
+                    if zones.len() >= 5 {
+                        break;
+                    }
+                }
+            }
+        }
+
+        zones.truncate(8);
+        items.truncate(10);
+        npcs.truncate(8);
+        enemies.truncate(8);
+
+        GroundingContext {
+            zones,
+            items,
+            npcs,
+            classes: static_data.classes.clone(),
+            quests: Vec::new(),
+            enemies,
+        }
+    }
+
     /// Format the GEPA prompt section.
     pub fn format_prompt_section(&self) -> String {
         let mut s = String::with_capacity(300);
@@ -336,6 +407,7 @@ mod tests {
             w_zone: None,
             w_personality: None,
             w_relationship: None,
+            sim_to_sim: false,
         }
     }
 

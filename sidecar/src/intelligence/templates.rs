@@ -25,6 +25,9 @@ pub struct ResponseTemplate {
     pub relationship_max: f32,
     pub channel: Vec<String>,
     pub priority: f32,
+    /// Character-specific template: only surfaces for this SimPlayer.
+    /// None = generic template available to all characters.
+    pub sim_name: Option<String>,
     /// Embedding stored only for JSON fallback path; VectorDB stores it internally.
     pub embedding: Vec<f32>,
 }
@@ -105,6 +108,7 @@ impl ResponseStore {
                 relationship_max: e.relationship_max,
                 channel: e.channel,
                 priority: e.priority,
+                sim_name: e.sim_name,
                 embedding: e.embedding,
             })
             .collect();
@@ -194,6 +198,9 @@ impl ResponseStore {
             priority: metadata.get("priority")
                 .and_then(|v| v.as_f64())
                 .unwrap_or(1.0) as f32,
+            sim_name: metadata.get("sim_name")
+                .and_then(|v| v.as_str())
+                .map(|s| s.to_string()),
             embedding: Vec::new(), // Not needed when using VectorDB
         })
     }
@@ -287,6 +294,9 @@ pub struct SerializedTemplate {
     pub relationship_max: f32,
     pub channel: Vec<String>,
     pub priority: f32,
+    /// Character-specific template.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub sim_name: Option<String>,
     pub embedding: Vec<f32>,
 }
 
@@ -314,6 +324,9 @@ pub struct RawTemplate {
     pub channel: Vec<String>,
     #[serde(default = "default_priority")]
     pub priority: f32,
+    /// Character-specific template: only for this SimPlayer.
+    #[serde(default)]
+    pub sim_name: Option<String>,
 }
 
 fn default_relationship_min() -> f32 {
@@ -343,6 +356,7 @@ pub fn save_template_index(templates: &[ResponseTemplate], path: &Path) -> Resul
             relationship_max: t.relationship_max,
             channel: t.channel.clone(),
             priority: t.priority,
+            sim_name: t.sim_name.clone(),
             embedding: t.embedding.clone(),
         })
         .collect();

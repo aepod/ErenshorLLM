@@ -335,6 +335,8 @@ pub struct RespondConfig {
     pub relationship_weight: f32,
     #[serde(default = "default_channel_weight")]
     pub channel_weight: f32,
+    #[serde(default = "default_sim_name_weight")]
+    pub sim_name_weight: f32,
 }
 
 impl Default for RespondConfig {
@@ -349,6 +351,7 @@ impl Default for RespondConfig {
             personality_weight: default_personality_weight(),
             relationship_weight: default_relationship_weight(),
             channel_weight: default_channel_weight(),
+            sim_name_weight: default_sim_name_weight(),
         }
     }
 }
@@ -370,15 +373,15 @@ fn default_min_confidence() -> f32 {
 }
 
 fn default_semantic_weight() -> f32 {
-    0.2
+    0.15
 }
 
 fn default_zone_weight() -> f32 {
-    0.2
+    0.15
 }
 
 fn default_personality_weight() -> f32 {
-    0.3
+    0.25
 }
 
 fn default_relationship_weight() -> f32 {
@@ -386,6 +389,10 @@ fn default_relationship_weight() -> f32 {
 }
 
 fn default_channel_weight() -> f32 {
+    0.15
+}
+
+fn default_sim_name_weight() -> f32 {
     0.15
 }
 
@@ -428,6 +435,16 @@ pub struct LlmConfig {
     /// Maximum concurrent LLM inference requests.
     #[serde(default = "default_queue_depth")]
     pub queue_depth: usize,
+    /// Base probability (0.0-1.0) of paraphrasing a template through LLM for variety.
+    #[serde(default = "default_paraphrase_chance")]
+    pub paraphrase_chance: f32,
+    /// Paraphrase probability when the selected template was recently used.
+    #[serde(default = "default_paraphrase_recency_chance")]
+    pub paraphrase_recency_chance: f32,
+    /// Paraphrase probability for sim-to-sim dialog (ambient chatter).
+    /// Higher than player-to-sim because variety matters more for overheard dialog.
+    #[serde(default = "default_paraphrase_sim_to_sim_chance")]
+    pub paraphrase_sim_to_sim_chance: f32,
     /// Local LLM backend config.
     #[serde(default)]
     pub local: LocalLlmConfig,
@@ -445,6 +462,9 @@ impl Default for LlmConfig {
             max_tokens: default_max_tokens(),
             temperature: default_temperature(),
             queue_depth: default_queue_depth(),
+            paraphrase_chance: default_paraphrase_chance(),
+            paraphrase_recency_chance: default_paraphrase_recency_chance(),
+            paraphrase_sim_to_sim_chance: default_paraphrase_sim_to_sim_chance(),
             local: LocalLlmConfig::default(),
             cloud: CloudLlmConfig::default(),
         }
@@ -465,6 +485,18 @@ fn default_temperature() -> f32 {
 
 fn default_queue_depth() -> usize {
     5
+}
+
+fn default_paraphrase_chance() -> f32 {
+    0.15
+}
+
+fn default_paraphrase_recency_chance() -> f32 {
+    0.80
+}
+
+fn default_paraphrase_sim_to_sim_chance() -> f32 {
+    0.90
 }
 
 /// Local LLM backend configuration (shimmy external inference server).

@@ -19,6 +19,8 @@ fn build_router(state: Arc<AppState>) -> Router {
         .merge(routes::rag::router())
         // Phase 2c: respond
         .merge(routes::respond::router())
+        // Phase 2d: event paraphrase
+        .merge(routes::paraphrase::router())
         .layer(TraceLayer::new_for_http())
         .with_state(state)
 }

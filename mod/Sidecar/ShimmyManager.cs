@@ -139,6 +139,9 @@ namespace ErenshorLLMDialog.Sidecar
                     return;
                 }
 
+                // Ensure shimmy is killed if the game crashes or is force-closed
+                ChildProcessJob.AssignProcess(_process);
+
                 _process.ErrorDataReceived += OnStderrData;
                 _process.BeginErrorReadLine();
 
@@ -244,10 +247,9 @@ namespace ErenshorLLMDialog.Sidecar
 
         private void OnStderrData(object sender, DataReceivedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(e.Data))
-            {
-                _log.LogInfo("[Shimmy] " + e.Data);
-            }
+            // Shimmy stderr is llama.cpp internal output (layer info, graph reserves, etc.)
+            // which is extremely verbose and not useful for mod debugging.
+            // Always suppressed -- stderr is still consumed to prevent pipe deadlocks.
         }
     }
 }
