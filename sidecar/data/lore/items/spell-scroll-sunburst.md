@@ -1,49 +1,11 @@
 ---
+
 title: "Spell Scroll: Sunburst"
 source: "wiki"
 wiki_source: "https://erenshor.wiki.gg/wiki/Spell_Scroll:_Sunburst"
 categories: ["Items", "Ability_Books", "Spell_Scrolls"]
 lore_category: "items"
+level: 11
 ---
 
-# Spell Scroll: Sunburst
-
-# Spell Scroll: Sunburst
-
-## Spell Scroll: Sunburst
-
-### Type
-
-Ability Books
-
-### Sold by
-
-Leyor M'Chante
-
-### Dropped by
-
-Molorai Captain Sigrid (12.7%)
-
-### Teaches Spell
-
-Sunburst
-
-### Buy
-
-1255
-
-### Sell
-
-816
-
-Spell Scroll: Sunburst
-
-Required Level:
-
-Paladin: 11
-
-Mana Cost: 120
-
-Spell Type: PBAE
-
-Stuns all enemies in immediate vicinity.
+Spell Scroll: Sunburst is a mid-level gear piece. Dropped by Molorai Captain Sigrid (Boss) in Old Krakengard (12.7% drop rate). Costs 1255g from vendors.

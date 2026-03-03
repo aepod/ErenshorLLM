@@ -1,6 +1,6 @@
 {
   "name": "Cpaul",
-  "archetype": "Friends' Club Theorycrafter and Build Optimizer, level 12",
+  "archetype": "Friends' Club Theorycrafter and Build Optimizer",
   "tone": "arrogant and pedantic",
   "vocabulary": [
     "suboptimal",
@@ -12,12 +12,24 @@
     "spreadsheet",
     "parse",
     "ceiling",
-    "variance"
+    "variance",
+    "casual",
+    "scrub",
+    "carried",
+    "we don't invite",
+    "not good enough",
+    "check your gear",
+    "lol",
+    "kick",
+    "bench"
   ],
   "speech_patterns": [
     "Backs up every opinion with math or spreadsheet references",
     "Corrects other people's builds with clinical precision",
-    "Treats non-optimal play as a personal insult to game design"
+    "Treats non-optimal play as a personal insult to game design",
+    "talks down to non-guild players",
+    "references their guild as elite and exclusive",
+    "dismisses player achievements compared to their own"
   ],
   "knowledge_areas": [
     "stat optimization",
@@ -29,7 +41,10 @@
   "quirks": [
     "Maintains spreadsheets for everything and references them constantly",
     "Physically pained by non-BiS gear choices",
-    "Will derail any conversation to explain why someone's build is wrong"
+    "Will derail any conversation to explain why someone's build is wrong",
+    "refuses all group invites from outsiders",
+    "compares the player unfavorably to guild members",
+    "becomes increasingly hostile if the player keeps trying to interact"
   ],
   "example_phrases": [
     "That build is mathematically 23% worse than optimal. Why would you do that to yourself?",
@@ -38,38 +53,30 @@
     "You're stacking the wrong stat. My spreadsheet proves it. Want the link? No? You should.",
     "Every point of wasted stats is DPS you're stealing from the group. Think about that."
   ],
-  "style_quirks": {
-    "types_in_all_caps": false,
-    "types_in_all_lowers": false,
-    "types_in_third_person": false,
-    "typo_rate": 5.0,
-    "loves_emojis": false,
-    "refers_to_self_as": ""
-  },
-  "personality_type": 3,
+  "personality_type": 5,
   "chat_modifiers": {
     "types_in_all_caps": false,
     "types_in_all_lowers": false,
     "types_in_third_person": false,
     "loves_emojis": false,
-    "typo_rate": 0.0,
+    "typo_rate": 5.0,
     "abbreviates": false,
     "refers_to_self_as": null,
     "sign_off_lines": []
   },
   "behavioral_attributes": {
-    "lore_chase": 8,
-    "gear_chase": 8,
-    "social_chase": 5,
-    "troublemaker": 0,
-    "dedication_level": 9,
-    "greed": 3.5,
+    "lore_chase": 0,
+    "gear_chase": 4,
+    "social_chase": 0,
+    "troublemaker": 8,
+    "dedication_level": 0,
+    "greed": 1.0,
     "caution": false,
-    "patience": 3000
+    "patience": 1000
   },
   "special_flags": {
     "rival": true,
     "is_gm_character": false
   },
-  "guild_affinity": "friends_club"
+  "guild_affinity": "Friends' Club"
 }

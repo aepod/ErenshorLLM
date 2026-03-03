@@ -1,35 +1,11 @@
 ---
+
 title: "Sableheart's Key"
 source: "wiki"
 wiki_source: "https://erenshor.wiki.gg/wiki/Sableheart's_Key"
 categories: ["Items", "Keys"]
 lore_category: "items"
+level: 40
 ---
 
-# Sableheart's Key
-
-# Sableheart's Key
-
-## Sableheart's Key
-
-### Type
-
-Key
-
-### Dropped by
-
-Vessel Siraethe (100.0%)
-
-### Buy
-
-500
-
-### Sell
-
-325
-
-Opens the door to Sableheart, Steed of Sivakaya
-
-Sableheart's Key
-
-A unique key
+Sableheart's Key is a best-in-slot gear piece. Dropped by Vessel Siraethe (Boss) in Jaws of Sivakaya (100.0% drop rate). Costs 500g from vendors.

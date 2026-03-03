@@ -1,25 +1,11 @@
 ---
+
 title: "Azynthian Resting place"
 source: "wiki"
 wiki_source: "https://erenshor.wiki.gg/wiki/Azynthian_Resting_place"
 categories: ["Items", "Furniture"]
 lore_category: "items"
+level: 45
 ---
 
-# Azynthian Resting place
-
-# Azynthian Resting place
-
-## Azynthian Resting place
-
-### Buy
-
-85000
-
-### Sell
-
-55250
-
-Azynthian Resting place
-
-Used to decorate a building
+Azynthian Resting place is a best-in-slot gear piece. Available from vendors for 85000g.

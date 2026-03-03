@@ -195,13 +195,32 @@ impl VectorDbConfig {
 }
 
 impl IndexConfig {
-    /// Get the .ruvector path corresponding to a .json path.
-    /// E.g., "dist/lore.json" -> "dist/lore.ruvector"
-    pub fn ruvector_path(json_path: &str) -> String {
-        json_path
-            .strip_suffix(".json")
-            .map(|s| format!("{}.ruvector", s))
-            .unwrap_or_else(|| format!("{}.ruvector", json_path))
+    /// Get the .ruvector path for a given index path.
+    /// Handles both `.json` and `.ruvector` input:
+    ///   "dist/lore.json"     -> "dist/lore.ruvector"
+    ///   "dist/lore.ruvector" -> "dist/lore.ruvector"
+    pub fn ruvector_path(path: &str) -> String {
+        if path.ends_with(".ruvector") {
+            path.to_string()
+        } else if let Some(stem) = path.strip_suffix(".json") {
+            format!("{}.ruvector", stem)
+        } else {
+            format!("{}.ruvector", path)
+        }
+    }
+
+    /// Get the .json fallback path for a given index path.
+    /// Handles both `.ruvector` and `.json` input:
+    ///   "dist/lore.ruvector" -> "dist/lore.json"
+    ///   "dist/lore.json"     -> "dist/lore.json"
+    pub fn json_path(path: &str) -> String {
+        if path.ends_with(".json") {
+            path.to_string()
+        } else if let Some(stem) = path.strip_suffix(".ruvector") {
+            format!("{}.json", stem)
+        } else {
+            format!("{}.json", path)
+        }
     }
 }
 
@@ -316,6 +335,8 @@ pub struct RespondConfig {
     pub relationship_weight: f32,
     #[serde(default = "default_channel_weight")]
     pub channel_weight: f32,
+    #[serde(default = "default_sim_name_weight")]
+    pub sim_name_weight: f32,
 }
 
 impl Default for RespondConfig {
@@ -330,6 +351,7 @@ impl Default for RespondConfig {
             personality_weight: default_personality_weight(),
             relationship_weight: default_relationship_weight(),
             channel_weight: default_channel_weight(),
+            sim_name_weight: default_sim_name_weight(),
         }
     }
 }
@@ -351,15 +373,15 @@ fn default_min_confidence() -> f32 {
 }
 
 fn default_semantic_weight() -> f32 {
-    0.2
+    0.15
 }
 
 fn default_zone_weight() -> f32 {
-    0.2
+    0.15
 }
 
 fn default_personality_weight() -> f32 {
-    0.3
+    0.25
 }
 
 fn default_relationship_weight() -> f32 {
@@ -367,6 +389,10 @@ fn default_relationship_weight() -> f32 {
 }
 
 fn default_channel_weight() -> f32 {
+    0.15
+}
+
+fn default_sim_name_weight() -> f32 {
     0.15
 }
 
@@ -409,6 +435,16 @@ pub struct LlmConfig {
     /// Maximum concurrent LLM inference requests.
     #[serde(default = "default_queue_depth")]
     pub queue_depth: usize,
+    /// Base probability (0.0-1.0) of paraphrasing a template through LLM for variety.
+    #[serde(default = "default_paraphrase_chance")]
+    pub paraphrase_chance: f32,
+    /// Paraphrase probability when the selected template was recently used.
+    #[serde(default = "default_paraphrase_recency_chance")]
+    pub paraphrase_recency_chance: f32,
+    /// Paraphrase probability for sim-to-sim dialog (ambient chatter).
+    /// Higher than player-to-sim because variety matters more for overheard dialog.
+    #[serde(default = "default_paraphrase_sim_to_sim_chance")]
+    pub paraphrase_sim_to_sim_chance: f32,
     /// Local LLM backend config.
     #[serde(default)]
     pub local: LocalLlmConfig,
@@ -426,6 +462,9 @@ impl Default for LlmConfig {
             max_tokens: default_max_tokens(),
             temperature: default_temperature(),
             queue_depth: default_queue_depth(),
+            paraphrase_chance: default_paraphrase_chance(),
+            paraphrase_recency_chance: default_paraphrase_recency_chance(),
+            paraphrase_sim_to_sim_chance: default_paraphrase_sim_to_sim_chance(),
             local: LocalLlmConfig::default(),
             cloud: CloudLlmConfig::default(),
         }
@@ -448,8 +487,21 @@ fn default_queue_depth() -> usize {
     5
 }
 
+fn default_paraphrase_chance() -> f32 {
+    0.15
+}
+
+fn default_paraphrase_recency_chance() -> f32 {
+    0.80
+}
+
+fn default_paraphrase_sim_to_sim_chance() -> f32 {
+    0.90
+}
+
 /// Local LLM backend configuration (shimmy external inference server).
-/// Shimmy runs as a separate process and handles GPU acceleration natively.
+/// Shimmy runs as a separate process, loads GGUF models, and handles GPU
+/// acceleration (Vulkan/CUDA) natively. We communicate over HTTP on localhost.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct LocalLlmConfig {
     /// HTTP endpoint for the local inference server (shimmy).
@@ -588,16 +640,46 @@ pub fn load_config(
         config.embedding.threads = threads;
     }
 
-    // Store the resolved data directory
-    config.data_dir = data_dir.to_path_buf();
+    // Store the resolved data directory as an absolute path.
+    // This is critical: if data_dir is relative (e.g. "data"), we must
+    // canonicalize it NOW while the CWD is known. Otherwise all
+    // resolve_path() calls depend on CWD remaining unchanged.
+    config.data_dir = if data_dir.is_absolute() {
+        data_dir.to_path_buf()
+    } else {
+        match std::env::current_dir() {
+            Ok(cwd) => {
+                let abs = cwd.join(data_dir);
+                tracing::info!("Data directory (absolute): {:?}", abs);
+                abs
+            }
+            Err(e) => {
+                tracing::warn!("Could not get CWD to resolve data_dir: {}. Using as-is: {:?}", e, data_dir);
+                data_dir.to_path_buf()
+            }
+        }
+    };
 
     Ok(config)
 }
 
 impl AppConfig {
     /// Resolve a relative path against the data directory.
+    ///
+    /// Normalizes path separators to the platform native separator so that
+    /// forward-slash defaults (e.g. "dist/lore.ruvector") work correctly
+    /// when data_dir uses backslashes on Windows. Without this, the cross-
+    /// compiled MinGW binary produces mixed-separator paths like
+    /// `data\dist/lore.ruvector` which fail to find existing files.
     pub fn resolve_path(&self, relative: &str) -> PathBuf {
-        let p = PathBuf::from(relative);
+        // Build the relative portion from individual components so the
+        // platform-native separator is used throughout.
+        let mut p = PathBuf::new();
+        for component in relative.split('/') {
+            if !component.is_empty() {
+                p.push(component);
+            }
+        }
         if p.is_absolute() {
             p
         } else {

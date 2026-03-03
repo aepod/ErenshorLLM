@@ -112,6 +112,50 @@ namespace ErenshorLLMDialog.Sidecar
         }
 
         /// <summary>
+        /// Sends POST /v1/paraphrase with the given request body.
+        /// Invokes the callback with the parsed response (or null on failure).
+        /// </summary>
+        public IEnumerator Paraphrase(ParaphraseRequest req, Action<ParaphraseResponse, long> callback)
+        {
+            string url = _baseUrl + "/v1/paraphrase";
+            string body = req.ToJson();
+            float startTime = Time.realtimeSinceStartup;
+
+            using (var request = new UnityWebRequest(url, "POST"))
+            {
+                byte[] bodyBytes = System.Text.Encoding.UTF8.GetBytes(body);
+                request.uploadHandler = new UploadHandlerRaw(bodyBytes);
+                request.downloadHandler = new DownloadHandlerBuffer();
+                request.SetRequestHeader("Content-Type", "application/json");
+                request.timeout = _respondTimeout;
+
+                yield return request.SendWebRequest();
+
+                long latencyMs = (long)((Time.realtimeSinceStartup - startTime) * 1000f);
+
+                if (IsRequestError(request))
+                {
+                    _log.LogWarning("[SidecarClient] /v1/paraphrase failed (" + latencyMs +
+                        "ms): " + request.error);
+                    callback?.Invoke(null, latencyMs);
+                    yield break;
+                }
+
+                string json = request.downloadHandler.text;
+                ParaphraseResponse resp = null;
+                try
+                {
+                    resp = ParaphraseResponse.FromJson(json);
+                }
+                catch (Exception e)
+                {
+                    _log.LogWarning("[SidecarClient] Failed to parse paraphrase response: " + e.Message);
+                }
+                callback?.Invoke(resp, latencyMs);
+            }
+        }
+
+        /// <summary>
         /// Sends POST /shutdown to initiate graceful sidecar shutdown.
         /// Invokes the callback with true on success, false on failure.
         /// </summary>

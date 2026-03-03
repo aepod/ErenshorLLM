@@ -1,40 +1,11 @@
 ---
+
 title: "Coal"
 source: "wiki"
 wiki_source: "https://erenshor.wiki.gg/wiki/Coal"
 categories: ["Items", "Crafting"]
 lore_category: "items"
+level: 6
 ---
 
-# Coal
-
-# Coal
-
-## Coal
-
-### Type
-
-Crafting
-Quest Item
-
-### Sold by
-
-Oscar VanEllis
-
-### Dropped by
-
-Failed Cremation (100.0%)
-
-### Other sources
-
-Mining
-
-### Related quest(s)
-
-The Mystery of Bellwain Island
-
-Used in crafting.
-
-Coal
-
-A level 1 fuel source
+Coal is a starter gear piece. Dropped by Failed Cremation (Boss) in Island Tomb (100.0% drop rate).

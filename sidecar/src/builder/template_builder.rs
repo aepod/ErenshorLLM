@@ -15,6 +15,22 @@ use crate::intelligence::embedder::EmbeddingEngine;
 use crate::intelligence::templates::{save_template_index, RawTemplateFile, ResponseTemplate};
 use crate::intelligence::vector_store::{VectorStoreAdapter, VectorStoreConfig};
 
+/// Recursively collect all .json files from a directory and its subdirectories.
+fn collect_json_files(dir: &Path, files: &mut Vec<std::path::PathBuf>) -> Result<()> {
+    for entry in std::fs::read_dir(dir)
+        .with_context(|| format!("Failed to read directory {:?}", dir))?
+    {
+        let entry = entry?;
+        let path = entry.path();
+        if path.is_dir() {
+            collect_json_files(&path, files)?;
+        } else if path.extension().map_or(false, |e| e == "json") {
+            files.push(path);
+        }
+    }
+    Ok(())
+}
+
 /// Build a response template index from JSON files in the input directory.
 ///
 /// If `output_path` ends with `.ruvector`, writes a redb-backed HNSW database.
@@ -44,17 +60,9 @@ pub fn build_response_index(
     let mut file_count = 0;
     let mut template_count = 0;
 
-    // Read all JSON files in the input directory
+    // Read all JSON files in the input directory and subdirectories
     let mut files: Vec<std::path::PathBuf> = Vec::new();
-    for entry in std::fs::read_dir(input_dir)
-        .with_context(|| format!("Failed to read directory {:?}", input_dir))?
-    {
-        let entry = entry?;
-        let path = entry.path();
-        if path.extension().map_or(false, |e| e == "json") {
-            files.push(path);
-        }
-    }
+    collect_json_files(input_dir, &mut files)?;
     files.sort();
 
     for path in &files {
@@ -84,6 +92,7 @@ pub fn build_response_index(
                         relationship_max: raw.relationship_max,
                         channel: raw.channel.clone(),
                         priority: raw.priority,
+                        sim_name: raw.sim_name.clone(),
                         embedding,
                     });
                     template_count += 1;
@@ -186,6 +195,12 @@ fn write_ruvector_templates(templates: &[ResponseTemplate], output_path: &Path) 
                 "priority".to_string(),
                 serde_json::json!(tmpl.priority),
             );
+            if let Some(ref sim_name) = tmpl.sim_name {
+                metadata.insert(
+                    "sim_name".to_string(),
+                    serde_json::Value::String(sim_name.clone()),
+                );
+            }
 
             (tmpl.id.clone(), tmpl.embedding.clone(), metadata)
         })

@@ -1,38 +1,11 @@
 ---
+
 title: "Stone Giant's Blood"
 source: "wiki"
 wiki_source: "https://erenshor.wiki.gg/wiki/Stone_Giant's_Blood"
 categories: ["Items", "Crafting"]
 lore_category: "items"
+level: 30
 ---
 
-# Stone Giant's Blood
-
-# Stone Giant's Blood
-
-## Stone Giant's Blood
-
-### Type
-
-Crafting
-
-### Dropped by
-
-Granitus (100.0%)
-Gruhglor (87.1%)
-
-### Component for
-
-Mold: Nighthollow Wax
-
-### Buy
-
-8
-
-### Sell
-
-5
-
-Stone Giant's Blood
-
-Blood from a stone. That's weird... but here it is.
+Stone Giant's Blood is a solid upgrade gear piece. Dropped by Granitus (Boss) in Windwashed Pass (100.0% drop rate). Also drops from Gruhglor. Costs 8g from vendors.

@@ -1,35 +1,11 @@
 ---
+
 title: "Key to Vitheo's Tomb"
 source: "wiki"
 wiki_source: "https://erenshor.wiki.gg/wiki/Key_to_Vitheo's_Tomb"
 categories: ["Items", "Keys"]
 lore_category: "items"
+level: 38
 ---
 
-# Key to Vitheo's Tomb
-
-# Key to Vitheo's Tomb
-
-## Key to Vitheo's Tomb
-
-### Type
-
-Key
-
-### Dropped by
-
-The Abomination (100.0%)
-
-### Buy
-
-500
-
-### Sell
-
-325
-
-The key that unlocks the door to the Final wing of Vitheo's Rest
-
-Key to Vitheo's Tomb
-
-A small simple key
+Key to Vitheo's Tomb is a endgame gear piece. Dropped by The Abomination (Boss) in Vitheo's Rest (100.0% drop rate). Costs 500g from vendors.

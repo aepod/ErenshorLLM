@@ -2,7 +2,8 @@ use anyhow::Result;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::path::Path;
-use tracing::{info, warn};
+use std::sync::RwLock;
+use tracing::{debug, info, warn};
 
 /// Style quirks that affect how dialog text is formatted.
 /// These correspond to fields on the game's SimPlayer component
@@ -158,11 +159,171 @@ impl Personality {
             style_quirks: None,
         }
     }
+
+    /// Generate a personality on-the-fly from game trait flags and the sim name.
+    ///
+    /// Uses the name hash for deterministic variation and the game's trait flags
+    /// to build a coherent archetype, tone, vocabulary, and speech patterns.
+    /// This produces unique-feeling personalities for game-generated SimPlayers
+    /// that don't have personality files.
+    fn generate(name: &str, game_traits: &HashMap<String, bool>) -> Self {
+        let hash: u32 = name.bytes().map(|b| b as u32).sum();
+
+        // Determine active trait flags (from game or name hash fallback)
+        let is_friendly = *game_traits.get("friendly").unwrap_or(&false)
+            || *game_traits.get("helpful").unwrap_or(&false)
+            || *game_traits.get("kind").unwrap_or(&false);
+        let is_aggressive = *game_traits.get("aggressive").unwrap_or(&false)
+            || *game_traits.get("brave").unwrap_or(&false)
+            || *game_traits.get("fierce").unwrap_or(&false);
+        let is_scholarly = *game_traits.get("scholarly").unwrap_or(&false)
+            || *game_traits.get("wise").unwrap_or(&false)
+            || *game_traits.get("intellectual").unwrap_or(&false);
+        let is_social = *game_traits.get("social").unwrap_or(&false)
+            || *game_traits.get("leader").unwrap_or(&false)
+            || *game_traits.get("chatty").unwrap_or(&false);
+        let is_grumpy = *game_traits.get("grumpy").unwrap_or(&false)
+            || *game_traits.get("veteran").unwrap_or(&false);
+
+        // If game sent no useful traits, derive from name hash
+        let any_trait = is_friendly || is_aggressive || is_scholarly || is_social || is_grumpy;
+        let (friendly, aggressive, scholarly, social) = if any_trait {
+            (is_friendly, is_aggressive, is_scholarly, is_social)
+        } else {
+            (
+                (hash % 3) == 0,
+                (hash % 7) == 0,
+                (hash % 5) == 0,
+                (hash % 4) == 0,
+            )
+        };
+
+        // Pick archetype based on dominant traits
+        let archetype = if aggressive && social {
+            "raid leader"
+        } else if aggressive && scholarly {
+            "battle mage"
+        } else if aggressive {
+            "warrior"
+        } else if scholarly && friendly {
+            "helpful sage"
+        } else if scholarly {
+            "lore keeper"
+        } else if friendly && social {
+            "social butterfly"
+        } else if social {
+            "guild organizer"
+        } else if friendly {
+            "friendly adventurer"
+        } else if is_grumpy {
+            "grizzled veteran"
+        } else {
+            // Use name hash to pick from a pool
+            match hash % 6 {
+                0 => "wandering explorer",
+                1 => "casual adventurer",
+                2 => "seasoned fighter",
+                3 => "curious traveler",
+                4 => "quiet observer",
+                _ => "resourceful survivor",
+            }
+        };
+
+        // Pick tone
+        let tone = if is_grumpy {
+            "blunt, impatient, speaks from experience"
+        } else if friendly && social {
+            "warm, enthusiastic, loves meeting people"
+        } else if friendly {
+            "approachable and encouraging"
+        } else if aggressive {
+            "direct, competitive, respects strength"
+        } else if scholarly {
+            "thoughtful and precise"
+        } else if social {
+            "chatty and outgoing"
+        } else {
+            match hash % 4 {
+                0 => "laid-back and easygoing",
+                1 => "cautiously friendly",
+                2 => "matter-of-fact",
+                _ => "dry wit, slightly sarcastic",
+            }
+        };
+
+        // Build vocabulary from active traits
+        let mut vocabulary = vec!["quest".to_string(), "zone".to_string()];
+        if friendly {
+            vocabulary.extend(["hey".to_string(), "awesome".to_string(), "nice".to_string()]);
+        }
+        if aggressive {
+            vocabulary.extend(["DPS".to_string(), "pull".to_string(), "wipe".to_string()]);
+        }
+        if scholarly {
+            vocabulary.extend(["lore".to_string(), "ancient".to_string(), "theory".to_string()]);
+        }
+        if social {
+            vocabulary.extend(["group".to_string(), "guild".to_string(), "LFG".to_string()]);
+        }
+        if is_grumpy {
+            vocabulary.extend(["back in my day".to_string(), "noob".to_string()]);
+        }
+
+        // Speech patterns
+        let mut patterns = Vec::new();
+        if friendly {
+            patterns.push("uses encouraging language".to_string());
+        }
+        if aggressive {
+            patterns.push("talks about combat and strategy".to_string());
+        }
+        if scholarly {
+            patterns.push("references history and lore when relevant".to_string());
+        }
+        if social {
+            patterns.push("asks others about themselves".to_string());
+        }
+        if is_grumpy {
+            patterns.push("complains about how things used to be better".to_string());
+        }
+        if patterns.is_empty() {
+            patterns.push("speaks casually like a fellow player".to_string());
+        }
+
+        // Knowledge areas
+        let mut knowledge = vec!["general Erenshor world knowledge".to_string()];
+        if aggressive {
+            knowledge.push("combat tactics and enemy weaknesses".to_string());
+        }
+        if scholarly {
+            knowledge.push("ancient lore and magical theory".to_string());
+        }
+        if social {
+            knowledge.push("guild dynamics and group coordination".to_string());
+        }
+
+        Self {
+            name: name.to_string(),
+            archetype: archetype.to_string(),
+            tone: tone.to_string(),
+            vocabulary,
+            speech_patterns: patterns,
+            knowledge_areas: knowledge,
+            quirks: Vec::new(),
+            example_phrases: Vec::new(),
+            style_quirks: None,
+        }
+    }
 }
 
 /// Store of personality profiles loaded from JSON files.
+///
+/// For sims without a personality file, generates a personality on-the-fly
+/// from game trait flags + name hash and caches it for the session.
 pub struct PersonalityStore {
     personalities: HashMap<String, Personality>,
+    /// Cache of dynamically generated personalities for unknown sims.
+    generated: RwLock<HashMap<String, Personality>>,
     default: Personality,
 }
 
@@ -177,6 +338,7 @@ impl PersonalityStore {
             warn!("Personality directory not found: {}", dir.display());
             return Self {
                 personalities,
+                generated: RwLock::new(HashMap::new()),
                 default,
             };
         }
@@ -187,6 +349,7 @@ impl PersonalityStore {
                 warn!("Failed to read personality directory: {}", e);
                 return Self {
                     personalities,
+                    generated: RwLock::new(HashMap::new()),
                     default,
                 };
             }
@@ -219,6 +382,7 @@ impl PersonalityStore {
 
         Self {
             personalities,
+            generated: RwLock::new(HashMap::new()),
             default,
         }
     }
@@ -231,6 +395,49 @@ impl PersonalityStore {
             .unwrap_or(&self.default)
     }
 
+    /// Look up or dynamically generate a personality for a SimPlayer.
+    ///
+    /// 1. Returns the file-loaded personality if one exists.
+    /// 2. Otherwise, generates a unique personality from the game's trait flags
+    ///    and the sim name hash, caches it, and returns a clone.
+    ///
+    /// This ensures game-created SimPlayers (which don't have personality files)
+    /// still get distinct, consistent personalities based on the traits the game
+    /// assigns them.
+    pub fn get_or_generate(
+        &self,
+        sim_name: &str,
+        game_traits: &HashMap<String, bool>,
+    ) -> Personality {
+        let key = sim_name.to_lowercase();
+
+        // 1. Check file-loaded personalities
+        if let Some(p) = self.personalities.get(&key) {
+            return p.clone();
+        }
+
+        // 2. Check generation cache
+        if let Ok(cache) = self.generated.read() {
+            if let Some(p) = cache.get(&key) {
+                return p.clone();
+            }
+        }
+
+        // 3. Generate from game traits + name hash
+        let personality = Personality::generate(sim_name, game_traits);
+        debug!(
+            "Generated personality for unknown sim '{}': archetype='{}', tone='{}'",
+            sim_name, personality.archetype, personality.tone
+        );
+
+        // 4. Cache it
+        if let Ok(mut cache) = self.generated.write() {
+            cache.insert(key, personality.clone());
+        }
+
+        personality
+    }
+
     /// Whether a named personality exists (not the default fallback).
     pub fn has(&self, sim_name: &str) -> bool {
         self.personalities.contains_key(&sim_name.to_lowercase())
@@ -239,6 +446,11 @@ impl PersonalityStore {
     /// Total number of loaded personalities (including default).
     pub fn count(&self) -> usize {
         self.personalities.len() + 1
+    }
+
+    /// Number of dynamically generated personalities in the cache.
+    pub fn generated_count(&self) -> usize {
+        self.generated.read().map(|c| c.len()).unwrap_or(0)
     }
 
     /// Derive template-compatible personality trait flags for a SimPlayer.

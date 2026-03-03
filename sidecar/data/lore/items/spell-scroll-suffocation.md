@@ -1,41 +1,11 @@
 ---
+
 title: "Spell Scroll: Suffocation"
 source: "wiki"
 wiki_source: "https://erenshor.wiki.gg/wiki/Spell_Scroll:_Suffocation"
 categories: ["Items", "Ability_Books", "Spell_Scrolls"]
 lore_category: "items"
+level: 11
 ---
 
-# Spell Scroll: Suffocation
-
-# Spell Scroll: Suffocation
-
-## Spell Scroll: Suffocation
-
-### Sold by
-
-Grant Haxoway
-
-### Teaches Spell
-
-Suffocate
-
-### Buy
-
-11500
-
-### Sell
-
-7475
-
-Spell Scroll: Suffocation
-
-Required Level:
-
-Reaver: 16
-
-Mana Cost: 300
-
-Spell Type: StatusEffect
-
-Do 700 void damage per tick for 3 ticks.
+Spell Scroll: Suffocation is a mid-level gear piece. Available from vendors for 11500g.

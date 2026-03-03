@@ -1,46 +1,11 @@
 ---
+
 title: "Spell Scroll: Group Healing"
 source: "wiki"
 wiki_source: "https://erenshor.wiki.gg/wiki/Spell_Scroll:_Group_Healing"
 categories: ["Items", "Ability_Books", "Spell_Scrolls"]
 lore_category: "items"
+level: 12
 ---
 
-# Spell Scroll: Group Healing
-
-# Spell Scroll: Group Healing
-
-## Spell Scroll: Group Healing
-
-### Sold by
-
-Alexander Farland
-Aspen Dechaffe
-
-### Dropped by
-
-Molorai Spiritist (100.0%)
-
-### Teaches Spell
-
-Group Heal
-
-### Buy
-
-1255
-
-### Sell
-
-816
-
-Spell Scroll: Group Healing
-
-Required Level:
-
-Druid: 11
-
-Mana Cost: 200
-
-Spell Type: Heal
-
-Heal nearby group members for base 85 damage.
+Spell Scroll: Group Healing is a mid-level gear piece. Dropped by Molorai Spiritist (Boss) in Old Krakengard (100.0% drop rate). Costs 1255g from vendors.

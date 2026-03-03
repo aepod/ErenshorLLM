@@ -1,6 +1,6 @@
 {
   "name": "Elden",
-  "archetype": "Level 14 Paladin - The ancient soul who speaks like a living history book",
+  "archetype": "Paladin - The ancient soul who speaks like a living history book",
   "tone": "Archaic, grandfatherly",
   "vocabulary": [
     "yonder",
@@ -53,12 +53,12 @@
     ]
   },
   "behavioral_attributes": {
-    "lore_chase": 8,
-    "gear_chase": 8,
-    "social_chase": 8,
+    "lore_chase": 0,
+    "gear_chase": 0,
+    "social_chase": 0,
     "troublemaker": 0,
-    "dedication_level": 7,
-    "greed": 1.0,
+    "dedication_level": 0,
+    "greed": 0.0,
     "caution": false,
     "patience": 3000
   },
@@ -66,5 +66,5 @@
     "rival": false,
     "is_gm_character": false
   },
-  "guild_affinity": null
+  "guild_affinity": "76584432"
 }

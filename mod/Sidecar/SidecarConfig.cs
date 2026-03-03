@@ -1,4 +1,7 @@
+using System.IO;
+using System.Text.RegularExpressions;
 using BepInEx.Configuration;
+using BepInEx.Logging;
 
 namespace ErenshorLLMDialog.Sidecar
 {
@@ -21,6 +24,8 @@ namespace ErenshorLLMDialog.Sidecar
         public ConfigEntry<int> MaxRestarts { get; }
         public ConfigEntry<Toggle> RebuildIndexes { get; }
         public ConfigEntry<Toggle> DumpStyleQuirks { get; }
+        public ConfigEntry<Toggle> DumpFullPersonalities { get; }
+        public ConfigEntry<Toggle> RestartSidecar { get; }
 
         // ── Section 3: Response Tuning ──────────────────────────────────
 
@@ -58,6 +63,7 @@ namespace ErenshorLLMDialog.Sidecar
         public ConfigEntry<float> Temperature { get; }
         public ConfigEntry<float> LlmTimeout { get; }
         public ConfigEntry<float> EnhanceThreshold { get; }
+        public ConfigEntry<float> ParaphraseStaleTimeout { get; }
 
         public SidecarConfig(ConfigFile config)
         {
@@ -123,6 +129,21 @@ namespace ErenshorLLMDialog.Sidecar
                 "Read TypesInAllCaps, TypesInThirdPerson, TypoRate, etc. from game " +
                 "prefabs at startup and merge into personality JSON files. " +
                 "Run once then disable. Auto-resets to Off after dump completes.");
+
+            DumpFullPersonalities = config.Bind(
+                "2 - Sidecar", "Dump Full Personalities", Toggle.Off,
+                "Extract ALL personality data from game prefabs at startup: " +
+                "speech modifiers, behavioral traits, dialog lists, bios, rival status. " +
+                "Writes _full_personality_dump.json to the personalities directory. " +
+                "Run once to capture real game data for personality enrichment. " +
+                "Auto-resets to Off after dump completes.");
+
+            RestartSidecar = config.Bind(
+                "2 - Sidecar", "Restart Sidecar", Toggle.Off,
+                "Toggle On to restart the sidecar and shimmy processes. " +
+                "Use after changing LLM Mode or other sidecar settings. " +
+                "Syncs BepInEx LLM settings to erenshor-llm.toml before restart. " +
+                "Auto-resets to Off after restart completes.");
 
             // ── Section 3: Response Tuning ──────────────────────────────
 
@@ -242,6 +263,14 @@ namespace ErenshorLLMDialog.Sidecar
                     "Lower values = fewer LLM calls, higher values = more LLM personalization.",
                     new AcceptableValueRange<float>(0f, 1f)));
 
+            ParaphraseStaleTimeout = config.Bind(
+                "5 - LLM (Phase 3)", "Paraphrase Stale Timeout", 4.0f,
+                new ConfigDescription(
+                    "Seconds a queued paraphrase request can wait before being delivered " +
+                    "as original text. Lower values reduce dialog delays at the cost of " +
+                    "fewer paraphrased lines during bursts.",
+                    new AcceptableValueRange<float>(1f, 30f)));
+
             // ── Section 6: Multi-Sim ─────────────────────────────────────
 
             MaxRequestsPerMinute = config.Bind(
@@ -287,6 +316,137 @@ namespace ErenshorLLMDialog.Sidecar
                     "1 = one reaction layer (sim A -> sim B reacts). " +
                     "Higher values risk rate limit exhaustion.",
                     new AcceptableValueRange<int>(0, 3)));
+        }
+
+        /// <summary>
+        /// Syncs BepInEx LLM config values into the sidecar's erenshor-llm.toml.
+        /// Uses line-by-line replacement so comments and non-LLM sections are preserved.
+        /// Returns true if the file was updated.
+        /// </summary>
+        public bool SyncToSidecarToml(string tomlPath, ManualLogSource log)
+        {
+            if (!File.Exists(tomlPath))
+            {
+                log.LogWarning("[SidecarConfig] TOML not found at " + tomlPath +
+                    ", cannot sync settings.");
+                return false;
+            }
+
+            try
+            {
+                string content = File.ReadAllText(tomlPath);
+
+                // Derive sidecar-side values from BepInEx config
+                string modeStr = LlmModeEntry.Value.ToString().ToLowerInvariant();
+                bool enabled = LlmModeEntry.Value != LlmMode.Off;
+
+                // [llm] section
+                content = SetTomlValue(content, "enabled", enabled ? "true" : "false");
+                content = SetTomlValue(content, "mode", "\"" + modeStr + "\"");
+                content = SetTomlValue(content, "enhance_threshold",
+                    EnhanceThreshold.Value.ToString("F2",
+                        System.Globalization.CultureInfo.InvariantCulture));
+                content = SetTomlValue(content, "max_tokens", MaxTokens.Value.ToString());
+                content = SetTomlValue(content, "temperature",
+                    Temperature.Value.ToString("F1",
+                        System.Globalization.CultureInfo.InvariantCulture));
+
+                // [llm.local] section
+                content = SetTomlValue(content, "endpoint",
+                    "\"http://127.0.0.1:" + ShimmyPort.Value + "\"");
+                content = SetTomlValue(content, "gpu_backend",
+                    "\"" + ShimmyGpuBackend.Value + "\"");
+
+                // [llm.cloud] section
+                if (!string.IsNullOrEmpty(ApiKey.Value))
+                    content = SetTomlValue(content, "api_key",
+                        "\"" + ApiKey.Value + "\"");
+                if (!string.IsNullOrEmpty(ApiEndpoint.Value))
+                    content = SetTomlValue(content, "api_endpoint",
+                        "\"" + ApiEndpoint.Value + "\"");
+
+                // [respond] section weights
+                content = SetTomlValue(content, "template_candidates",
+                    TemplateCandidates.Value.ToString());
+                content = SetTomlValue(content, "lore_candidates",
+                    LoreContextCount.Value.ToString());
+                content = SetTomlValue(content, "memory_candidates",
+                    MemoryContextCount.Value.ToString());
+                content = SetTomlValue(content, "zone_weight",
+                    ZoneWeight.Value.ToString("F2",
+                        System.Globalization.CultureInfo.InvariantCulture));
+                content = SetTomlValue(content, "personality_weight",
+                    PersonalityWeight.Value.ToString("F2",
+                        System.Globalization.CultureInfo.InvariantCulture));
+                content = SetTomlValue(content, "relationship_weight",
+                    RelationshipWeight.Value.ToString("F2",
+                        System.Globalization.CultureInfo.InvariantCulture));
+                content = SetTomlValue(content, "channel_weight",
+                    ChannelWeight.Value.ToString("F2",
+                        System.Globalization.CultureInfo.InvariantCulture));
+
+                // Validate no garbage was introduced -- every non-empty,
+                // non-comment line must look like a TOML key=value or [section]
+                if (!ValidateTomlStructure(content))
+                {
+                    log.LogError("[SidecarConfig] TOML sync produced invalid content, aborting write.");
+                    return false;
+                }
+
+                File.WriteAllText(tomlPath, content);
+                log.LogInfo("[SidecarConfig] Synced BepInEx settings to " + tomlPath);
+                log.LogInfo("[SidecarConfig] LLM mode=" + modeStr +
+                    ", enabled=" + enabled +
+                    ", threshold=" + EnhanceThreshold.Value);
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                log.LogError("[SidecarConfig] Failed to sync TOML: " + e.Message);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Replace a TOML key = value on its line, preserving inline comments.
+        /// Only matches lines where the key is a bare TOML identifier (letters,
+        /// digits, underscores, hyphens) -- rejects lines starting with [, ESC, etc.
+        /// </summary>
+        private static string SetTomlValue(string content, string key, string value)
+        {
+            // Anchor: start of line, optional whitespace, the key as a TOML bare key,
+            // then whitespace-equals-whitespace, then the old value (non-newline, non-#),
+            // then optional inline comment.
+            // The negative lookbehind-like approach: key must be preceded by line start
+            // or whitespace only (no [ or other chars).
+            string pattern = @"(?m)^([ \t]*" + Regex.Escape(key) + @"[ \t]*=[ \t]*)([^\n#]*)(.*)$";
+            return Regex.Replace(content, pattern, "${1}" + value + " ${3}");
+        }
+
+        /// <summary>
+        /// Quick structural validation of TOML content.
+        /// Returns false if any non-blank, non-comment line isn't a valid
+        /// TOML key=value or [section.header].
+        /// </summary>
+        private static bool ValidateTomlStructure(string content)
+        {
+            var linePattern = new Regex(
+                @"^[ \t]*$" +                           // blank line
+                @"|^[ \t]*#" +                           // comment
+                @"|^[ \t]*\[[\w.\-"" ]+\]" +             // section header [foo.bar]
+                @"|^[ \t]*[\w\-]+[ \t]*=",              // key = value
+                RegexOptions.Multiline);
+
+            string[] lines = content.Split('\n');
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i].TrimEnd('\r');
+                if (string.IsNullOrEmpty(line))
+                    continue;
+                if (!linePattern.IsMatch(line))
+                    return false;
+            }
+            return true;
         }
     }
 }

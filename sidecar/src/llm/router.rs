@@ -3,7 +3,7 @@ use std::time::Instant;
 use tracing::{debug, info, warn};
 
 use crate::config::LlmMode;
-use crate::llm::cloud::CloudBackend;
+use crate::llm::cloud::{ChatMessage, CloudBackend};
 use crate::llm::local::LocalBackend;
 use crate::llm::postprocess;
 
@@ -42,10 +42,30 @@ impl LlmRouter {
         Self { local, cloud, mode }
     }
 
-    /// Generate text using the configured backend(s).
+    /// Generate text using the configured backend(s) with a flat prompt.
+    ///
+    /// Legacy interface -- wraps the prompt as a single user message.
+    /// Prefer `generate_chat()` for fine-tuned models with structured messages.
     pub async fn generate(
         &self,
         prompt: &str,
+        max_tokens: usize,
+        temperature: f32,
+    ) -> LlmResult {
+        let messages = vec![ChatMessage {
+            role: "user".to_string(),
+            content: prompt.to_string(),
+        }];
+        self.generate_chat(messages, max_tokens, temperature).await
+    }
+
+    /// Generate text using structured chat messages (system + user).
+    ///
+    /// This is the preferred interface for fine-tuned models trained with
+    /// separate system/user/assistant turns.
+    pub async fn generate_chat(
+        &self,
+        messages: Vec<ChatMessage>,
         max_tokens: usize,
         temperature: f32,
     ) -> LlmResult {
@@ -53,18 +73,23 @@ impl LlmRouter {
             LlmMode::Off => LlmResult::Fallback {
                 reason: "LLM disabled".to_string(),
             },
-            LlmMode::Local => self.generate_local(prompt, max_tokens, temperature).await,
+            LlmMode::Local => self.generate_local_chat(messages, max_tokens, temperature).await,
             LlmMode::Cloud => {
-                self.generate_cloud(prompt, max_tokens, temperature).await
+                self.generate_cloud_chat(messages, max_tokens, temperature).await
             }
             LlmMode::Hybrid => {
-                self.generate_hybrid(prompt, max_tokens, temperature).await
+                self.generate_hybrid_chat(messages, max_tokens, temperature).await
             }
         }
     }
 
-    /// Generate via the local inference server (shimmy).
-    async fn generate_local(&self, prompt: &str, max_tokens: usize, temperature: f32) -> LlmResult {
+    /// Generate via the local inference server with structured messages.
+    async fn generate_local_chat(
+        &self,
+        messages: Vec<ChatMessage>,
+        max_tokens: usize,
+        temperature: f32,
+    ) -> LlmResult {
         let Some(local) = &self.local else {
             return LlmResult::Fallback {
                 reason: "Local backend not configured".to_string(),
@@ -72,7 +97,7 @@ impl LlmRouter {
         };
 
         let start = Instant::now();
-        match local.generate(prompt, max_tokens, temperature).await {
+        match local.generate_chat(messages, max_tokens, temperature).await {
             Ok(raw) => {
                 let text = postprocess::clean(&raw);
                 if text.is_empty() {
@@ -97,9 +122,9 @@ impl LlmRouter {
         }
     }
 
-    async fn generate_cloud(
+    async fn generate_cloud_chat(
         &self,
-        prompt: &str,
+        messages: Vec<ChatMessage>,
         max_tokens: usize,
         temperature: f32,
     ) -> LlmResult {
@@ -108,11 +133,6 @@ impl LlmRouter {
                 reason: "Cloud backend not configured".to_string(),
             };
         };
-
-        let messages = vec![crate::llm::cloud::ChatMessage {
-            role: "user".to_string(),
-            content: prompt.to_string(),
-        }];
 
         let start = Instant::now();
         match cloud.generate(messages, max_tokens, temperature).await {
@@ -140,20 +160,22 @@ impl LlmRouter {
         }
     }
 
-    async fn generate_hybrid(
+    async fn generate_hybrid_chat(
         &self,
-        prompt: &str,
+        messages: Vec<ChatMessage>,
         max_tokens: usize,
         temperature: f32,
     ) -> LlmResult {
-        // Try local first (shimmy), fall back to cloud (OpenRouter)
-        let local_result = self.generate_local(prompt, max_tokens, temperature).await;
+        // Try local first, fall back to cloud
+        let local_result = self.generate_local_chat(
+            messages.clone(), max_tokens, temperature,
+        ).await;
 
         match local_result {
             LlmResult::Success { .. } => local_result,
             LlmResult::Fallback { reason } => {
                 debug!("Local failed ({}), trying cloud fallback", reason);
-                self.generate_cloud(prompt, max_tokens, temperature).await
+                self.generate_cloud_chat(messages, max_tokens, temperature).await
             }
         }
     }

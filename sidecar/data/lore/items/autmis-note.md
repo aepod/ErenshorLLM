@@ -1,23 +1,11 @@
 ---
+
 title: "Autmis' Note"
 source: "wiki"
 wiki_source: "https://erenshor.wiki.gg/wiki/Autmis'_Note"
 categories: ["Items"]
 lore_category: "items"
+level: 7
 ---
 
-# Autmis' Note
-
-# Autmis' Note
-
-## Autmis' Note
-
-### Dropped by
-
-Autmis the Lost (100.0%)
-
-Autmis' Note
-
-It's faded but legible:
-
-"She yearns for the Willow. To cradle a single seed is to be graced; to cradle the seeds of all is to be sanctified. Such sanctification is seldom bestowed, for a Watcher may never abandon her vigil."
+Autmis' Note is a starter gear piece. Dropped by Autmis the Lost (Boss) in Willowwatch Ridge (100.0% drop rate). Also drops from Autmis' Note and It's faded but legible:.
