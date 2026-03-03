@@ -37,7 +37,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 SIDECAR_DIR="$SCRIPT_DIR/sidecar"
 MOD_DIR="$SCRIPT_DIR/mod"
 DOCS_DIR="$SCRIPT_DIR/docs"
-MOD_VERSION="0.3-1"
+MOD_VERSION="0.3-2"
 
 # Parse flags
 PACKAGE_MODE=false
@@ -108,7 +108,7 @@ if $PACKAGE_MODE; then
 
     # ONNX Runtime
     ONNX_DLL=""
-    for candidate in "$SIDECAR_DIR/onnxruntime.dll" "$SIDECAR_DIR/data/lib/onnxruntime.dll"; do
+    for candidate in "$SIDECAR_DIR/onnxruntime.dll" "$SIDECAR_DIR/data/onnxruntime.dll" "$SIDECAR_DIR/data/lib/onnxruntime.dll"; do
         if [ -f "$candidate" ]; then
             ONNX_DLL="$candidate"
             break
@@ -239,7 +239,7 @@ fi
 
 # ONNX Runtime DLL (optional, may be alongside the sidecar or in lib/)
 ONNX_DLL=""
-for candidate in "$SIDECAR_DIR/onnxruntime.dll" "$SIDECAR_DIR/data/lib/onnxruntime.dll" "$TARGET/onnxruntime.dll"; do
+for candidate in "$SIDECAR_DIR/onnxruntime.dll" "$SIDECAR_DIR/data/onnxruntime.dll" "$SIDECAR_DIR/data/lib/onnxruntime.dll" "$TARGET/onnxruntime.dll"; do
     if [ -f "$candidate" ]; then
         ONNX_DLL="$candidate"
         break
