@@ -37,7 +37,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 SIDECAR_DIR="$SCRIPT_DIR/sidecar"
 MOD_DIR="$SCRIPT_DIR/mod"
 DOCS_DIR="$SCRIPT_DIR/docs"
-MOD_VERSION="0.3-1"
+MOD_VERSION="0.3-2"
 
 # Parse flags
 PACKAGE_MODE=false
