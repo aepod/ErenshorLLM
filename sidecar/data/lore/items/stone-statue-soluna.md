@@ -1,32 +1,11 @@
 ---
+
 title: "Stone Statue: Soluna"
 source: "wiki"
 wiki_source: "https://erenshor.wiki.gg/wiki/Stone_Statue:_Soluna"
 categories: ["Items", "Furniture"]
 lore_category: "items"
+level: 32
 ---
 
-# Stone Statue: Soluna
-
-# Stone Statue: Soluna
-
-## Stone Statue: Soluna
-
-### Dropped by
-
-Raval, The First Paladin (3.4%)
-Ancient Celestarian (1.4%)
-Ancient Guard (1.4%)
-Ancient Knight (1.4%)
-
-### Buy
-
-10000
-
-### Sell
-
-6500
-
-Stone Statue: Soluna
-
-Used to decorate a building
+Stone Statue: Soluna is a endgame gear piece. Dropped by Raval, The First Paladin (Boss) in Soluna's Landing (3.4% drop rate). Also drops from Ancient Celestarian and Ancient Guard. Costs 10000g from vendors.

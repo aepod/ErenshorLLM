@@ -1,39 +1,11 @@
 ---
+
 title: "Devoratrix Thorn"
 source: "wiki"
 wiki_source: "https://erenshor.wiki.gg/wiki/Devoratrix_Thorn"
 categories: ["Items", "Quest_Items"]
 lore_category: "items"
+level: 22
 ---
 
-# Devoratrix Thorn
-
-# Devoratrix Thorn
-
-## Devoratrix Thorn
-
-### Type
-
-Quest Item
-
-### Dropped by
-
-Devoratrix (6.9%)
-
-### Related quest(s)
-
-Ritual Components
-
-### Buy
-
-12
-
-### Sell
-
-8
-
-Required for Ritual Components
-
-Devoratrix Thorn
-
-A spike from the vines of a Devoratrix
+Devoratrix Thorn is a solid upgrade gear piece. Dropped by Devoratrix in Loomingwood Forest (6.9% drop rate). Costs 12g from vendors.

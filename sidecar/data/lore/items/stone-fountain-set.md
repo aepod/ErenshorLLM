@@ -1,25 +1,11 @@
 ---
+
 title: "Stone Fountain Set"
 source: "wiki"
 wiki_source: "https://erenshor.wiki.gg/wiki/Stone_Fountain_Set"
 categories: ["Items", "Furniture"]
 lore_category: "items"
+level: 3
 ---
 
-# Stone Fountain Set
-
-# Stone Fountain Set
-
-## Stone Fountain Set
-
-### Buy
-
-3500
-
-### Sell
-
-2275
-
-Stone Fountain Set
-
-Used to decorate a building
+Stone Fountain Set is a starter gear piece. Available from vendors for 3500g.

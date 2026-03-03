@@ -1,6 +1,6 @@
 {
   "name": "Thane",
-  "archetype": "Level 14 Paladin, noble lord shouldering the weight of command",
+  "archetype": "Paladin, noble lord shouldering the weight of command",
   "tone": "dignified, weary, resolute",
   "vocabulary": [
     "duty",
@@ -53,18 +53,18 @@
     ]
   },
   "behavioral_attributes": {
-    "lore_chase": 7,
-    "gear_chase": 5,
-    "social_chase": 5,
+    "lore_chase": 0,
+    "gear_chase": 0,
+    "social_chase": 0,
     "troublemaker": 0,
-    "dedication_level": 9,
-    "greed": 1.0,
-    "caution": true,
+    "dedication_level": 0,
+    "greed": 0.0,
+    "caution": false,
     "patience": 5000
   },
   "special_flags": {
     "rival": false,
     "is_gm_character": false
   },
-  "guild_affinity": null
+  "guild_affinity": "76584432"
 }

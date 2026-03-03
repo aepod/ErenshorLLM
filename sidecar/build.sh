@@ -49,11 +49,20 @@ echo "=== Building response templates ==="
 
 echo "=== Deploying to game directory ==="
 if [ -d "$PLUGIN_DIR" ]; then
+    mkdir -p "$PLUGIN_DIR/data/dist"
     cp "$WIN_EXE" "$PLUGIN_DIR/erenshor-llm.exe"
     cp "$SHIMMY_EXE" "$PLUGIN_DIR/shimmy.exe"
-    cp data/dist/*.ruvector "$PLUGIN_DIR/dist/"
+    cp data/dist/*.ruvector "$PLUGIN_DIR/data/dist/"
     sync
     echo "Deployed to $PLUGIN_DIR"
+
+    # Clean up stale directories from previous builds
+    for stale in "$PLUGIN_DIR/dist" "$PLUGIN_DIR/databuild-index" "$PLUGIN_DIR/erenshor-llm.exe.old"; do
+        if [ -e "$stale" ]; then
+            rm -rf "$stale"
+            echo "  Removed stale: $(basename "$stale")"
+        fi
+    done
 else
     echo "WARNING: Plugin dir not found at $PLUGIN_DIR"
     echo "Set ErenshorGamePath env var or copy manually."

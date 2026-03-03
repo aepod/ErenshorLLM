@@ -13,6 +13,8 @@ mod server;
 mod state;
 
 use clap::{Parser, Subcommand};
+use std::collections::hash_map::DefaultHasher;
+use std::hash::{Hash, Hasher};
 use std::path::PathBuf;
 use std::sync::Arc;
 use tracing::{debug, error, info, warn};
@@ -36,7 +38,7 @@ struct Cli {
     #[arg(long)]
     threads: Option<usize>,
 
-    /// Log format: "pretty" or "json"
+    /// Log format: "pretty", "plain" (no ANSI/timestamps), or "json"
     #[arg(long, default_value = "pretty")]
     log_format: String,
 
@@ -115,6 +117,99 @@ enum Commands {
         #[arg(long, default_value = "lore")]
         output_dir: PathBuf,
     },
+    /// Clean wiki-imported item files: transform raw stat dumps into
+    /// conversational prose suitable for LLM context injection.
+    /// Cross-references enemies and zones for drop source grounding.
+    CleanItems {
+        /// Items directory containing wiki-imported .md files
+        #[arg(long, default_value = "lore/items")]
+        items_dir: PathBuf,
+        /// Enemies directory for cross-referencing drop sources
+        #[arg(long, default_value = "lore/enemies")]
+        enemies_dir: PathBuf,
+        /// Zones directory for zone name validation
+        #[arg(long, default_value = "lore/zones")]
+        zones_dir: PathBuf,
+    },
+    /// Export training data for LoRA fine-tuning.
+    /// Generates JSONL files in ChatML, Alpaca, and/or ShareGPT formats
+    /// from personalities, templates, lore, and grounding data.
+    ExportTraining {
+        /// Output directory for JSONL files
+        #[arg(long, default_value = "dist/training")]
+        output_dir: PathBuf,
+        /// Output format: chatml, alpaca, sharegpt, or all
+        #[arg(long, default_value = "all")]
+        format: String,
+        /// Strategies (comma-separated): phrases, crossover, lore, multiturn, or all
+        #[arg(long, default_value = "all")]
+        strategies: String,
+        /// Deterministic RNG seed
+        #[arg(long, default_value = "42")]
+        seed: u64,
+        /// Max pairs per strategy (0 = unlimited)
+        #[arg(long, default_value = "0")]
+        max_per_strategy: usize,
+        /// Filter personality types (comma-separated): 1=Nice, 2=Tryhard, 3=Mean, 5=Neutral
+        #[arg(long)]
+        personality_types: Option<String>,
+        /// Filter template categories (comma-separated)
+        #[arg(long)]
+        categories: Option<String>,
+        /// Filter zones (comma-separated)
+        #[arg(long)]
+        zones: Option<String>,
+    },
+    /// Validate template JSON files for quality, correctness, and entity grounding.
+    /// Checks format, forbidden phrases, duplicate IDs, category balance,
+    /// and zone_affinity against grounding.json.
+    ValidateTemplates {
+        /// Validate a specific file instead of all templates
+        #[arg(long)]
+        input: Option<PathBuf>,
+        /// Check entity grounding in template text (slower)
+        #[arg(long)]
+        check_grounding: bool,
+    },
+    /// Export SillyTavern character cards (TavernAI Card V2 JSON).
+    /// Generates one JSON file per SimPlayer personality for import
+    /// into SillyTavern or any TavernAI-compatible frontend.
+    ExportTavern {
+        /// Output directory for character card JSON files
+        #[arg(long, default_value = "dist/tavern")]
+        output_dir: PathBuf,
+        /// Filter personality types (comma-separated): 1=Nice, 2=Tryhard, 3=Mean, 5=Neutral
+        #[arg(long)]
+        personality_types: Option<String>,
+        /// Include character_book (lorebook) from knowledge_areas
+        #[arg(long)]
+        include_lorebook: bool,
+    },
+    /// Fine-tune a local model using exported training data.
+    /// Generates training scripts and optionally runs them.
+    FineTune {
+        /// Training data directory
+        #[arg(long, default_value = "dist/training")]
+        output_dir: PathBuf,
+        /// Backend: config-only, unsloth, or axolotl
+        #[arg(long, default_value = "config-only")]
+        backend: String,
+        /// HuggingFace base model ID
+        #[arg(long, default_value = "unsloth/gemma-3-1b-it")]
+        base_model: String,
+        /// LoRA rank
+        #[arg(long, default_value = "16")]
+        lora_rank: u32,
+        /// Training epochs
+        #[arg(long, default_value = "3")]
+        epochs: u32,
+        /// Learning rate
+        #[arg(long, default_value = "2e-4")]
+        learning_rate: f64,
+        /// RNG seed
+        #[arg(long, default_value = "42")]
+        seed: u64,
+    },
 }
 
 fn init_tracing(format: &str) {
@@ -128,6 +223,19 @@ fn init_tracing(format: &str) {
             tracing_subscriber::registry()
                 .with(filter)
                 .with(fmt::layer().json().with_writer(std::io::stderr))
+                .init();
+        }
+        "plain" => {
+            // No ANSI codes, no timestamps -- clean output for BepInEx log forwarding.
+            // Format: "LEVEL module: message"
+            tracing_subscriber::registry()
+                .with(filter)
+                .with(
+                    fmt::layer()
+                        .with_writer(std::io::stderr)
+                        .with_ansi(false)
+                        .without_time(),
+                )
                 .init();
         }
         _ => {
@@ -178,9 +286,11 @@ fn load_embedder(config: &config::AppConfig) -> Option<std::sync::Arc<intelligen
 
 /// Load the lore index. Tries .ruvector first, falls back to .json.
 fn load_lore(config: &config::AppConfig) -> intelligence::lore::LoreStore {
-    let json_path = config.resolve_path(&config.indexes.lore_path);
     let ruvector_path = config.resolve_path(
         &config::IndexConfig::ruvector_path(&config.indexes.lore_path),
+    );
+    let json_path = config.resolve_path(
+        &config::IndexConfig::json_path(&config.indexes.lore_path),
     );
     let adapter_config = config.vectordb.to_adapter_config();
 
@@ -195,9 +305,11 @@ fn load_lore(config: &config::AppConfig) -> intelligence::lore::LoreStore {
 
 /// Load the memory store. Creates a new .ruvector if neither exists.
 fn load_memory(config: &config::AppConfig) -> intelligence::memory::MemoryStore {
-    let json_path = config.resolve_path(&config.indexes.memory_path);
     let ruvector_path = config.resolve_path(
         &config::IndexConfig::ruvector_path(&config.indexes.memory_path),
+    );
+    let json_path = config.resolve_path(
+        &config::IndexConfig::json_path(&config.indexes.memory_path),
     );
     let adapter_config = config.vectordb.to_adapter_config();
 
@@ -212,9 +324,11 @@ fn load_memory(config: &config::AppConfig) -> intelligence::memory::MemoryStore 
 
 /// Load the response template store. Tries .ruvector first, falls back to .json.
 fn load_responses(config: &config::AppConfig) -> intelligence::templates::ResponseStore {
-    let json_path = config.resolve_path(&config.indexes.responses_path);
     let ruvector_path = config.resolve_path(
         &config::IndexConfig::ruvector_path(&config.indexes.responses_path),
+    );
+    let json_path = config.resolve_path(
+        &config::IndexConfig::json_path(&config.indexes.responses_path),
     );
     let adapter_config = config.vectordb.to_adapter_config();
 
@@ -233,9 +347,38 @@ fn load_personalities(config: &config::AppConfig) -> Arc<llm::personality::Perso
     Arc::new(llm::personality::PersonalityStore::load(&dir))
 }
 
+/// Hash the personality directory contents for change detection.
+///
+/// Concatenates file names, sizes, and modification times, then hashes
+/// with DefaultHasher. This is fast and sufficient for detecting edits.
+fn hash_personality_dir(dir: &std::path::Path) -> String {
+    let mut hasher = DefaultHasher::new();
+    let mut entries: Vec<_> = match std::fs::read_dir(dir) {
+        Ok(rd) => rd.filter_map(|e| e.ok()).collect(),
+        Err(_) => return String::new(),
+    };
+    entries.sort_by_key(|e| e.file_name());
+
+    for entry in &entries {
+        let name = entry.file_name();
+        name.to_string_lossy().hash(&mut hasher);
+        if let Ok(meta) = entry.metadata() {
+            hasher.write_u64(meta.len());
+            if let Ok(mtime) = meta.modified() {
+                if let Ok(dur) = mtime.duration_since(std::time::SystemTime::UNIX_EPOCH) {
+                    hasher.write_u64(dur.as_secs());
+                }
+            }
+        }
+    }
+
+    format!("{:x}", hasher.finish())
+}
+
 /// Build and load vector-backed personality store at startup.
 ///
-/// Always rebuilds from personality JSON files to pick up any changes.
+/// Skips rebuild if personality files haven't changed (hash-based detection).
+/// The `init-data` command always forces a full rebuild (deletes the ruvector).
 /// Requires the embedding engine to be available.
 fn load_vector_personalities(
     config: &config::AppConfig,
@@ -244,26 +387,49 @@ fn load_vector_personalities(
     let ruvector_path = config.resolve_path(&config.indexes.personality_path);
     let personalities_dir = config.resolve_path("personalities");
     let adapter_config = config.vectordb.to_adapter_config();
+    let hash_path = config.resolve_path("dist/personality.hash");
 
-    // Always rebuild from JSON source files at startup
-    if let Some(ref emb) = embedder {
-        debug!("Building personality vectors from {:?}...", personalities_dir);
-        // Remove stale .ruvector if present
-        if ruvector_path.exists() {
-            if let Err(e) = std::fs::remove_file(&ruvector_path) {
-                warn!("Failed to remove stale personality DB: {}", e);
-            }
+    // Check if rebuild is needed by comparing directory hash
+    let current_hash = hash_personality_dir(&personalities_dir);
+
+    let needs_rebuild = if ruvector_path.exists() && hash_path.exists() {
+        let stored_hash = std::fs::read_to_string(&hash_path).unwrap_or_default();
+        let changed = stored_hash.trim() != current_hash;
+        if !changed {
+            debug!("Personality files unchanged (hash: {}), skipping rebuild", &current_hash[..8.min(current_hash.len())]);
         }
-        match builder::personality_builder::build_personality_index(&personalities_dir, &ruvector_path, emb) {
-            Ok(()) => {
-                debug!("Personality vectors rebuilt successfully");
-            }
-            Err(e) => {
-                warn!("Failed to build personality vectors: {}. Personality vector search will be unavailable.", e);
-            }
-        }
+        changed
     } else {
-        warn!("Embedding engine unavailable; cannot build personality vectors at startup.");
+        true
+    };
+
+    if needs_rebuild {
+        if let Some(ref emb) = embedder {
+            debug!("Building personality vectors from {:?}...", personalities_dir);
+            // Remove stale .ruvector if present
+            if ruvector_path.exists() {
+                if let Err(e) = std::fs::remove_file(&ruvector_path) {
+                    warn!("Failed to remove stale personality DB: {}", e);
+                }
+            }
+            match builder::personality_builder::build_personality_index(&personalities_dir, &ruvector_path, emb) {
+                Ok(()) => {
+                    debug!("Personality vectors rebuilt successfully");
+                    // Store hash for next startup
+                    if let Some(parent) = hash_path.parent() {
+                        std::fs::create_dir_all(parent).ok();
+                    }
+                    if let Err(e) = std::fs::write(&hash_path, &current_hash) {
+                        warn!("Failed to write personality hash: {}", e);
+                    }
+                }
+                Err(e) => {
+                    warn!("Failed to build personality vectors: {}. Personality vector search will be unavailable.", e);
+                }
+            }
+        } else {
+            warn!("Embedding engine unavailable; cannot build personality vectors at startup.");
+        }
     }
 
     let store = intelligence::personality_store::VectorPersonalityStore::open(&ruvector_path, &adapter_config);
@@ -490,6 +656,208 @@ async fn main() {
                 info!("Wiki import complete.");
                 return;
             }
+            Commands::CleanItems { items_dir, enemies_dir, zones_dir } => {
+                let items_dir = config.resolve_path(&items_dir.to_string_lossy());
+                let enemies_dir = config.resolve_path(&enemies_dir.to_string_lossy());
+                let zones_dir = config.resolve_path(&zones_dir.to_string_lossy());
+                info!("Cleaning item files: {:?}", items_dir);
+
+                match builder::item_cleaner::clean_items(&items_dir, &enemies_dir, &zones_dir) {
+                    Ok(count) => {
+                        info!("Item cleaning complete: {} files processed.", count);
+                    }
+                    Err(e) => {
+                        error!("Item cleaning failed: {}", e);
+                        std::process::exit(1);
+                    }
+                }
+                return;
+            }
+            Commands::ValidateTemplates { input, check_grounding } => {
+                let data_dir = config.data_dir.clone();
+                let input_path = input.as_ref().map(|p| {
+                    if p.is_absolute() {
+                        p.clone()
+                    } else {
+                        config.resolve_path(&p.to_string_lossy())
+                    }
+                });
+
+                info!("Validating templates in {:?}", data_dir);
+
+                match builder::template_validator::validate_templates(
+                    &data_dir,
+                    input_path.as_deref(),
+                    *check_grounding,
+                ) {
+                    Ok(report) => {
+                        report.print_summary();
+                        if !report.is_valid() {
+                            std::process::exit(1);
+                        }
+                    }
+                    Err(e) => {
+                        error!("Validation failed: {}", e);
+                        std::process::exit(1);
+                    }
+                }
+                return;
+            }
+            Commands::ExportTavern {
+                output_dir,
+                personality_types,
+                include_lorebook,
+            } => {
+                use builder::tavern_exporter::TavernExportConfig;
+
+                let output_dir = config.resolve_path(&output_dir.to_string_lossy());
+
+                let type_filter = personality_types.as_ref().map(|s| {
+                    s.split(',')
+                        .filter_map(|t| t.trim().parse::<u8>().ok())
+                        .collect::<Vec<_>>()
+                });
+
+                let tavern_config = TavernExportConfig {
+                    data_dir: config.data_dir.clone(),
+                    output_dir,
+                    personality_types: type_filter,
+                    include_lorebook: *include_lorebook,
+                };
+
+                info!("Exporting SillyTavern character cards...");
+                if let Err(e) = builder::tavern_exporter::export_tavern_cards(&tavern_config) {
+                    error!("Tavern export failed: {}", e);
+                    std::process::exit(1);
+                }
+
+                info!("SillyTavern character card export complete.");
+                return;
+            }
+            Commands::ExportTraining {
+                output_dir,
+                format,
+                strategies,
+                seed,
+                max_per_strategy,
+                personality_types,
+                categories,
+                zones,
+            } => {
+                use builder::training_exporter::{ExportConfig, OutputFormat, Strategy};
+
+                let output_dir = config.resolve_path(&output_dir.to_string_lossy());
+
+                let formats = match format.to_lowercase().as_str() {
+                    "all" => vec![OutputFormat::ChatML, OutputFormat::Alpaca, OutputFormat::ShareGPT],
+                    "chatml" => vec![OutputFormat::ChatML],
+                    "alpaca" => vec![OutputFormat::Alpaca],
+                    "sharegpt" => vec![OutputFormat::ShareGPT],
+                    other => {
+                        error!("Unknown format: '{}'. Use: chatml, alpaca, sharegpt, or all", other);
+                        std::process::exit(1);
+                    }
+                };
+
+                let strats = match strategies.to_lowercase().as_str() {
+                    "all" => Strategy::all().to_vec(),
+                    other => {
+                        let mut result = Vec::new();
+                        for s in other.split(',') {
+                            match Strategy::from_str(s.trim()) {
+                                Some(strat) => result.push(strat),
+                                None => {
+                                    error!("Unknown strategy: '{}'. Use: phrases, crossover, lore, multiturn, or all", s.trim());
+                                    std::process::exit(1);
+                                }
+                            }
+                        }
+                        result
+                    }
+                };
+
+                let type_filter = personality_types.as_ref().map(|s| {
+                    s.split(',')
+                        .filter_map(|t| t.trim().parse::<u8>().ok())
+                        .collect::<Vec<_>>()
+                });
+
+                let cat_filter = categories.as_ref().map(|s| {
+                    s.split(',')
+                        .map(|c| c.trim().to_string())
+                        .collect::<Vec<_>>()
+                });
+
+                let zone_filter = zones.as_ref().map(|s| {
+                    s.split(',')
+                        .map(|z| z.trim().to_string())
+                        .collect::<Vec<_>>()
+                });
+
+                let export_config = ExportConfig {
+                    data_dir: config.data_dir.clone(),
+                    output_dir,
+                    formats,
+                    strategies: strats,
+                    seed: *seed,
+                    max_per_strategy: *max_per_strategy,
+                    personality_types: type_filter,
+                    categories: cat_filter,
+                    zones: zone_filter,
+                };
+
+                info!("Exporting training data...");
+                if let Err(e) = builder::training_exporter::export_training(&export_config) {
+                    error!("Training export failed: {}", e);
+                    std::process::exit(1);
+                }
+
+                info!("Training data export complete.");
+                return;
+            }
+            Commands::FineTune {
+                output_dir,
+                backend,
+                base_model,
+                lora_rank,
+                epochs,
+                learning_rate,
+                seed,
+            } => {
+                use builder::training_exporter::{FineTuneBackend, FineTuneConfig};
+
+                let output_dir = config.resolve_path(&output_dir.to_string_lossy());
+
+                let backend = match backend.to_lowercase().as_str() {
+                    "config-only" => FineTuneBackend::ConfigOnly,
+                    "unsloth" => FineTuneBackend::Unsloth,
+                    "axolotl" => FineTuneBackend::Axolotl,
+                    other => {
+                        error!("Unknown backend: '{}'. Use: config-only, unsloth, or axolotl", other);
+                        std::process::exit(1);
+                    }
+                };
+
+                let ft_config = FineTuneConfig {
+                    data_dir: config.data_dir.clone(),
+                    output_dir,
+                    backend,
+                    base_model: base_model.clone(),
+                    lora_rank: *lora_rank,
+                    epochs: *epochs,
+                    learning_rate: *learning_rate,
+                    seed: *seed,
+                };
+
+                info!("Running fine-tune pipeline...");
+                if let Err(e) = builder::training_exporter::fine_tune(&ft_config) {
+                    error!("Fine-tune failed: {}", e);
+                    std::process::exit(1);
+                }
+
+                info!("Fine-tune pipeline complete.");
+                return;
+            }
         }
     }
 
@@ -584,9 +952,15 @@ async fn main() {
 
     let llm_router = load_llm_router(&config);
 
+    // Load GEPA grounding data for hallucination prevention
+    let static_grounding = llm::grounding::StaticGrounding::load(
+        &config.resolve_path("grounding.json"),
+    );
+
     let app_state = state::AppState::new(
         config, embedder, lore, responses, memory, sona,
         personality_store, vector_personalities, llm_router,
+        static_grounding,
     );
 
     // Start SONA background tick task

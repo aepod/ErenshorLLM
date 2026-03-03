@@ -64,11 +64,31 @@ namespace ErenshorLLMDialog.Sidecar
         }
 
         /// <summary>
+        /// Restarts shimmy: kills the current process and starts a new one.
+        /// </summary>
+        public void Restart()
+        {
+            _log.LogInfo("[ShimmyManager] Restart requested.");
+            _shutdownRequested = false;
+
+            if (_process != null && !_process.HasExited)
+            {
+                _log.LogInfo("[ShimmyManager] Killing current shimmy process...");
+                try { _process.Kill(); } catch { }
+            }
+
+            _process = null;
+            Start();
+        }
+
+        /// <summary>
         /// Starts the shimmy inference server.
         /// Shimmy auto-discovers GGUF models from ./models/ relative to its CWD.
         /// </summary>
         public void Start()
         {
+            _shutdownRequested = false;
+
             if (IsRunning)
             {
                 _log.LogInfo("[ShimmyManager] Shimmy is already running.");
@@ -118,6 +138,9 @@ namespace ErenshorLLMDialog.Sidecar
                     _log.LogError("[ShimmyManager] Failed to start shimmy process.");
                     return;
                 }
+
+                // Ensure shimmy is killed if the game crashes or is force-closed
+                ChildProcessJob.AssignProcess(_process);
 
                 _process.ErrorDataReceived += OnStderrData;
                 _process.BeginErrorReadLine();
@@ -187,7 +210,9 @@ namespace ErenshorLLMDialog.Sidecar
         }
 
         /// <summary>
-        /// Graceful shutdown: kills the shimmy process.
+        /// Graceful shutdown: kills the shimmy process immediately.
+        /// Called from OnApplicationQuit where Unity may terminate us at any moment,
+        /// so we don't wait -- just kill.
         /// </summary>
         public void Stop()
         {
@@ -201,37 +226,30 @@ namespace ErenshorLLMDialog.Sidecar
                 return;
             }
 
-            _log.LogInfo("[ShimmyManager] Stopping shimmy...");
+            _log.LogInfo("[ShimmyManager] Killing shimmy...");
 
             try
             {
                 if (!_process.HasExited)
                 {
-                    bool exited = _process.WaitForExit(2000);
-                    if (!exited)
-                    {
-                        _process.Kill();
-                        _log.LogInfo("[ShimmyManager] Shimmy process killed.");
-                    }
-                    else
-                    {
-                        _log.LogInfo("[ShimmyManager] Shimmy exited gracefully.");
-                    }
+                    _process.Kill();
+                    _process.WaitForExit(1000);
+                    _log.LogInfo("[ShimmyManager] Shimmy process killed.");
                 }
             }
             catch (Exception e)
             {
                 _log.LogWarning("[ShimmyManager] Error stopping shimmy: " + e.Message);
-                try { _process?.Kill(); } catch { }
             }
+
+            _process = null;
         }
 
         private void OnStderrData(object sender, DataReceivedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(e.Data))
-            {
-                _log.LogInfo("[Shimmy] " + e.Data);
-            }
+            // Shimmy stderr is llama.cpp internal output (layer info, graph reserves, etc.)
+            // which is extremely verbose and not useful for mod debugging.
+            // Always suppressed -- stderr is still consumed to prevent pipe deadlocks.
         }
     }
 }

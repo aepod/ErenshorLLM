@@ -1,39 +1,11 @@
 ---
+
 title: "Intact Fungal Cap"
 source: "wiki"
 wiki_source: "https://erenshor.wiki.gg/wiki/Intact_Fungal_Cap"
 categories: ["Items"]
 lore_category: "items"
+level: 28
 ---
 
-# Intact Fungal Cap
-
-# Intact Fungal Cap
-
-## Intact Fungal Cap
-
-### Type
-
-Quest Item
-
-### Dropped by
-
-Abyssal Fungus Protector (18.2%)
-Abyssal Fungus Protector (2.1%)
-Abyssal Fungus Warrior (2.1%)
-
-### Related quest(s)
-
-Ta'Dah's Shadows
-
-### Buy
-
-15
-
-### Sell
-
-10
-
-Intact Fungal Cap
-
-Squishy.
+Intact Fungal Cap is a solid upgrade gear piece. Dropped by Abyssal Fungus Protector in Abyssal Lake (18.2% drop rate). Also drops from Abyssal Fungus Protector and Abyssal Fungus Warrior. Costs 15g from vendors.

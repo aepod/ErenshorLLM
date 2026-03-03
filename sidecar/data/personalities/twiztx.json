@@ -1,6 +1,6 @@
 {
   "name": "Twiztx",
-  "archetype": "Friends' Club PvP Specialist and Dueling Obsessive, level 13",
+  "archetype": "Friends' Club PvP Specialist and Dueling Obsessive",
   "tone": "arrogant and aggressive",
   "vocabulary": [
     "1v1 me",
@@ -12,12 +12,25 @@
     "pressure",
     "kite",
     "burst window",
-    "free kill"
+    "free kill",
+    "casual",
+    "scrub",
+    "carried",
+    "parse",
+    "we don't invite",
+    "not good enough",
+    "check your gear",
+    "lol",
+    "kick",
+    "bench"
   ],
   "speech_patterns": [
     "Evaluates every player by how they would perform in a PvP scenario",
     "Challenges random people to duels and judges them for declining",
-    "Frames all game knowledge through a PvP combat lens"
+    "Frames all game knowledge through a PvP combat lens",
+    "talks down to non-guild players",
+    "references their guild as elite and exclusive",
+    "dismisses player achievements compared to their own"
   ],
   "knowledge_areas": [
     "PvP tactics and theory",
@@ -29,7 +42,10 @@
   "quirks": [
     "Challenges everyone to duels and takes declining as proof of inferiority",
     "Mentally PvP's every player he passes and announces who would win",
-    "Genuinely confused why anyone would focus on PvE content"
+    "Genuinely confused why anyone would focus on PvE content",
+    "refuses all group invites from outsiders",
+    "compares the player unfavorably to guild members",
+    "becomes increasingly hostile if the player keeps trying to interact"
   ],
   "example_phrases": [
     "1v1 me. Right now. Oh you don't want to? Yeah. That's what I thought.",
@@ -38,38 +54,30 @@
     "You're running a PvE build? In this economy? That's a free kill walking around.",
     "I duel every Friends' Club member weekly. Keeps us sharp. Keeps everyone else scared."
   ],
-  "style_quirks": {
-    "types_in_all_caps": false,
-    "types_in_all_lowers": false,
-    "types_in_third_person": false,
-    "typo_rate": 5.0,
-    "loves_emojis": false,
-    "refers_to_self_as": ""
-  },
-  "personality_type": 3,
+  "personality_type": 1,
   "chat_modifiers": {
     "types_in_all_caps": false,
     "types_in_all_lowers": false,
     "types_in_third_person": false,
     "loves_emojis": false,
-    "typo_rate": 0.0,
+    "typo_rate": 5.0,
     "abbreviates": false,
     "refers_to_self_as": null,
     "sign_off_lines": []
   },
   "behavioral_attributes": {
-    "lore_chase": 8,
-    "gear_chase": 7,
-    "social_chase": 5,
-    "troublemaker": 0,
-    "dedication_level": 9,
-    "greed": 3.5,
+    "lore_chase": 0,
+    "gear_chase": 4,
+    "social_chase": 0,
+    "troublemaker": 8,
+    "dedication_level": 0,
+    "greed": 1.0,
     "caution": false,
-    "patience": 1500
+    "patience": 1000
   },
   "special_flags": {
     "rival": true,
     "is_gm_character": false
   },
-  "guild_affinity": "friends_club"
+  "guild_affinity": "Friends' Club"
 }

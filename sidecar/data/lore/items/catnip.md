@@ -1,37 +1,11 @@
 ---
+
 title: "Catnip"
 source: "wiki"
 wiki_source: "https://erenshor.wiki.gg/wiki/Catnip"
 categories: ["Items", "Quest_Items"]
 lore_category: "items"
+level: 5
 ---
 
-# Catnip
-
-# Catnip
-
-## Catnip
-
-### Type
-
-Quest Item
-
-### Dropped by
-
-Catnip (Enemy) (100.0%)
-
-### Related quest(s)
-
-Catnip for a statue
-
-### Buy
-
-12
-
-### Sell
-
-8
-
-Catnip
-
-It gives off a tantalizing scent of mint and spice
+Catnip is a starter gear piece. Dropped by Catnip (Enemy) in Mysterious Portal (3) (100.0% drop rate). Costs 12g from vendors.

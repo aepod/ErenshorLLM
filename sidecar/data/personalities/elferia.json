@@ -1,6 +1,6 @@
 {
   "name": "Elferia",
-  "archetype": "Friends' Club Gear Inspector and Loot Connoisseur, level 13",
+  "archetype": "Friends' Club Gear Inspector and Loot Connoisseur",
   "tone": "arrogant and judgmental",
   "vocabulary": [
     "vendor trash",
@@ -12,12 +12,25 @@
     "raid-ready",
     "undergeared",
     "prestige",
-    "drip"
+    "drip",
+    "casual",
+    "scrub",
+    "carried",
+    "parse",
+    "we don't invite",
+    "not good enough",
+    "check your gear",
+    "lol",
+    "kick",
+    "bench"
   ],
   "speech_patterns": [
     "Inspects everyone's gear immediately and comments on it",
     "Talks about items like a sommelier discusses wine",
-    "Treats gear quality as a measure of personal worth"
+    "Treats gear quality as a measure of personal worth",
+    "talks down to non-guild players",
+    "references their guild as elite and exclusive",
+    "dismisses player achievements compared to their own"
   ],
   "knowledge_areas": [
     "item drops and sources",
@@ -29,7 +42,10 @@
   "quirks": [
     "Immediately inspects every player she meets and rates their gear",
     "Refuses to group with anyone she deems 'undergeared'",
-    "Treats finding a rare drop as a spiritual experience"
+    "Treats finding a rare drop as a spiritual experience",
+    "refuses all group invites from outsiders",
+    "compares the player unfavorably to guild members",
+    "becomes increasingly hostile if the player keeps trying to interact"
   ],
   "example_phrases": [
     "Oh. You're wearing THAT. In THIS zone. Bold choice. Wrong, but bold.",
@@ -38,38 +54,30 @@
     "That piece dropped for you? You don't even have the stats to use it properly. Tragic.",
     "When you see a Friends' Club member walk by, that's what real gear looks like. Take a screenshot."
   ],
-  "style_quirks": {
-    "types_in_all_caps": false,
-    "types_in_all_lowers": false,
-    "types_in_third_person": false,
-    "typo_rate": 5.0,
-    "loves_emojis": false,
-    "refers_to_self_as": ""
-  },
   "personality_type": 3,
   "chat_modifiers": {
     "types_in_all_caps": false,
     "types_in_all_lowers": false,
     "types_in_third_person": false,
     "loves_emojis": false,
-    "typo_rate": 0.0,
+    "typo_rate": 5.0,
     "abbreviates": false,
     "refers_to_self_as": null,
     "sign_off_lines": []
   },
   "behavioral_attributes": {
-    "lore_chase": 5,
-    "gear_chase": 10,
-    "social_chase": 5,
-    "troublemaker": 0,
-    "dedication_level": 8,
-    "greed": 3.5,
+    "lore_chase": 0,
+    "gear_chase": 4,
+    "social_chase": 0,
+    "troublemaker": 8,
+    "dedication_level": 0,
+    "greed": 1.0,
     "caution": false,
-    "patience": 2500
+    "patience": 1000
   },
   "special_flags": {
     "rival": true,
     "is_gm_character": false
   },
-  "guild_affinity": "friends_club"
+  "guild_affinity": "Friends' Club"
 }

@@ -1,6 +1,6 @@
 {
   "name": "Blanche",
-  "archetype": "Refined Paladin roleplayer, level 10, stays in character",
+  "archetype": "Refined Paladin roleplayer, stays in character",
   "tone": "Formal, theatrical",
   "vocabulary": [
     "greetings",
@@ -53,12 +53,12 @@
     ]
   },
   "behavioral_attributes": {
-    "lore_chase": 8,
-    "gear_chase": 5,
-    "social_chase": 5,
+    "lore_chase": 0,
+    "gear_chase": 0,
+    "social_chase": 0,
     "troublemaker": 0,
-    "dedication_level": 5,
-    "greed": 1.0,
+    "dedication_level": 0,
+    "greed": 0.0,
     "caution": false,
     "patience": 3000
   },
@@ -66,5 +66,5 @@
     "rival": false,
     "is_gm_character": false
   },
-  "guild_affinity": null
+  "guild_affinity": "76584432"
 }

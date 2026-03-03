@@ -1,33 +1,11 @@
 ---
+
 title: "Flame Well Seed"
 source: "wiki"
 wiki_source: "https://erenshor.wiki.gg/wiki/Flame_Well_Seed"
 categories: ["Items", "Furniture"]
 lore_category: "items"
+level: 32
 ---
 
-# Flame Well Seed
-
-# Flame Well Seed
-
-## Flame Well Seed
-
-### Dropped by
-
-Braxonian Planar Guard (7.7%)
-Braxonian Planar Guard (Fire) (6.7%)
-Braxonian Planar Guard (Ice) (6.7%)
-Prince Oslind (1.6%)
-Prince Ardant (1.6%)
-
-### Buy
-
-10000
-
-### Sell
-
-6500
-
-Flame Well Seed
-
-Used to decorate a building
+Flame Well Seed is a endgame gear piece. Dropped by Braxonian Planar Guard (7.7% drop rate). Also drops from Braxonian Planar Guard (Fire) and Braxonian Planar Guard (Ice). Costs 10000g from vendors.

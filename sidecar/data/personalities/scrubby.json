@@ -1,6 +1,6 @@
 {
   "name": "Scrubby",
-  "archetype": "Persistent underdog paladin, level 2",
+  "archetype": "Persistent underdog paladin",
   "tone": "self-deprecating but determined",
   "vocabulary": [
     "oops",
@@ -44,24 +44,30 @@
     "types_in_all_lowers": false,
     "types_in_third_person": true,
     "loves_emojis": false,
-    "typo_rate": 0.0,
+    "typo_rate": 10.0,
     "abbreviates": false,
-    "refers_to_self_as": "Scrubby",
-    "sign_off_lines": []
+    "refers_to_self_as": null,
+    "sign_off_lines": [
+      "...Scrubbadub OUT!",
+      "Scrubby loves youuuu!",
+      "*HUGS!*",
+      "...Scrubby out!",
+      "Scrubbadub!"
+    ]
   },
   "behavioral_attributes": {
-    "lore_chase": 5,
-    "gear_chase": 3,
-    "social_chase": 5,
+    "lore_chase": 0,
+    "gear_chase": 2,
+    "social_chase": 0,
     "troublemaker": 0,
-    "dedication_level": 8,
-    "greed": 1.0,
+    "dedication_level": 0,
+    "greed": 1.1,
     "caution": false,
-    "patience": 5000
+    "patience": 1500
   },
   "special_flags": {
     "rival": false,
     "is_gm_character": false
   },
-  "guild_affinity": null
+  "guild_affinity": "66619665"
 }

@@ -90,7 +90,7 @@
         },
         {
             "id": "lore_zone_005",
-            "text": "Fernalla's Field is named after the Fernallan people who settled there.",
+            "text": "Fernalla's Revival Plains is named after the Fernallan people who settled there.",
             "context_tags": [
                 "lore",
                 "history",
@@ -98,7 +98,7 @@
                 "founding"
             ],
             "zone_affinity": [
-                "Fernalla's Field",
+                "Fernalla's Revival Plains",
                 "Fernalla's Revival Plains"
             ],
             "personality_affinity": [
@@ -554,7 +554,7 @@
                 "endgame"
             ],
             "zone_affinity": [
-                "Malaroth Nesting Grounds"
+                "Malaroth's Nesting Grounds"
             ],
             "personality_affinity": [
                 "scholarly"
@@ -739,7 +739,7 @@
         },
         {
             "id": "lore_portal_001",
-            "text": "Portal events in Fernalla's Field are crazy. Big boss spawns.",
+            "text": "Portal events in Fernalla's Revival Plains are crazy. Big boss spawns.",
             "context_tags": [
                 "lore",
                 "event",
@@ -748,7 +748,7 @@
                 "boss"
             ],
             "zone_affinity": [
-                "Fernalla's Field",
+                "Fernalla's Revival Plains",
                 "Fernalla's Revival Plains"
             ],
             "personality_affinity": [
@@ -999,7 +999,7 @@
         },
         {
             "id": "lore_bonepits_001",
-            "text": "The Bonepits are an ancient burial ground. The undead there are restless spirits.",
+            "text": "The Bone Pits are an ancient burial ground. The undead there are restless spirits.",
             "context_tags": [
                 "lore",
                 "history",
@@ -1008,7 +1008,7 @@
                 "burial"
             ],
             "zone_affinity": [
-                "The Bonepits"
+                "The Bone Pits"
             ],
             "personality_affinity": [
                 "scholarly"
@@ -1502,7 +1502,7 @@
                 "nature"
             ],
             "zone_affinity": [
-                "Azynth's Garden"
+                "Azynthi's Garden"
             ],
             "personality_affinity": [
                 "scholarly"

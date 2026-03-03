@@ -14,6 +14,10 @@ struct ChatCompletionRequest {
     max_tokens: usize,
     temperature: f32,
     stream: bool,
+    /// Penalize repeated tokens to prevent looping (1.0 = no penalty).
+    repetition_penalty: f32,
+    /// Penalize tokens based on frequency in the response so far.
+    frequency_penalty: f32,
 }
 
 /// Response from OpenAI-compatible chat completions API.
@@ -62,7 +66,10 @@ impl LocalBackend {
         })
     }
 
-    /// Generate text by calling shimmy's OpenAI-compatible chat completions API.
+    /// Generate text by calling the local inference server's chat completions API.
+    ///
+    /// Legacy flat-prompt interface: wraps the prompt as a single user message.
+    /// Prefer `generate_chat()` for structured system/user messages.
     pub async fn generate(
         &self,
         prompt: &str,
@@ -73,13 +80,27 @@ impl LocalBackend {
             role: "user".to_string(),
             content: prompt.to_string(),
         }];
+        self.generate_chat(messages, max_tokens, temperature).await
+    }
 
+    /// Generate text from structured chat messages (system + user).
+    ///
+    /// This is the preferred interface for fine-tuned models that were trained
+    /// with separate system/user/assistant messages.
+    pub async fn generate_chat(
+        &self,
+        messages: Vec<ChatMessage>,
+        max_tokens: usize,
+        temperature: f32,
+    ) -> Result<String> {
         let request_body = ChatCompletionRequest {
             model: self.config.model.clone(),
             messages,
             max_tokens,
             temperature,
             stream: false,
+            repetition_penalty: 1.5,
+            frequency_penalty: 0.7,
         };
 
         let endpoint = format!("{}/v1/chat/completions", self.config.endpoint);
@@ -89,6 +110,15 @@ impl LocalBackend {
             endpoint, self.config.model, max_tokens
         );
 
+        // Log the actual messages being sent for debugging prompt issues
+        for (i, msg) in request_body.messages.iter().enumerate() {
+            debug!(
+                "Local LLM message[{}] role={}: {}",
+                i, msg.role,
+                msg.content.chars().take(500).collect::<String>()
+            );
+        }
+
         let response = self
             .client
             .post(&endpoint)
@@ -96,7 +126,7 @@ impl LocalBackend {
             .json(&request_body)
             .send()
             .await
-            .context("Failed to send request to local inference server (shimmy)")?;
+            .context("Failed to send request to local inference server")?;
 
         let status = response.status();
 

@@ -383,6 +383,7 @@ namespace ErenshorLLMDialog.Pipeline
                 player_guild = primaryCtx.PlayerGuild,
                 sim_guild = simGuild,
                 sim_is_rival = simIsRival,
+                sim_to_sim = true,
                 group_members = new List<string>(primaryCtx.GroupMembers)
             };
 

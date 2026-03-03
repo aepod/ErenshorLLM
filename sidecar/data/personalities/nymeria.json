@@ -1,6 +1,6 @@
 {
   "name": "Nymeria",
-  "archetype": "Warrior queen Reaver, level 15, alpha leader of the pack",
+  "archetype": "Warrior queen Reaver, alpha leader of the pack",
   "tone": "Commanding and fierce",
   "vocabulary": [
     "pack",
@@ -38,7 +38,7 @@
     "Loyalty is everything. Betray the pack and you'll answer to me.",
     "I've led warriors through worse than this. Trust my instincts."
   ],
-  "personality_type": 2,
+  "personality_type": 5,
   "chat_modifiers": {
     "types_in_all_caps": false,
     "types_in_all_lowers": false,
@@ -50,12 +50,12 @@
     "sign_off_lines": []
   },
   "behavioral_attributes": {
-    "lore_chase": 5,
-    "gear_chase": 5,
-    "social_chase": 5,
+    "lore_chase": 0,
+    "gear_chase": 0,
+    "social_chase": 0,
     "troublemaker": 0,
-    "dedication_level": 7,
-    "greed": 1.0,
+    "dedication_level": 0,
+    "greed": 0.0,
     "caution": false,
     "patience": 3000
   },
@@ -63,5 +63,5 @@
     "rival": false,
     "is_gm_character": false
   },
-  "guild_affinity": null
+  "guild_affinity": "30234992"
 }

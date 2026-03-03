@@ -11,6 +11,8 @@
 use crate::error::{AppError, AppResult};
 use crate::intelligence::enricher;
 use crate::intelligence::ranker::{self, RankWeights};
+use crate::llm::grounding::GroundingContext;
+use crate::llm::postprocess;
 use crate::llm::prompt::{LoreContext, MemoryContext, PromptBuilder};
 use crate::llm::router::LlmResult;
 use crate::state::AppState;
@@ -87,6 +89,11 @@ pub struct RespondRequest {
     /// Re-ranking weight override: relationship level.
     #[serde(default)]
     pub w_relationship: Option<f32>,
+    /// Whether this is sim-to-sim dialog (not player-initiated).
+    /// When true, paraphrase probability is boosted to make ambient chatter
+    /// feel more varied. The C# mod sets this for SimPlayer autonomous chat.
+    #[serde(default)]
+    pub sim_to_sim: bool,
 }
 
 fn default_relationship() -> f32 {
@@ -209,10 +216,13 @@ async fn handle_respond(
     let rank_ctx = ranker::RankContext {
         channel: request.channel.clone(),
         zone: request.zone.clone(),
-        personality: personality_traits,
+        personality: personality_traits.clone(),
         relationship: request.relationship,
+        sim_name: request.sim_name.clone(),
     };
-    let ranked = ranker::rerank(candidates, &rank_ctx, &weights);
+    let ranked = ranker::rerank_with_recency(
+        candidates, &rank_ctx, &weights, Some(&state.recency_tracker),
+    );
     let rerank_ms = rerank_start.elapsed().as_millis() as u64;
 
     // Step 4: Lore search for context enrichment
@@ -295,17 +305,35 @@ async fn handle_respond(
         fallback_text
     };
 
+    // Record the selected template for recency tracking (prevents repetition)
+    if template_id != "hardcoded_fallback" {
+        state.recency_tracker.record(&request.sim_name, &template_id);
+    }
+
     // Extract lore context snippets
     let lore_context = enricher::extract_lore_context(&lore_results, 2);
 
-    // Step 7: LLM enhancement (confidence-gated)
+    // Step 7: LLM enhancement -- full generation, template paraphrase, or verbatim
+    //
+    // Three paths:
+    //   A) Low confidence  → full LLM generation (personality + lore + memory)
+    //   B) High confidence → maybe paraphrase template through LLM for variety
+    //   C) Fast path       → use template text verbatim
+    //
+    // Path B triggers when:
+    //   - Template was recently used by this sim → paraphrase_recency_chance (default 80%)
+    //   - Otherwise → paraphrase_chance (default 15%)
+    // GEPA validates the paraphrased output; falls back to original on failure.
     let llm_start = Instant::now();
     let llm_config = &state.config.llm;
     let (response_text, source, llm_fallback_reason) =
         if llm_config.enabled && confidence < llm_config.enhance_threshold {
+            // Path A: Low confidence → full LLM generation
             if let Some(ref router) = state.llm_router {
-                // Build LLM prompt with personality + lore + memory context
-                let personality = state.personality_store.get(&request.sim_name);
+                let personality = state.personality_store.get_or_generate(
+                    &request.sim_name,
+                    &personality_traits,
+                );
                 let lore_ctx: Vec<LoreContext> = lore_results
                     .iter()
                     .map(|r| LoreContext {
@@ -319,19 +347,35 @@ async fn handle_respond(
                     })
                     .collect();
 
-                // Token budget for prompt assembly (shimmy/cloud handle actual context window)
-                let context_budget = 2048;
-                let prompt = PromptBuilder::build(
-                    personality,
-                    &lore_ctx,
-                    &memory_ctx,
-                    &request,
-                    context_budget,
-                );
+                let grounding_ctx = state.static_grounding.as_ref().map(|sg| {
+                    GroundingContext::from_search_results(&lore_ctx, &request, sg)
+                });
 
-                let result = router
-                    .generate(&prompt, llm_config.max_tokens, llm_config.temperature)
-                    .await;
+                let result = if matches!(state.config.llm.mode, crate::config::LlmMode::Cloud) {
+                    let context_budget = 2048;
+                    let prompt = PromptBuilder::build(
+                        &personality,
+                        &lore_ctx,
+                        &memory_ctx,
+                        &request,
+                        context_budget,
+                        grounding_ctx.as_ref(),
+                    );
+                    router
+                        .generate(&prompt, llm_config.max_tokens, llm_config.temperature)
+                        .await
+                } else {
+                    let messages = PromptBuilder::build_messages(
+                        &personality,
+                        &lore_ctx,
+                        &memory_ctx,
+                        &request,
+                        grounding_ctx.as_ref(),
+                    );
+                    router
+                        .generate_chat(messages, llm_config.max_tokens, llm_config.temperature)
+                        .await
+                };
 
                 match result {
                     LlmResult::Success {
@@ -343,7 +387,31 @@ async fn handle_respond(
                             "LLM enhanced response for '{}' ({}ms, source={})",
                             request.sim_name, latency_ms, source
                         );
-                        (text, source, None)
+
+                        let cleaned = postprocess::clean(&text);
+                        let validated = if let Some(ref gc) = grounding_ctx {
+                            postprocess::validate_entities_full(
+                                &cleaned,
+                                gc,
+                                state.static_grounding.as_ref(),
+                            )
+                        } else {
+                            cleaned
+                        };
+
+                        if let Some(ref sona) = state.sona {
+                            if let Some(ref emb) = state.embedder {
+                                if let Ok(llm_vec) = emb.embed_async(validated.clone()).await {
+                                    sona.record_llm_trajectory(
+                                        &query_embedding,
+                                        &llm_vec,
+                                        &state.responses,
+                                    );
+                                }
+                            }
+                        }
+
+                        (validated, source, None)
                     }
                     LlmResult::Fallback { reason } => {
                         debug!("LLM fallback: {}", reason);
@@ -357,8 +425,118 @@ async fn handle_respond(
                     Some("LLM router not initialized".to_string()),
                 )
             }
+        } else if llm_config.enabled && confidence > 0.0 {
+            // Path B: High confidence template → maybe paraphrase for variety
+            //
+            // Determine paraphrase probability based on context:
+            //   sim-to-sim ambient chatter → 90% (variety for overheard dialog)
+            //   recency-penalized template → 80% (avoid exact repetition)
+            //   normal player-to-sim      → 15% (occasional variety)
+            let is_recency_penalized =
+                state.recency_tracker.is_recent(&request.sim_name, &template_id);
+            let paraphrase_prob = if request.sim_to_sim {
+                llm_config.paraphrase_sim_to_sim_chance
+            } else if is_recency_penalized {
+                llm_config.paraphrase_recency_chance
+            } else {
+                llm_config.paraphrase_chance
+            };
+
+            if rand::random::<f32>() < paraphrase_prob {
+                if let Some(ref router) = state.llm_router {
+                    let personality = state.personality_store.get_or_generate(
+                        &request.sim_name,
+                        &personality_traits,
+                    );
+                    // Build GEPA grounding from lore results for entity validation
+                    let lore_ctx: Vec<LoreContext> = lore_results
+                        .iter()
+                        .map(|r| LoreContext {
+                            text: r.text.clone(),
+                        })
+                        .collect();
+                    let grounding_ctx = state.static_grounding.as_ref().map(|sg| {
+                        GroundingContext::from_search_results(&lore_ctx, &request, sg)
+                    });
+
+                    // Lightweight paraphrase prompt: personality voice + template text
+                    let result = if matches!(state.config.llm.mode, crate::config::LlmMode::Cloud)
+                    {
+                        let prompt = PromptBuilder::build_paraphrase(
+                            &personality,
+                            &template_text,
+                            &request,
+                            grounding_ctx.as_ref(),
+                        );
+                        router
+                            .generate(&prompt, llm_config.max_tokens, llm_config.temperature)
+                            .await
+                    } else {
+                        let messages = PromptBuilder::build_paraphrase_messages(
+                            &personality,
+                            &template_text,
+                            &request,
+                            grounding_ctx.as_ref(),
+                        );
+                        router
+                            .generate_chat(messages, llm_config.max_tokens, llm_config.temperature)
+                            .await
+                    };
+
+                    match result {
+                        LlmResult::Success {
+                            text,
+                            source: _,
+                            latency_ms,
+                        } => {
+                            info!(
+                                "Paraphrased template for '{}' ({}ms, recency={})",
+                                request.sim_name, latency_ms, is_recency_penalized
+                            );
+
+                            let cleaned = postprocess::clean(&text);
+                            let validated = if let Some(ref gc) = grounding_ctx {
+                                postprocess::validate_entities_full(
+                                    &cleaned,
+                                    gc,
+                                    state.static_grounding.as_ref(),
+                                )
+                            } else {
+                                cleaned
+                            };
+
+                            // SONA learns from paraphrased output
+                            if let Some(ref sona) = state.sona {
+                                if let Some(ref emb) = state.embedder {
+                                    if let Ok(llm_vec) =
+                                        emb.embed_async(validated.clone()).await
+                                    {
+                                        sona.record_llm_trajectory(
+                                            &query_embedding,
+                                            &llm_vec,
+                                            &state.responses,
+                                        );
+                                    }
+                                }
+                            }
+
+                            (validated, "template+paraphrase".to_string(), None)
+                        }
+                        LlmResult::Fallback { reason } => {
+                            debug!("Paraphrase fallback, using original: {}", reason);
+                            (template_text, template_source, None)
+                        }
+                    }
+                } else {
+                    // No LLM router -- use template verbatim
+                    (template_text, template_source, None)
+                }
+            } else {
+                // Paraphrase roll failed -- use template verbatim
+                (template_text, template_source, None)
+            }
         } else {
-            // Fast path: high confidence template or LLM disabled
+            // Path C: LLM disabled or fallback template → use verbatim
             (template_text, template_source, None)
         };
     let llm_ms = llm_start.elapsed().as_millis() as u64;

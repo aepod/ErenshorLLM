@@ -1,33 +1,11 @@
 ---
+
 title: "Celestial Goop"
 source: "wiki"
 wiki_source: "https://erenshor.wiki.gg/wiki/Celestial_Goop"
 categories: ["Items"]
 lore_category: "items"
+level: 24
 ---
 
-# Celestial Goop
-
-# Celestial Goop
-
-## Celestial Goop
-
-### Type
-
-General
-
-### Dropped by
-
-Celestial Matter (13.4%)
-
-### Buy
-
-9
-
-### Sell
-
-6
-
-Celestial Goop
-
-A building block of existence
+Celestial Goop is a solid upgrade gear piece. Dropped by Celestial Matter in Soluna's Landing (13.4% drop rate). Costs 9g from vendors.

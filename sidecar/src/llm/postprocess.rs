@@ -1,5 +1,7 @@
+use crate::llm::grounding::{GroundingContext, StaticGrounding};
 use regex::Regex;
 use std::sync::LazyLock;
+use tracing::debug;
 
 static MARKDOWN_BOLD: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\*\*(.+?)\*\*").unwrap());
 static MARKDOWN_ITALIC: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\*(.+?)\*").unwrap());
@@ -12,6 +14,23 @@ static INSTRUCTION_LEAK: LazyLock<Regex> = LazyLock::new(|| {
 });
 static MULTI_SPACE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"  +").unwrap());
 static MULTI_NEWLINE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\n{2,}").unwrap());
+/// LLM filler: any clause containing "world of Erenshor" is low-value noise.
+/// Nobody says "in the world of Erenshor" in-world -- it's like saying "on planet Earth."
+/// Handles trailing, mid-sentence, and stacked filler (e.g. "a place where the world of...").
+static WORLD_FILLER: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(
+        r"(?i),?\s*((a place|which is|that is)\s+)?(where\s+)?(in\s+|of\s+)?(the\s+)?world of Erenshor[,.]?\s*"
+    ).unwrap()
+});
+/// Orphaned whitespace before punctuation left after filler strip (e.g. "I'm  ." -> "I'm.")
+static SPACE_BEFORE_PUNCT: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\s+([.!?,])").unwrap());
+/// Degenerate "not a X, not a Y, not a Z, ..." lists. Keep first, strip the rest.
+/// Matches 2+ additional ", not a(n) Word" after an initial "not a(n) Word".
+static NOT_A_LIST: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(r"(?i)(not an? \w+)(,\s*not an? \w+){2,}").unwrap()
+});
+/// Minimum consecutive repetitions before collapsing.
+const MIN_REPETITIONS: usize = 3;
 
 const MAX_RESPONSE_CHARS: usize = 2000;
 
@@ -34,6 +53,29 @@ pub fn clean(raw: &str) -> String {
     text = MULTI_NEWLINE.replace_all(&text, " ").to_string();
     text = MULTI_SPACE.replace_all(&text, " ").to_string();
 
+    // Strip "world of Erenshor" filler -- nobody says this in-world.
+    // Globally replace all occurrences, then clean up orphaned punctuation.
+    let had_filler = WORLD_FILLER.is_match(&text);
+    text = WORLD_FILLER.replace_all(&text, " ").to_string();
+    text = SPACE_BEFORE_PUNCT.replace_all(&text, "$1").to_string();
+    text = text.trim().to_string();
+    // If filler was stripped and text no longer ends with punctuation, add period
+    if had_filler && !text.is_empty() {
+        let last = text.chars().last().unwrap();
+        if last != '.' && last != '!' && last != '?' {
+            text.push('.');
+        }
+    }
+
+    // Collapse degenerate "not a X, not a Y, not a Z" lists to just the first
+    text = NOT_A_LIST.replace_all(&text, "$1").to_string();
+
+    // Collapse LLM repetition (e.g. "2H 2H 2H 2H" -> "2H")
+    text = collapse_repetition(&text);
+
+    // Collapse sentence-level repetition (long repeated clauses that escape word-level detection)
+    text = collapse_sentence_repetition(&text);
+
     // Trim
     text = text.trim().to_string();
 
@@ -47,6 +89,152 @@ pub fn clean(raw: &str) -> String {
     }
 
     text
+}
+
+/// Collapse repeated words/phrases that small LLMs produce.
+/// "2H 2H 2H 2H 2H 2H" -> "2H"
+/// "the sword the sword the sword" -> "the sword"
+/// Only triggers on 3+ consecutive repetitions to avoid false positives.
+///
+/// Checks phrase lengths from 4 words down to 1 word, so longer repeated
+/// phrases are caught before shorter ones.
+fn collapse_repetition(text: &str) -> String {
+    let words: Vec<&str> = text.split_whitespace().collect();
+    if words.len() < MIN_REPETITIONS {
+        return text.to_string();
+    }
+
+    let mut result_words = words.clone();
+    let mut changed = false;
+
+    // Try phrase lengths shortest first (1 word up to 20 words).
+    // Shortest first ensures "2H 2H 2H 2H" is caught as single-token repeat
+    // before a multi-word pattern like "2H 2H" could claim it.
+    // Extended to 20 words to catch longer parroting loops from small LLMs like
+    // "and you are in the world of the world of Erenshor," (12 words repeating).
+    // Dialog text is short (max ~300 words) so the O(N*P) cost is negligible.
+    for phrase_len in 1..=20 {
+        let mut i = 0;
+        let mut new_words: Vec<&str> = Vec::with_capacity(result_words.len());
+        while i < result_words.len() {
+            // Check if a phrase of `phrase_len` words starting at `i` repeats
+            if i + phrase_len * MIN_REPETITIONS <= result_words.len() {
+                let phrase = &result_words[i..i + phrase_len];
+                let mut reps = 1;
+                let mut j = i + phrase_len;
+                while j + phrase_len <= result_words.len()
+                    && result_words[j..j + phrase_len] == *phrase
+                {
+                    reps += 1;
+                    j += phrase_len;
+                }
+                if reps >= MIN_REPETITIONS {
+                    // Keep one copy of the phrase, skip the rest
+                    new_words.extend_from_slice(phrase);
+                    i = j; // skip past all repetitions
+                    changed = true;
+                    debug!(
+                        "Collapsed {} repetitions of {:?} in LLM output",
+                        reps,
+                        phrase.join(" ")
+                    );
+                    continue;
+                }
+            }
+            new_words.push(result_words[i]);
+            i += 1;
+        }
+        result_words = new_words;
+    }
+
+    if changed {
+        result_words.join(" ")
+    } else {
+        text.to_string()
+    }
+}
+
+/// Collapse sentence-level repetition that escapes word-level detection.
+///
+/// Small LLMs (0.5B-1B) often loop entire clauses or sentences, producing output like:
+///   "Do X for Y. Do X for Y. Do X for Y. Do X for Y."
+/// The word-level `collapse_repetition` (max 8 words) can't catch 20+ word repeated
+/// sentences. This function splits on sentence boundaries and deduplicates.
+fn collapse_sentence_repetition(text: &str) -> String {
+    // First pass: split on sentence boundaries (. ! ?) and dedup full sentences.
+    // Second pass: split remaining long clauses on commas and dedup those.
+    let text = dedup_by_delimiter(text, &['.', '!', '?']);
+    let text = dedup_by_delimiter(&text, &[',']);
+    return text;
+}
+
+/// Split text at the given delimiters and remove consecutive duplicate clauses.
+/// For comma delimiters, only splits if the clause has 6+ words to avoid
+/// breaking short lists like "swords, shields, and axes".
+fn dedup_by_delimiter(text: &str, delimiters: &[char]) -> String {
+    let is_comma = delimiters.contains(&',');
+    let mut sentences: Vec<String> = Vec::new();
+    let mut current = String::new();
+
+    for ch in text.chars() {
+        current.push(ch);
+        if delimiters.contains(&ch) {
+            // For commas, only split if clause is substantial
+            if is_comma && current.split_whitespace().count() < 6 {
+                continue;
+            }
+            let trimmed = current.trim().to_string();
+            if !trimmed.is_empty() {
+                sentences.push(trimmed);
+            }
+            current.clear();
+        }
+    }
+    // Remaining fragment
+    let trailing = current.trim().to_string();
+    if !trailing.is_empty() {
+        sentences.push(trailing);
+    }
+
+    if sentences.len() < 2 {
+        return text.to_string();
+    }
+
+    // Deduplicate consecutive identical sentences
+    let mut deduped: Vec<&String> = Vec::with_capacity(sentences.len());
+    let mut prev: Option<&String> = None;
+    let mut collapsed = false;
+
+    for s in &sentences {
+        let dominated = match prev {
+            Some(p) => {
+                // Exact match or one contains the other (catches minor trailing variations)
+                p == s || s.contains(p.as_str()) || p.contains(s.as_str())
+            }
+            None => false,
+        };
+
+        if dominated {
+            collapsed = true;
+        } else {
+            deduped.push(s);
+        }
+        prev = Some(s);
+    }
+
+    if !collapsed {
+        return text.to_string();
+    }
+
+    let count = sentences.len() - deduped.len();
+    debug!(
+        "Collapsed {} repeated sentences in LLM output ({} -> {})",
+        count,
+        sentences.len(),
+        deduped.len()
+    );
+
+    deduped.iter().map(|s| s.as_str()).collect::<Vec<_>>().join(" ")
 }
 
 /// Minimum length before we attempt sentence-completion trimming.
@@ -105,6 +293,130 @@ fn truncate_at_sentence(text: &str, max_chars: usize) -> String {
     // Hard cut (shouldn't happen with normal text)
     let mut result = text[..max_chars].to_string();
     result.push_str("...");
+    result
+}
+
+/// Regex to find capitalized multi-word sequences that look like entity names.
+/// Matches 2+ capitalized words (e.g. "Crystal Depths", "Abyssal Plate").
+static PROPER_NOUN: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(r"\b([A-Z][a-z]+(?:'s)?(?:\s+(?:of\s+(?:the\s+)?)?[A-Z][a-z]+(?:'s?)?)+)\b").unwrap()
+});
+
+/// Levenshtein distance between two strings.
+fn levenshtein(a: &str, b: &str) -> usize {
+    let a_len = a.len();
+    let b_len = b.len();
+
+    if a_len == 0 { return b_len; }
+    if b_len == 0 { return a_len; }
+
+    let mut prev: Vec<usize> = (0..=b_len).collect();
+    let mut curr = vec![0usize; b_len + 1];
+
+    for (i, ca) in a.chars().enumerate() {
+        curr[0] = i + 1;
+        for (j, cb) in b.chars().enumerate() {
+            let cost = if ca == cb { 0 } else { 1 };
+            curr[j + 1] = (prev[j] + cost)
+                .min(prev[j + 1] + 1)
+                .min(curr[j] + 1);
+        }
+        std::mem::swap(&mut prev, &mut curr);
+    }
+
+    prev[b_len]
+}
+
+/// Validate that proper nouns in the response match known entities from grounding.
+///
+/// This is a lightweight safety net -- GEPA grounding should prevent most
+/// hallucinations. This catches stragglers by:
+/// 1. Extracting capitalized multi-word sequences (potential entity names)
+/// 2. Checking each against the grounding lists
+/// 3. If a close match exists (Levenshtein distance <= 3), replacing it
+/// 4. If no close match, leaving it alone (might be valid common speech)
+///
+/// Returns the (possibly corrected) text.
+pub fn validate_entities(text: &str, grounding: &GroundingContext) -> String {
+    validate_entities_full(text, grounding, None)
+}
+
+/// Validate entities with optional full static grounding for comprehensive checks.
+/// When `static_grounding` is provided, uses the full 2,300+ entity set via HashSet
+/// for O(1) exact-match validation before falling back to Levenshtein correction.
+pub fn validate_entities_full(
+    text: &str,
+    grounding: &GroundingContext,
+    static_grounding: Option<&StaticGrounding>,
+) -> String {
+    let known_names = grounding.all_names();
+    // Build the full name set for fast exact-match lookups
+    let full_names_set = static_grounding.map(|sg| sg.all_names_set());
+
+    if known_names.is_empty() && full_names_set.is_none() {
+        return text.to_string();
+    }
+
+    let mut result = text.to_string();
+    let mut corrections = 0;
+
+    // Find all potential entity names in the text
+    let matches: Vec<(String, usize, usize)> = PROPER_NOUN
+        .find_iter(text)
+        .map(|m| (m.as_str().to_string(), m.start(), m.end()))
+        .collect();
+
+    // Process in reverse order to preserve offsets
+    for (name, start, end) in matches.into_iter().rev() {
+        // Fast path: check full static set first (O(1) HashSet lookup)
+        if let Some(ref set) = full_names_set {
+            if set.contains(name.as_str()) {
+                continue;
+            }
+        }
+
+        // Check per-request grounding context
+        if known_names.iter().any(|&k| k == name) {
+            continue;
+        }
+
+        // Skip common phrases that look like proper nouns but aren't entities
+        let lower = name.to_lowercase();
+        if lower.starts_with("friends' club")
+            || lower.starts_with("sim player")
+            || lower.starts_with("the ")
+        {
+            continue;
+        }
+
+        // Find closest match by Levenshtein distance
+        let mut best_match: Option<(&str, usize)> = None;
+        for &known in &known_names {
+            let dist = levenshtein(&name, known);
+            if dist <= 3 {
+                if best_match.is_none() || dist < best_match.unwrap().1 {
+                    best_match = Some((known, dist));
+                }
+            }
+        }
+
+        if let Some((replacement, dist)) = best_match {
+            if dist > 0 {
+                debug!(
+                    "Entity validation: '{}' -> '{}' (distance: {})",
+                    name, replacement, dist
+                );
+                result.replace_range(start..end, replacement);
+                corrections += 1;
+            }
+        }
+        // If no close match found, leave it alone -- might be valid dialog
+    }
+
+    if corrections > 0 {
+        debug!("Entity validation made {} corrections", corrections);
+    }
+
     result
 }
 
@@ -204,5 +516,168 @@ mod tests {
         let result = clean(raw);
         assert!(result.ends_with('.') || result.ends_with('!') || result.ends_with('?'),
             "Expected sentence-ending punctuation, got: {}", result);
+    }
+
+    #[test]
+    fn test_collapse_repeated_token() {
+        // Classic LLM parrot: single token repeated
+        assert_eq!(clean("2H Weapons like the 2H 2H 2H 2H 2H 2H"), "2H Weapons like the 2H");
+    }
+
+    #[test]
+    fn test_collapse_repeated_phrase() {
+        // Multi-word phrase repeated
+        assert_eq!(
+            clean("Try the sword the sword the sword for combat."),
+            "Try the sword for combat."
+        );
+    }
+
+    #[test]
+    fn test_no_collapse_normal_text() {
+        // Two repetitions shouldn't trigger (threshold is 3+)
+        assert_eq!(clean("go go adventurer"), "go go adventurer");
+    }
+
+    #[test]
+    fn test_collapse_long_phrase_parrot() {
+        // Real case: qwen 0.5b parroting a 5+ word phrase in a loop
+        let input = "What a fascinating piece of gear! It is a great addition to a Arcanist, \
+            or a Reaver, Stormcaller, or a Reaver, Stormcaller, or a Reaver, Stormcaller, \
+            or a Reaver, Stormcaller, or a Reaver, Stormcaller, or a Reaver, Stormcaller.";
+        let result = clean(input);
+        // Should collapse the repeating phrase and not contain 5+ instances
+        let count = result.matches("Reaver, Stormcaller,").count();
+        assert!(count <= 2, "Expected at most 2 occurrences, got {}: {}", count, result);
+    }
+
+    #[test]
+    fn test_levenshtein() {
+        assert_eq!(levenshtein("Port Azure", "Port Azure"), 0);
+        assert_eq!(levenshtein("Port Azur", "Port Azure"), 1);
+        assert_eq!(levenshtein("Port Azyre", "Port Azure"), 1);
+        assert_eq!(levenshtein("", "abc"), 3);
+    }
+
+    #[test]
+    fn test_validate_entities_exact_match() {
+        let ctx = GroundingContext {
+            zones: vec!["Port Azure".to_string(), "Hidden Hills".to_string()],
+            items: vec!["Abyssal Plate".to_string()],
+            npcs: vec![],
+            classes: vec![],
+            quests: vec![],
+            enemies: vec![],
+        };
+        // Exact match should not be changed
+        let text = "I was in Port Azure yesterday.";
+        assert_eq!(validate_entities(text, &ctx), text);
+    }
+
+    #[test]
+    fn test_validate_entities_close_match() {
+        let ctx = GroundingContext {
+            zones: vec!["Port Azure".to_string(), "Hidden Hills".to_string()],
+            items: vec!["Abyssal Plate".to_string()],
+            npcs: vec![],
+            classes: vec![],
+            quests: vec![],
+            enemies: vec![],
+        };
+        // Close misspelling should be corrected
+        let text = "I found the Abyssal Plat in the cave.";
+        let result = validate_entities(text, &ctx);
+        assert!(result.contains("Abyssal Plate"), "Got: {}", result);
+    }
+
+    #[test]
+    fn test_validate_entities_unknown_left_alone() {
+        let ctx = GroundingContext {
+            zones: vec!["Port Azure".to_string()],
+            items: vec![],
+            npcs: vec![],
+            classes: vec![],
+            quests: vec![],
+            enemies: vec![],
+        };
+        // Completely unknown entity should be left alone (distance > 3)
+        let text = "Crystal Depths is beautiful.";
+        assert_eq!(validate_entities(text, &ctx), text);
+    }
+
+    #[test]
+    fn test_collapse_sentence_repetition() {
+        // Real case: qwen 0.5b repeating entire sentences
+        let input = "Terpz, your swords are not just fine, they are your pride. \
+            Do not use them for your own gain, for they are not just for your own use, they are for your own glory. \
+            Do not use them for your own gain, for they are not just for your own use, they are for your own glory. \
+            Do not use them for your own gain, for they are not just for your own use, they are for your own glory. \
+            Do not use them for your own gain, for they are not just for your own use, they are for your own glory.";
+        let result = clean(input);
+        let count = result.matches("Do not use them").count();
+        assert!(count <= 1, "Expected at most 1 occurrence, got {}: {}", count, result);
+    }
+
+    #[test]
+    fn test_collapse_comma_separated_loop() {
+        // Real case: qwen 0.5b comma-separated run-on repetition
+        let input = "how are you, you are in the world of Erenshor, \
+            and you are in the world of the world of Erenshor, \
+            and you are in the world of the world of Erenshor, \
+            and you are in the world of the world of Erenshor.";
+        let result = clean(input);
+        let count = result.matches("world of Erenshor").count();
+        assert!(count <= 2, "Expected at most 2 occurrences, got {}: {}", count, result);
+    }
+
+    #[test]
+    fn test_sentence_dedup_preserves_unique() {
+        // Unique sentences should not be collapsed
+        let input = "Hello adventurer. Welcome to the guild. How can I help you today?";
+        assert_eq!(clean(input), input);
+    }
+
+    #[test]
+    fn test_strip_world_of_erenshor_filler() {
+        // "a place in the world of Erenshor" trailing filler
+        assert_eq!(
+            clean("Violet Smithfield can be found in Port Azure, a place in the world of Erenshor."),
+            "Violet Smithfield can be found in Port Azure."
+        );
+        // "in the world of Erenshor" without prefix
+        assert_eq!(
+            clean("Check the guild hall in the world of Erenshor."),
+            "Check the guild hall."
+        );
+        // "a place where the world of Erenshor" -- stacked filler variant
+        // After stripping both filler phrases, orphan "I'm" gets period appended
+        let stacked = clean("aww, I died. I'm in the world of Erenshor, a place where the world of Erenshor,.");
+        assert!(stacked.starts_with("aww, I died."), "Got: {}", stacked);
+        // Should not contain any "world of Erenshor" remnant
+        assert!(!stacked.contains("world of Erenshor"), "Got: {}", stacked);
+        // Mid-sentence filler
+        assert_eq!(
+            clean("I found the sword, a place in the world of Erenshor, pretty cool."),
+            "I found the sword pretty cool."
+        );
+    }
+
+    #[test]
+    fn test_collapse_not_a_list() {
+        // Long "not a X" lists collapse to just the first
+        assert_eq!(
+            clean("I, Elowen, am not an AI, not an Arcanist, not a Paladin, not a Windblade, not a Druid, not a Stormcaller, not a Reaver."),
+            "I, Elowen, am not an AI."
+        );
+        // Two "not a" is fine (comedic pattern: "I'm a druid not a doctor")
+        assert_eq!(
+            clean("I'm a druid, not a doctor."),
+            "I'm a druid, not a doctor."
+        );
+        // Three triggers the collapse
+        assert_eq!(
+            clean("I'm not a warrior, not a mage, not a thief."),
+            "I'm not a warrior."
+        );
     }
 }
