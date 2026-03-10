@@ -21,6 +21,8 @@ fn build_router(state: Arc<AppState>) -> Router {
         .merge(routes::respond::router())
         // Phase 2d: event paraphrase
         .merge(routes::paraphrase::router())
+        // Phase 3: busybox exec
+        .merge(routes::exec::router())
         .layer(TraceLayer::new_for_http())
         .with_state(state)
 }
