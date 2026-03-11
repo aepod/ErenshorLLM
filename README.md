@@ -6,7 +6,7 @@ LLM-powered NPC dialog mod for [Erenshor](https://store.steampowered.com/app/238
 
 The mod has two components:
 
-1. **ErenshorLLMDialog.dll** -- A BepInEx plugin (C#) that hooks into Erenshor's chat system via Harmony patches, intercepts player-to-SimPlayer conversations, and injects LLM-generated responses back into the game.
+1. **ErenshorLLMDialog.dll** -- A BepInEx plugin (C#) that hooks into Erenshor's chat system via Harmony patches on `UpdateSocialLog.GlobalAddLine`. A unified `ChatInterceptHook` intercepts all chat through a single funnel point, classifies messages by `LogType`, and routes them through sync combat template lookups or async dialog paraphrase.
 
 2. **erenshor-llm** -- A Rust sidecar binary that provides GGUF model inference, embedding generation, and vector-based lore/memory search through an OpenAI-compatible HTTP API on localhost.
 
@@ -25,12 +25,14 @@ Erenshor.exe (Unity)                    erenshor-llm (Rust)
                                        └─────────────────────┘
 ```
 
-## Features (Planned)
+## Features
 
 - **Dynamic NPC Dialog** -- SimPlayers respond with contextually aware, personality-driven text instead of canned responses
 - **RAG-powered Lore** -- Vector search over Erenshor wiki/game data ensures NPCs give accurate lore answers
 - **Per-SimPlayer Personalities** -- JSON personality files give each SimPlayer a unique voice, interests, and backstory
 - **Conversation Memory** -- SimPlayers remember past interactions across play sessions (stored in `.rvf` format via ruvector)
+- **Combat Template System** -- Instant sub-1ms personality-matched variant lookups for 14 combat callout types (pulling, aggro, oom, healing, etc.)
+- **Dynamic Template Learning** -- Cache misses trigger background LLM generation; new templates persist to disk and are available within 60 seconds
 - **Local-first** -- Runs entirely on the player's machine with no cloud dependency (GPU-accelerated via CUDA/Vulkan, or CPU fallback)
 - **OpenAI-compatible API** -- The sidecar exposes standard OpenAI endpoints, allowing fallback to cloud providers (OpenRouter) when local inference isn't available
 

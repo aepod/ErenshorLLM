@@ -196,6 +196,68 @@ When you speak in say, guild, or shout channels, the plugin doesn't just ask one
 
 SimPlayers can also react to each other's messages (**sim-to-sim chaining**). If Scrubby says something in response to you, Blademann might react to Scrubby's message. This is gated by a rate limiter and configurable depth limit to prevent runaway conversation chains.
 
+### Chat Interception Architecture (v0.3.0+)
+
+Starting with v0.3.0, the plugin uses a single unified `ChatInterceptHook` that replaces the previous three-hook system (`AddStringForDisplayPatch`, `LogAddColoredPatch`, `LogAddPlainPatch`). This was made possible by the March 10 game update which introduced `UpdateSocialLog.GlobalAddLine(ChatLogLine)` -- a single funnel point for all chat messages in the game.
+
+The hook patches `GlobalAddLine` and uses the `ChatLogLine.LogType` flags for canonical channel detection, replacing the fragile color-string parsing from earlier versions. The classification pipeline runs in order:
+
+1. **LogType mapping** -- `LogTypeMapper` converts game `LogType` flags to the mod's `ChatChannel` enum
+2. **Message parsing** -- `MessageParser` extracts speaker name, raw text, and metadata from the `ChatLogLine`
+3. **Known sim check** -- `IsKnownSim` determines if the speaker is a SimPlayer (vs. the real player or system)
+4. **Data-only filter** -- `IsDataOnly` skips messages that are pure system/data lines (loot rolls, XP gains)
+5. **Combat callout detection** -- `IsCombatCallout` identifies combat phrases for fast-path handling
+
+Messages take one of two execution paths:
+- **Sync combat template path** (<1ms) -- Combat callouts are matched instantly against `TemplateCache` and re-injected with personality variants. No async work, no sidecar round-trip.
+- **Async dialog paraphrase path** -- All other messages are sent to the sidecar for full pipeline processing (embedding, search, LLM generation).
+
+A re-entry guard prevents infinite loops when re-injected text flows back through `GlobalAddLine`. The hook includes graceful fallback to the legacy three-hook system on pre-March 10 game builds that lack the `GlobalAddLine` method. All exceptions are caught and logged -- the hook never propagates errors to the game engine.
+
+### Combat Template System (v0.3.0+)
+
+The `TemplateCache` provides instant variant lookups for 14 classified combat callout types:
+
+| Type | Example Phrases |
+|------|----------------|
+| `pulling` | "Pulling!", "Inc!" |
+| `aggro` | "I have aggro!", "It's on me!" |
+| `oom` | "OOM!", "No mana!" |
+| `healing` | "Healing you!", "Incoming heal!" |
+| `heal_request` | "Need heal!", "Heal me!" |
+| `retreat` | "Fall back!", "Run!" |
+| `ready_check` | "Ready?", "Ready check!" |
+| `taunting` | "Taunting!", "I'll grab it!" |
+| `targeting` | "Targeting the add!", "Focus fire!" |
+| `casting` | "Casting!", "Channeling!" |
+| `cc_notice` | "CC'd!", "Mezzed!" |
+| `stance` | "Going defensive!", "Switching stance!" |
+| `close_call` | "That was close!", "Barely survived!" |
+| `lfg` | "LFG!", "Looking for group!" |
+
+Templates are selected based on personality match -- each variant is tagged with a **style** (nice, tryhard, mean) and **role** (tank, healer, dps). A tryhard tank who calls "Pulling!" gets something like "Incoming, burn it down!" while a nice healer gets "Pulling carefully, heals are ready!"
+
+**Cache miss handling:** When a combat callout has no matching template variant, the cache queues a background LLM generation request via the sidecar's `/v1/templates/queue` endpoint. The original text is used as-is for the current message while the LLM generates new variants asynchronously. Generated templates persist to disk (`template_store.json`) via atomic write and survive across sessions.
+
+**Personalization:** The `{speaker}` placeholder is expanded to the SimPlayer's name, and `PersonalizeString()` applies character quirks -- caps for characters who type in all caps, typos for clumsy typists, third-person references for characters like Scrubby.
+
+**Zone self-reference filtering:** Templates used in party and guild channels avoid zone-specific language ("here in [place]") since group members may be in different zones. Templates used in shout and say channels allow zone references since all recipients are in the same zone.
+
+**Graceful degradation:** If the sidecar is down or unreachable, the template cache serves whatever it has locally. If it has nothing, the original game text passes through unchanged with zero delay.
+
+**Periodic refresh:** Every 60 seconds, the cache checks the sidecar for newly generated templates and merges them into its in-memory store.
+
+### Template API Endpoints
+
+The sidecar exposes four endpoints for the combat template system:
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/v1/templates/queue` | Queue background template generation for a trigger/style/role combination. Returns `202 Accepted` immediately. |
+| `GET` | `/v1/templates/lookup` | Look up personality-matched template variants for a given trigger type, style, and role. Returns cached results. |
+| `GET` | `/v1/templates/stats` | Template store statistics: total templates, variants per trigger, cache hit rate, generation queue depth. |
+| `POST` | `/v1/templates/import` | Bulk import template packs (JSON array of template objects). Used for distributing community-created template sets. |
+
 ### Dynamic Personality Generation
 
 The mod ships with 160 hand-crafted personality files, but the game can create SimPlayers that don't have one. When the sidecar encounters an unknown sim name, it generates a personality on-the-fly using:
@@ -259,6 +321,7 @@ Advanced settings live in `data/erenshor-llm.toml`. The BepInEx config syncs LLM
 - SONA learning parameters
 - Cloud LLM provider/key (for Hybrid mode)
 - Index file paths
+- Template system settings (`[templates]` section) -- max variants per trigger, dedup threshold, generation queue depth, persist path
 
 ## Customizing Personalities
 

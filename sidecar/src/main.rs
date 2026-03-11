@@ -957,10 +957,59 @@ async fn main() {
         &config.resolve_path("grounding.json"),
     );
 
+    // Create shared shutdown signal for all background tasks
+    let shutdown = Arc::new(tokio::sync::Notify::new());
+
+    // Load dynamic template store if enabled (wrap in Arc<RwLock<>> for sharing with generator)
+    let template_store: Option<Arc<tokio::sync::RwLock<intelligence::template_learning::TemplateStore>>> =
+        if config.templates.enabled {
+            let persist_path = config.resolve_path(&config.templates.persist_path);
+            let store_config = intelligence::template_learning::TemplateStoreConfig {
+                max_variants_per_trigger: config.templates.max_variants_per_trigger,
+                max_total_templates: config.templates.max_total_templates,
+                dedup_threshold: config.templates.dedup_threshold,
+            };
+            let store = intelligence::template_learning::TemplateStore::load(&persist_path, store_config);
+            let (variants, triggers) = store.stats();
+            info!("Dynamic template store enabled: {} triggers, {} variants", triggers, variants);
+            Some(Arc::new(tokio::sync::RwLock::new(store)))
+        } else {
+            info!("Dynamic template store disabled");
+            None
+        };
+
+    // Start template generator if both templates and LLM are enabled
+    let template_generator = if config.templates.enabled && config.llm.enabled {
+        match (&template_store, &llm_router) {
+            (Some(store), Some(router)) => {
+                let persist_path = config.resolve_path(&config.templates.persist_path);
+                let generator = intelligence::template_learning::TemplateGenerator::start(
+                    Arc::clone(router),
+                    embedder.clone(),
+                    Arc::clone(store),
+                    config.templates.clone(),
+                    persist_path,
+                    Arc::clone(&shutdown),
+                );
+                info!(
+                    "Template generator started (queue depth: {})",
+                    config.templates.generation_queue_depth
+                );
+                Some(generator)
+            }
+            _ => {
+                warn!("Template generator not started: LLM router or template store unavailable");
+                None
+            }
+        }
+    } else {
+        None
+    };
+
     let app_state = state::AppState::new(
-        config, embedder, lore, responses, memory, sona,
+        config, Arc::clone(&shutdown), embedder, lore, responses, memory, sona,
         personality_store, vector_personalities, llm_router,
-        static_grounding,
+        static_grounding, template_store, template_generator,
     );
 
     // Start SONA background tick task
@@ -1016,8 +1065,15 @@ async fn main() {
         });
     }
 
-    if let Err(e) = server::serve(app_state).await {
+    if let Err(e) = server::serve(Arc::clone(&app_state)).await {
         error!("Server error: {}", e);
-        std::process::exit(1);
     }
+
+    // Signal shutdown to background tasks (generator, persist loop, SONA)
+    // The server's graceful_shutdown already notifies via app_state.shutdown,
+    // but we signal again to catch any tasks that missed the first notification.
+    shutdown.notify_waiters();
+
+    // Give background tasks a moment to drain and persist
+    tokio::time::sleep(std::time::Duration::from_millis(500)).await;
 }

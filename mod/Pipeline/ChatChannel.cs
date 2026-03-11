@@ -8,6 +8,7 @@ namespace ErenshorLLMDialog.Pipeline
         Party,
         Guild,
         Shout,
-        Hail
+        Hail,
+        Trade
     }
 }

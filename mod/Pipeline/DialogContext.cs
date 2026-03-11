@@ -8,6 +8,13 @@ namespace ErenshorLLMDialog.Pipeline
         public string PlayerMessage { get; set; } = "";
         public ChatChannel Channel { get; set; } = ChatChannel.None;
 
+        /// <summary>
+        /// The game's LogType for this message. Used by ChatOutput to re-inject
+        /// responses with the correct LogType for proper chat tab routing.
+        /// Defaults to None; populated from ChatChannel by CheckInputPatch.
+        /// </summary>
+        public ChatLogLine.LogType LogType { get; set; } = ChatLogLine.LogType.None;
+
         // Target
         public SimPlayerTracking TargetSimTracking { get; set; }
         public SimPlayer TargetSimPlayer { get; set; }

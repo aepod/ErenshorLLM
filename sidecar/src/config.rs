@@ -20,6 +20,8 @@ pub struct AppConfig {
     pub respond: RespondConfig,
     #[serde(default)]
     pub llm: LlmConfig,
+    #[serde(default)]
+    pub templates: TemplateConfig,
 
     /// The resolved data directory (not serialized from TOML)
     #[serde(skip)]
@@ -36,6 +38,7 @@ impl Default for AppConfig {
             sona: SonaConfig::default(),
             respond: RespondConfig::default(),
             llm: LlmConfig::default(),
+            templates: TemplateConfig::default(),
             data_dir: PathBuf::from("."),
         }
     }
@@ -394,6 +397,64 @@ fn default_channel_weight() -> f32 {
 
 fn default_sim_name_weight() -> f32 {
     0.15
+}
+
+// --- Dynamic Template Store Configuration ---
+
+/// Configuration for the dynamic template store (runtime-generated templates).
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct TemplateConfig {
+    /// Enable the dynamic template store.
+    #[serde(default)]
+    pub enabled: bool,
+    /// Maximum variants stored per trigger key.
+    #[serde(default = "default_max_variants_per_trigger")]
+    pub max_variants_per_trigger: usize,
+    /// Maximum total stored variants across all triggers.
+    #[serde(default = "default_max_total_templates")]
+    pub max_total_templates: usize,
+    /// Cosine similarity threshold for deduplication (0.0-1.0).
+    #[serde(default = "default_dedup_threshold")]
+    pub dedup_threshold: f32,
+    /// Maximum pending generation requests.
+    #[serde(default = "default_generation_queue_depth")]
+    pub generation_queue_depth: usize,
+    /// File path for persisting the template store (relative to data_dir).
+    #[serde(default = "default_persist_path")]
+    pub persist_path: String,
+}
+
+impl Default for TemplateConfig {
+    fn default() -> Self {
+        Self {
+            enabled: false,
+            max_variants_per_trigger: default_max_variants_per_trigger(),
+            max_total_templates: default_max_total_templates(),
+            dedup_threshold: default_dedup_threshold(),
+            generation_queue_depth: default_generation_queue_depth(),
+            persist_path: default_persist_path(),
+        }
+    }
+}
+
+fn default_max_variants_per_trigger() -> usize {
+    8
+}
+
+fn default_max_total_templates() -> usize {
+    2000
+}
+
+fn default_dedup_threshold() -> f32 {
+    0.92
+}
+
+fn default_generation_queue_depth() -> usize {
+    10
+}
+
+fn default_persist_path() -> String {
+    "dist/template_store.json".to_string()
 }
 
 // --- Phase 3: LLM Configuration ---

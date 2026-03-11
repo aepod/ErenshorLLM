@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using BepInEx.Logging;
+using ErenshorLLMDialog.Pipeline;
 using ErenshorLLMDialog.Sidecar.Models;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -255,6 +256,253 @@ namespace ErenshorLLMDialog.Sidecar
 
             sb.Append("}}");
             return sb.ToString();
+        }
+
+        // ---- Template API methods (M3/M4) ----
+
+        private const int TEMPLATE_TIMEOUT = 5;
+
+        /// <summary>
+        /// GET /v1/templates/lookup -- Look up a template variant by trigger and personality.
+        /// Invokes the callback with a TemplateLookupResult (or null on failure).
+        /// </summary>
+        public IEnumerator LookupTemplate(string trigger, string personalityStyle,
+            string personalityClassRole, Action<TemplateLookupResult> callback)
+        {
+            string url = _baseUrl + "/v1/templates/lookup?trigger=" +
+                UnityWebRequest.EscapeURL(trigger);
+            if (!string.IsNullOrEmpty(personalityStyle))
+                url += "&personality_style=" + UnityWebRequest.EscapeURL(personalityStyle);
+            if (!string.IsNullOrEmpty(personalityClassRole))
+                url += "&personality_class_role=" + UnityWebRequest.EscapeURL(personalityClassRole);
+
+            using (var request = UnityWebRequest.Get(url))
+            {
+                request.timeout = TEMPLATE_TIMEOUT;
+
+                yield return request.SendWebRequest();
+
+                if (IsRequestError(request))
+                {
+                    callback?.Invoke(null);
+                    yield break;
+                }
+
+                string json = request.downloadHandler.text;
+                try
+                {
+                    var result = ParseLookupResponse(json);
+                    callback?.Invoke(result);
+                }
+                catch (Exception e)
+                {
+                    _log.LogDebug("[SidecarClient] Template lookup parse error: " + e.Message);
+                    callback?.Invoke(null);
+                }
+            }
+        }
+
+        /// <summary>
+        /// GET /v1/templates/stats -- Get template store statistics.
+        /// Invokes the callback with a dictionary of stat key-value pairs (or null on failure).
+        /// </summary>
+        public IEnumerator GetTemplateStats(Action<Dictionary<string, string>> callback)
+        {
+            string url = _baseUrl + "/v1/templates/stats";
+
+            using (var request = UnityWebRequest.Get(url))
+            {
+                request.timeout = TEMPLATE_TIMEOUT;
+
+                yield return request.SendWebRequest();
+
+                if (IsRequestError(request))
+                {
+                    callback?.Invoke(null);
+                    yield break;
+                }
+
+                string json = request.downloadHandler.text;
+                try
+                {
+                    var stats = ParseStatsResponse(json);
+                    callback?.Invoke(stats);
+                }
+                catch (Exception e)
+                {
+                    _log.LogDebug("[SidecarClient] Template stats parse error: " + e.Message);
+                    callback?.Invoke(null);
+                }
+            }
+        }
+
+        /// <summary>
+        /// POST /v1/templates/queue -- Queue a template generation request.
+        /// Fire-and-forget with completion callbacks.
+        /// </summary>
+        public IEnumerator QueueTemplateGeneration(string trigger, string originalText,
+            string channel, PersonalityData personality,
+            Action onComplete = null, Action onError = null)
+        {
+            string url = _baseUrl + "/v1/templates/queue";
+            string body = BuildQueueJson(trigger, originalText, channel, personality);
+
+            using (var request = new UnityWebRequest(url, "POST"))
+            {
+                byte[] bodyBytes = System.Text.Encoding.UTF8.GetBytes(body);
+                request.uploadHandler = new UploadHandlerRaw(bodyBytes);
+                request.downloadHandler = new DownloadHandlerBuffer();
+                request.SetRequestHeader("Content-Type", "application/json");
+                request.timeout = TEMPLATE_TIMEOUT;
+
+                yield return request.SendWebRequest();
+
+                if (IsRequestError(request))
+                {
+                    _log.LogDebug("[SidecarClient] Template queue failed: " + request.error);
+                    onError?.Invoke();
+                    yield break;
+                }
+
+                onComplete?.Invoke();
+            }
+        }
+
+        /// <summary>
+        /// Parse the JSON response from /v1/templates/lookup.
+        /// Manual parsing to avoid Newtonsoft dependency.
+        /// </summary>
+        private static TemplateLookupResult ParseLookupResponse(string json)
+        {
+            var result = new TemplateLookupResult();
+
+            // Check "found" field
+            result.Found = json.Contains("\"found\":true") || json.Contains("\"found\": true");
+
+            if (result.Found)
+            {
+                result.Text = ExtractJsonString(json, "text");
+                result.PersonalityStyle = ExtractJsonString(json, "personality_style");
+                result.PersonalityClassRole = ExtractJsonString(json, "personality_class_role");
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Parse the JSON response from /v1/templates/stats.
+        /// </summary>
+        private static Dictionary<string, string> ParseStatsResponse(string json)
+        {
+            var stats = new Dictionary<string, string>();
+
+            // Extract known fields
+            string enabled = ExtractJsonValue(json, "enabled");
+            if (enabled != null) stats["enabled"] = enabled;
+
+            string triggerCount = ExtractJsonValue(json, "trigger_count");
+            if (triggerCount != null) stats["trigger_count"] = triggerCount;
+
+            string variantCount = ExtractJsonValue(json, "variant_count");
+            if (variantCount != null) stats["variant_count"] = variantCount;
+
+            return stats;
+        }
+
+        /// <summary>
+        /// Build JSON body for POST /v1/templates/queue.
+        /// </summary>
+        private static string BuildQueueJson(string trigger, string originalText,
+            string channel, PersonalityData personality)
+        {
+            var sb = new System.Text.StringBuilder();
+            sb.Append("{\"trigger\":\"");
+            sb.Append(EscapeJsonString(trigger));
+            sb.Append("\",\"context\":\"");
+            sb.Append(EscapeJsonString(originalText));
+            sb.Append("\",\"channel\":\"");
+            sb.Append(EscapeJsonString(channel));
+            sb.Append("\",\"sim_name\":\"");
+            sb.Append(EscapeJsonString(personality.SourceSim));
+            sb.Append("\",\"personality\":{\"style\":\"");
+            sb.Append(EscapeJsonString(personality.Style));
+            sb.Append("\",\"class_role\":\"");
+            sb.Append(EscapeJsonString(personality.ClassRole));
+            sb.Append("\",\"traits\":[");
+            if (personality.Traits != null)
+            {
+                for (int i = 0; i < personality.Traits.Length; i++)
+                {
+                    if (i > 0) sb.Append(",");
+                    sb.Append("\"");
+                    sb.Append(EscapeJsonString(personality.Traits[i]));
+                    sb.Append("\"");
+                }
+            }
+            sb.Append("]}}");
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Extract a JSON string value by key. Simple parser for flat JSON objects.
+        /// </summary>
+        private static string ExtractJsonString(string json, string key)
+        {
+            string search = "\"" + key + "\":\"";
+            int idx = json.IndexOf(search);
+            if (idx < 0)
+            {
+                // Try with space after colon
+                search = "\"" + key + "\": \"";
+                idx = json.IndexOf(search);
+                if (idx < 0) return null;
+            }
+
+            int start = idx + search.Length;
+            int end = start;
+            while (end < json.Length)
+            {
+                if (json[end] == '"' && (end == start || json[end - 1] != '\\'))
+                    break;
+                end++;
+            }
+            if (end >= json.Length) return null;
+
+            return json.Substring(start, end - start)
+                .Replace("\\\"", "\"")
+                .Replace("\\n", "\n")
+                .Replace("\\\\", "\\");
+        }
+
+        /// <summary>
+        /// Extract a JSON value (string, number, or boolean) by key.
+        /// Returns the raw value as a string.
+        /// </summary>
+        private static string ExtractJsonValue(string json, string key)
+        {
+            // Try string value first
+            string strVal = ExtractJsonString(json, key);
+            if (strVal != null) return strVal;
+
+            // Try non-string value (number, bool)
+            string search = "\"" + key + "\":";
+            int idx = json.IndexOf(search);
+            if (idx < 0)
+            {
+                search = "\"" + key + "\": ";
+                idx = json.IndexOf(search);
+                if (idx < 0) return null;
+            }
+
+            int start = idx + search.Length;
+            while (start < json.Length && json[start] == ' ') start++;
+
+            int end = start;
+            while (end < json.Length && json[end] != ',' && json[end] != '}' && json[end] != ' ')
+                end++;
+
+            if (end <= start) return null;
+            return json.Substring(start, end - start);
         }
 
         /// <summary>

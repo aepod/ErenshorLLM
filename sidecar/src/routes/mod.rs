@@ -7,3 +7,4 @@ pub mod paraphrase;
 pub mod rag;
 pub mod respond;
 pub mod shutdown;
+pub mod templates;

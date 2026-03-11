@@ -8,5 +8,6 @@ pub mod multi_search;
 pub mod personality_store;
 pub mod ranker;
 pub mod sona_integration;
+pub mod template_learning;
 pub mod templates;
 pub mod vector_store;

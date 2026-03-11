@@ -7,6 +7,7 @@ use crate::intelligence::memory::MemoryStore;
 use crate::intelligence::personality_store::VectorPersonalityStore;
 use crate::intelligence::ranker::RecencyTracker;
 use crate::intelligence::sona_integration::SonaManager;
+use crate::intelligence::template_learning::{TemplateGenerator, TemplateStore};
 use crate::intelligence::templates::ResponseStore;
 use crate::llm::grounding::StaticGrounding;
 use crate::llm::personality::PersonalityStore;
@@ -47,12 +48,25 @@ pub struct AppState {
     /// Tracks recently-used template IDs per sim to prevent repetition.
     /// Window of 10 means a template won't repeat until 10 others have been used.
     pub recency_tracker: RecencyTracker,
+    /// Dynamic template store for runtime-generated dialog variants.
+    /// None when templates.enabled = false in config.
+    pub template_store: Option<Arc<RwLock<TemplateStore>>>,
+    /// Background LLM template generator.
+    /// None when templates.enabled = false or llm.enabled = false.
+    pub template_generator: Option<Arc<TemplateGenerator>>,
 }
 
 impl AppState {
     /// Create a new AppState with all intelligence components.
+    ///
+    /// `shutdown` is passed in so background tasks (template generator,
+    /// persist loop) can share the same notification signal.
+    ///
+    /// `template_store` is pre-wrapped in `Arc<RwLock<>>` so the same Arc
+    /// can be shared with the `TemplateGenerator` background task.
     pub fn new(
         config: AppConfig,
+        shutdown: Arc<Notify>,
         embedder: Option<Arc<EmbeddingEngine>>,
         lore: LoreStore,
         responses: ResponseStore,
@@ -62,10 +76,12 @@ impl AppState {
         vector_personalities: VectorPersonalityStore,
         llm_router: Option<Arc<LlmRouter>>,
         static_grounding: Option<StaticGrounding>,
+        template_store: Option<Arc<RwLock<TemplateStore>>>,
+        template_generator: Option<Arc<TemplateGenerator>>,
     ) -> Arc<Self> {
         Arc::new(Self {
             config,
-            shutdown: Arc::new(Notify::new()),
+            shutdown,
             start_time: std::time::Instant::now(),
             embedder,
             lore,
@@ -77,6 +93,8 @@ impl AppState {
             llm_router,
             static_grounding,
             recency_tracker: RecencyTracker::new(10),
+            template_store,
+            template_generator,
         })
     }
 

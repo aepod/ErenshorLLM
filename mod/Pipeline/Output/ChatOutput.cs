@@ -18,9 +18,14 @@ namespace ErenshorLLMDialog.Pipeline.Output
                 string personalized = GameData.SimMngr.PersonalizeString(
                     ctx.TransformedResponse, ctx.TargetSimPlayer);
 
-                // Queue the response through the say system for natural timing
+                // Queue the response through the say system for natural timing.
+                // Use typed LogAdd(ChatLogLine) with the context's LogType for correct tab routing.
+                // The old LogAdd(string) wraps as SystemMessages which shows in wrong tab.
                 string formatted = simName + " says: " + personalized;
-                UpdateSocialLog.LogAdd(formatted);
+                var logType = ctx.LogType != ChatLogLine.LogType.None
+                    ? ctx.LogType
+                    : ChatLogLine.LogType.Say;
+                UpdateSocialLog.LogAdd(new ChatLogLine(formatted, logType));
                 UpdateSocialLog.LocalLogAdd(formatted);
 
                 ctx.PipelineLog.Add("[ChatOutput] Injected say response from " + simName);

@@ -34,7 +34,7 @@ namespace ErenshorLLMDialog
         Hybrid
     }
 
-    [BepInPlugin("aepod.ErenshorLLMDialog", "Erenshor LLM Dialog", "0.2.0")]
+    [BepInPlugin("aepod.ErenshorLLMDialog", "Erenshor LLM Dialog", "0.3.0")]
     [BepInProcess("Erenshor.exe")]
     public class ErenshorLLMDialogPlugin : BaseUnityPlugin
     {
@@ -198,8 +198,20 @@ namespace ErenshorLLMDialog
             }
 
             // --- Apply Harmony patches ---
-            new Harmony("aepod.ErenshorLLMDialog").PatchAll();
-            Log.LogInfo("ErenshorLLMDialog v0.2.0 loaded!");
+            var harmony = new Harmony("aepod.ErenshorLLMDialog");
+            harmony.PatchAll();
+
+            // --- Manually patch GlobalAddLine (private static, requires AccessTools) ---
+            bool hasGlobalAddLine = Hooks.ChatInterceptHook.TryPatch(harmony);
+            if (!hasGlobalAddLine)
+            {
+                Log.LogWarning("GlobalAddLine not found. Using legacy hooks only (pre-Mar 10 game).");
+            }
+
+            // --- Initialize template cache for combat callout fast-path ---
+            ErenshorLLMDialog.Pipeline.TemplateCache.Initialize(_sidecarClient, this);
+
+            Log.LogInfo("ErenshorLLMDialog v0.3.0 loaded (March Update: unified hook + template learning)!");
         }
 
         /// <summary>

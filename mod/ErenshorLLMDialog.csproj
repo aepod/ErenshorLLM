@@ -8,28 +8,28 @@
 
   <ItemGroup>
     <Reference Include="0Harmony">
-      <HintPath>$(BepInExPath)\0Harmony.dll</HintPath>
+      <HintPath>$(BepInExPath)/0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx">
-      <HintPath>$(BepInExPath)\BepInEx.dll</HintPath>
+      <HintPath>$(BepInExPath)/BepInEx.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>$(CorlibPath)\Assembly-CSharp.dll</HintPath>
+      <HintPath>$(CorlibPath)/Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>$(CorlibPath)\UnityEngine.dll</HintPath>
+      <HintPath>$(CorlibPath)/UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>$(CorlibPath)\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>$(CorlibPath)/UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>$(CorlibPath)\UnityEngine.UI.dll</HintPath>
+      <HintPath>$(CorlibPath)/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestModule">
-      <HintPath>$(CorlibPath)\UnityEngine.UnityWebRequestModule.dll</HintPath>
+      <HintPath>$(CorlibPath)/UnityEngine.UnityWebRequestModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AudioModule">
-      <HintPath>$(CorlibPath)\UnityEngine.AudioModule.dll</HintPath>
+      <HintPath>$(CorlibPath)/UnityEngine.AudioModule.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

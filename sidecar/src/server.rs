@@ -23,6 +23,8 @@ fn build_router(state: Arc<AppState>) -> Router {
         .merge(routes::paraphrase::router())
         // Phase 3: busybox exec
         .merge(routes::exec::router())
+        // Dynamic template store
+        .merge(routes::templates::router())
         .layer(TraceLayer::new_for_http())
         .with_state(state)
 }

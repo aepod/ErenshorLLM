@@ -55,5 +55,10 @@ dist/
 # BepInEx logs
 LogOutput.log
 
+# Runtime template store (generated during play)
+**/template_store.json
+**/template_store.json.tmp
+**/template_store.json.bak
+
 # Misc dumps
 _full_personality_dump.json

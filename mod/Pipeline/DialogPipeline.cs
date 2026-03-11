@@ -41,6 +41,10 @@ namespace ErenshorLLMDialog.Pipeline
 
             // 1. Input: parse player text, detect channel and target
             _input.Process(ctx, typeText);
+
+            // Map ChatChannel to LogType for correct tab routing on re-injection
+            ctx.LogType = ChannelToLogType(ctx.Channel);
+
             if (ctx.Channel == ChatChannel.None || string.IsNullOrEmpty(ctx.PlayerMessage))
             {
                 LogDebug(ctx);
@@ -127,6 +131,24 @@ namespace ErenshorLLMDialog.Pipeline
             lock (_lock)
             {
                 _pendingContext = null;
+            }
+        }
+
+        /// <summary>
+        /// Map our ChatChannel enum to the game's ChatLogLine.LogType for re-injection.
+        /// </summary>
+        private static ChatLogLine.LogType ChannelToLogType(ChatChannel channel)
+        {
+            switch (channel)
+            {
+                case ChatChannel.Say: return ChatLogLine.LogType.Say;
+                case ChatChannel.Shout: return ChatLogLine.LogType.Shout;
+                case ChatChannel.Whisper: return ChatLogLine.LogType.Whisper;
+                case ChatChannel.Party: return ChatLogLine.LogType.Party;
+                case ChatChannel.Guild: return ChatLogLine.LogType.Guild;
+                case ChatChannel.Trade: return ChatLogLine.LogType.WTB;
+                case ChatChannel.Hail: return ChatLogLine.LogType.Say;
+                default: return ChatLogLine.LogType.None;
             }
         }
 
